@@ -1,5 +1,6 @@
 import React from "react";
 import TodoList from "../features/todos/TodoList";
+import Loader from "../components/Loader";
 
 const TodoPage = () => {
   const [ loading, setLoading ] = React.useState(false);
@@ -17,7 +18,7 @@ const TodoPage = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>
+    return <Loader />
   }
 
   return (
