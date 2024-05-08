@@ -4,11 +4,11 @@ import BlankProfile from '../../assets/blank-profile-picture.png';
 const SidebarProfile = ({ profile, isLoading }: any) => {
 
   if (isLoading)  {
-   return <div>Loading...</div>;
+    return <div className='items-center justify-center bg-slate-100'>Loading...</div>;
   }
   
   return (
-    <div className="flex gap-2 items-center justify-center bg-slate-300 p-2 shadow shadow-inner">
+    <div className="flex gap-2 items-center justify-center bg-slate-100 p-2 shadow shadow-inner">
       <img 
         className="max-w-16 rounded-full bg-white" 
         src={

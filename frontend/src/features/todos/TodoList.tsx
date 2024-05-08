@@ -1,4 +1,5 @@
 import React from 'react';
+import TodoItem from './TodoItem';
 
 const TodoList = ({ todos }: any) => {
   
@@ -6,11 +7,8 @@ const TodoList = ({ todos }: any) => {
     <>
       <div className='border rounded-lg p-4 bg-white'>
         {
-          todos.map((curr, idx) => (
-            <div key={idx}>
-              <h1>{curr.id}</h1>
-              <p>{curr.todo}</p>
-            </div>
+          todos.map((curr: any, idx: number) => (
+            <TodoItem key={idx} data={curr} />
           ))
         }
       </div>

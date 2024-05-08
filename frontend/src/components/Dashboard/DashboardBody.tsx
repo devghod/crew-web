@@ -8,7 +8,7 @@ const DashboardBody = () => {
       <div className="flex-initial w-64">
         <Sidebar />
       </div>
-      <div className="flex-1 p-4 bg-gray-100">
+      <div className="flex-1 p-4 bg-gray-100 overflow-y-auto overflow-x-hidden">
         <Outlet />
       </div>
     </div> 

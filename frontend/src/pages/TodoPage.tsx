@@ -21,10 +21,9 @@ const TodoPage = () => {
   }
 
   return (
-    <div className="">
-      Todo Page
+    <>
       <TodoList todos={todos} />
-    </div>
+    </>
   )
 }
 
