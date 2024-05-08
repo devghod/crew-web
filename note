@@ -1,0 +1,21 @@
+Project: Crew
+Platform: Web and Mobile
+Tools: MERN and Flutter
+
+configuration = {
+	company: {
+		name: "Crew",
+		description: "Free Platform",
+		logo: "",
+	},
+	settings: {
+		theme: {
+			color: {
+				primary: "",
+				secondary: "",
+				third: "",
+				fouth: "",
+			},
+		},
+	},
+}
