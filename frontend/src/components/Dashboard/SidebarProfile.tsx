@@ -20,8 +20,8 @@ const SidebarProfile = ({ profile, isLoading }: any) => {
         alt={profile.name} 
       />
       <div>
-        <p className="text-sm font-bold">{profile.firstName} {profile.lastName}</p>
-        <p className="text-xs text-gray-500">{profile.email}</p>
+        <p className="text-sm font-bold max-w-24 text-pretty">{profile.firstName} {profile.lastName}</p>
+        <p className="text-xs text-gray-500 max-w-24 truncate">{profile.email}</p>
       </div>
     </div>
   );

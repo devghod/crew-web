@@ -12,15 +12,15 @@ const TodoList = ({ todos }: any) => {
   }
   
   return (
-    <>
-      <div className='border rounded-lg p-4 bg-white'>
+    <div>
+      <div className='mx-auto max-w-96 border rounded-lg p-4 bg-white'>
         {
           todos.map((curr: any, idx: number) => (
             <TodoItem key={idx} data={curr} />
           ))
         }
       </div>
-    </>
+    </div>
   );
 };
 
