@@ -1,4 +1,6 @@
-const LoginPage = () => {
+import React from "react";
+
+const LoginPage: React.FC = () => {
 
   return (
     <>

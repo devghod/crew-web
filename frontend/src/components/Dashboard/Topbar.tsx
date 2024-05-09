@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../../assets/logos/crew-sm.png';
 
-const Topbar = () => {
+const Topbar: React.FC = () => {
   const [ showOptions, setShowOptions ] = React.useState(false);
   const [ company, setCompany ] = React.useState({
     logo: Logo,
@@ -13,7 +13,7 @@ const Topbar = () => {
     website: '',
   });
 
-  const onShowOptions = () => {
+  const onShowOptions: React.FC = () => {
     if (showOptions) {
       setShowOptions(false);
     } else {

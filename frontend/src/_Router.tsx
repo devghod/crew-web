@@ -1,12 +1,17 @@
-import { 
-  lazy, 
-  Suspense 
-} from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import 
+  React,
+  { 
+    lazy, 
+    Suspense 
+  } 
+from "react";
+import 
+  {
+    BrowserRouter,
+    Routes,
+    Route,
+  } 
+from "react-router-dom";
 
 const Root = lazy(() => import('./routes/root'));
 const Contact = lazy(() => import('./routes/contact'));
@@ -16,8 +21,7 @@ const LoginPage = lazy(() => import('./pages/LoginPage'));
 const StatisticsPage = lazy(() => import('./pages/StatisticsPage'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
 
-
-const Routers = () => {
+const Routers: React.FC = () => {
 
   return (
     <>

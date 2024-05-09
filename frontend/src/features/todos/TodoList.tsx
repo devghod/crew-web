@@ -1,7 +1,15 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 
-const TodoList = ({ todos }: any) => {
+export interface Todo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+export interface Todos extends Array<Todo> {}
+
+const TodoList: React.FC<{ todos: Todos }> = ({ todos }) => {
   
   return (
     <div>

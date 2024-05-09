@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DashboardFooter = () => {
+const DashboardFooter: React.FC = () => {
   return (
     <div className="p-4 text-center border">
       &copy; {new Date().getFullYear()} My Dashboard

@@ -2,7 +2,7 @@ import React from 'react';
 import SidebarNav from './SidebarNav';
 import SidebarProfile from './SidebarProfile';
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
   const [ profile, setProfile ] = React.useState({});
   const [ loading, setLoading ] = React.useState(false);
   const [ navigates, setNavigates ] = React.useState([

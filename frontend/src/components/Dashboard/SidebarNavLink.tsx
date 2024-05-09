@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
-const SidebarNavLink = ({ to, name, icon }: any) => {
+const SidebarNavLink: React.FC = ({ to, name, icon }: any) => {
   const location = useLocation();
   const isActivePath = (path: string) => {
     return location.pathname.endsWith(path);

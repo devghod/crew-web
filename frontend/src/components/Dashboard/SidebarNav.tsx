@@ -1,7 +1,7 @@
 import React from 'react';
 import SidebarNavLink from './SidebarNavLink';
 
-const SidebarNav = ({ navigates }: any) => {
+const SidebarNav: React.FC = ({ navigates }: any) => {
   
   return (
     <nav>

@@ -2,7 +2,7 @@ import React from "react";
 import TodoList from "../features/todos/TodoList";
 import Loader from "../components/Loader";
 
-const TodoPage = () => {
+const TodoPage: React.FC = () => {
   const [ loading, setLoading ] = React.useState(false);
   const [ todos, setTodos ] = React.useState([]);
 
@@ -18,7 +18,7 @@ const TodoPage = () => {
   }, []);
 
   if (loading) {
-    return <Loader />
+    return <Loader height={16} width={16} color="" />
   }
 
   return (

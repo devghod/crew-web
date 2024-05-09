@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
-const DashboardBody = () => {
+const DashboardBody: React.FC = () => {
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="flex-initial w-64">
