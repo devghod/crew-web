@@ -17,13 +17,21 @@ const TodoPage: React.FC = () => {
       .catch((error) => console.error('Error:', error));
   }, []);
 
-  if (loading) {
-    return <Loader height={16} width={16} color="" />
-  }
-
   return (
     <>
-      <TodoList todos={todos} />
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col px-4">
+          <textarea className="p-4 rounded-lg" placeholder="Enter todo here"></textarea>
+          <button className="m-2 p-2 bg-blue-500 text-white rounded">Submit</button>
+        </div>
+        <div className="h-full">
+          {loading ? (
+            <Loader height={16} width={16} color="" />
+          ) : (
+            <TodoList todos={todos} />
+          )}
+        </div>
+      </div>
     </>
   )
 }
