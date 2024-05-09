@@ -42,7 +42,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div className="shadow ease-in-out duration-300 h-full">
+    <div className="border-r shadow ease-in-out duration-300 h-full">
       <SidebarProfile profile={profile} isLoading={loading} />
       <SidebarNav navigates={navigates} />
     </div>

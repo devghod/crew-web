@@ -22,7 +22,7 @@ const Topbar = () => {
   }
 
   return (
-    <div className="grid grid-cols-6 gap-4 shadow h-16">
+    <div className="grid grid-cols-6 gap-4 border h-16">
       <div className="col-start-1 col-end-3 self-center mx-5">
         <img className="max-w-24" src={company.logo} alt={company.description} />
       </div>

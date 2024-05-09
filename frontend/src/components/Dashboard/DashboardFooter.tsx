@@ -2,7 +2,7 @@ import React from 'react';
 
 const DashboardFooter = () => {
   return (
-    <div className="bg-gray-200 p-4 text-center">
+    <div className="p-4 text-center border">
       &copy; {new Date().getFullYear()} My Dashboard
     </div>
   );
