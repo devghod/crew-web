@@ -1,11 +1,12 @@
 import React from "react";
+import { Todo } from "./TodoList";
 
 export interface TodoItem {
   key: number;
-  data: any;
+  data: Todo;
 };
 
-const TodoItem: React.FC<TodoItem> = ({ data }: any) => {
+const TodoItem: React.FC<TodoItem> = ({ data }) => {
   
   return (
     <div className="grid grid-cols-5 gap-4 mb-2">
