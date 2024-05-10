@@ -2,11 +2,13 @@ import React from "react";
 import TodoList from "../features/todos/TodoList";
 import { Todo, Todos } from "../features/todos/TodoList";
 import SkeletonLoader from "../components/SkeletonLoader";
+import TodoForm from "../features/todos/TodoForm";
 
 const TodoPage: React.FC = () => {
   const [ loading, setLoading ] = React.useState(false);
   const [ todos, setTodos ] = React.useState<Todos>([]);
   const [ todoVal, setTodoVal ] = React.useState('');
+  const [ error, setError ] = React.useState('');
 
   React.useEffect(() => {
     // setLoading(true);
@@ -23,35 +25,40 @@ const TodoPage: React.FC = () => {
     setTodoVal(e.target.value);
   };
 
-  const addTodo = () => {
-    let randomNumber = Math.floor(Math.random() * 101);
-    let tempTodo: Todo = {
-      id: randomNumber,
-      todo: todoVal,
-      completed: false,
+  const validateInput = (input: string) => {
+    const regex = /^\s*$/;
+    return regex.test(input);
+  }
+
+  const addTodo = (e: any) => {
+    e.preventDefault();
+    if (validateInput(todoVal)) {
+      setError('Please enter a todo');
+    } else {
+      setLoading(true);
+      setError('');
+      let randomNumber = Math.floor(Math.random() * 101);
+      let tempTodo: Todo = {
+        id: randomNumber,
+        todo: todoVal,
+        completed: false,
+      }
+      let temp: Todos = [...todos, tempTodo];
+      setTodos(temp);
+      setTodoVal('');
+      setLoading(false);
     }
-    let temp: Todos = [...todos, tempTodo];
-    setTodos(temp);
-    setTodoVal('');
   };
 
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
-        <div className="flex flex-col px-4">
-          <textarea 
-            className="p-4 rounded-lg" 
-            placeholder="Enter todo here"
-            value={todoVal}
-            onChange={handleChange}
-          ></textarea>
-          <button 
-            className="w-16 my-4 py-2 bg-blue-500 hover:bg-blue-400 text-sm text-white rounded"
-            onClick={addTodo}
-          >
-            Add
-          </button>
-        </div>
+        <TodoForm 
+          addTodo={addTodo}
+          todoVal={todoVal}
+          handleChange={handleChange}
+          error={error}
+        />
         <div className="h-full">
           {loading ? (
             <SkeletonLoader />
