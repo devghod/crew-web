@@ -22,7 +22,7 @@ const SidebarProfile: React.FC<SidebarProfile> = ({ profile, isLoading }) => {
     <>
       {(isLoading) &&
         <div className='items-center justify-center bg-slate-100 text-center shadow shadow-inner text-sm'>
-          <Loader height={16} width={16} color="" />
+          <Loader height={10} width={10} color="" />
         </div>
       }
       {(!isLoading) &&

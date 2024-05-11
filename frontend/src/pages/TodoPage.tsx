@@ -30,7 +30,7 @@ const TodoPage: React.FC = () => {
     return regex.test(input);
   }
 
-  const addTodo = (e: any) => {
+  const onCreate = (e: any) => {
     e.preventDefault();
     if (validateInput(todoVal)) {
       setError('Please enter a todo');
@@ -50,11 +50,16 @@ const TodoPage: React.FC = () => {
     }
   };
 
+  const onDelete = (id: any) => {
+    const temp = todos.filter((obj) => obj.id != id);
+    setTodos(temp);
+  };
+
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
         <TodoForm 
-          addTodo={addTodo}
+          onCreate={onCreate}
           todoVal={todoVal}
           handleChange={handleChange}
           error={error}
@@ -63,7 +68,10 @@ const TodoPage: React.FC = () => {
           {loading ? (
             <SkeletonLoader />
           ) : (
-            <TodoList todos={todos} />
+            <TodoList 
+              todos={todos} 
+              onDelete={onDelete}
+            />
           )}
         </div>
       </div>

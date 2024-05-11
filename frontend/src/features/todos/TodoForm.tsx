@@ -2,16 +2,16 @@ import React from "react";
 
 export interface TodoForm {
   handleChange: (e: any) => void;
-  addTodo: (e: any) => void;
+  onCreate: (e: any) => void;
   todoVal: string;
   error: string;
 };
 
-const TodoForm: React.FC<TodoForm> = ({ addTodo, todoVal, handleChange, error }) => {
+const TodoForm: React.FC<TodoForm> = ({ onCreate, todoVal, handleChange, error }) => {
   
   return (
     <div className="mx-auto w-2/3 h-fit border rounded-lg p-4 bg-white">
-      <form onSubmit={addTodo}>
+      <form onSubmit={onCreate}>
         <div className="flex flex-col">
           <input 
             className="p-4 rounded-lg border" 

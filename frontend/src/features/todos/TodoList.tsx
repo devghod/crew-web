@@ -9,7 +9,12 @@ export interface Todo {
 
 export interface Todos extends Array<Todo> {}
 
-const TodoList: React.FC<{ todos: Todos }> = ({ todos }) => {
+export interface TodoList {
+  todos: Todos;
+  onDelete: Function;
+}
+
+const TodoList: React.FC<TodoList> = ({ todos, onDelete } ) => {
   
   return (
     <div>
@@ -18,7 +23,11 @@ const TodoList: React.FC<{ todos: Todos }> = ({ todos }) => {
           <div className='mx-auto text-center text-gray-500'>No data</div>
         ) : (
           todos.map((curr: any, idx: number) => (
-            <TodoItem key={idx} data={curr} />
+            <TodoItem 
+              key={idx} 
+              data={curr} 
+              onDelete={() => onDelete(curr.id)}
+            />
           ))
         )}
       </div>
