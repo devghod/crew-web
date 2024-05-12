@@ -1,11 +1,26 @@
 import React from 'react';
 import SidebarNav from './SidebarNav';
-import SidebarProfile from './SidebarProfile';
+import SidebarProfile, { Profile } from './SidebarProfile';
+
+export interface Navigate {
+  name: string;
+  path: string;
+  icon: Function;
+};
+
+export interface Navigates extends Array<Navigate> {};
 
 const Sidebar: React.FC = () => {
-  const [ profile, setProfile ] = React.useState({});
   const [ loading, setLoading ] = React.useState(false);
-  const [ navigates, setNavigates ] = React.useState([
+  const [ profile, setProfile ] = React.useState<Profile>({
+    id: 0,
+    firstName: '',
+    lastName: '',
+    name: '',
+    email: '',
+    image: '',
+  });
+  const [ navigates, setNavigates ] = React.useState<Navigates>([
     {
       name: 'Dashboard',
       path: '/dashboard',
@@ -28,17 +43,32 @@ const Sidebar: React.FC = () => {
     }
   ]);
 
-  const randomNumber = Math.floor(Math.random() * 101);
+  const getProfile = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setProfile({
+        id: 100,
+        firstName: 'Hanzo',
+        lastName: 'Hattori',
+        name: 'Hanzo Hattori',
+        email: 'hanzo.hattor@test.com',
+        image: '',
+      });
+      setLoading(false);
+    }, 3000);    
+  };
 
   React.useEffect(() => {
-    setLoading(true);
-    fetch(`https://dummyjson.com/users/${randomNumber}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProfile(data);
-        setLoading(false);
-      })
-      .catch((error) => console.error('Error:', error));
+    // setLoading(true);
+    // fetch(`https://dummyjson.com/users/${randomNumber}`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setProfile(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => console.error('Error:', error));
+    getProfile();
   }, []);
 
   return (

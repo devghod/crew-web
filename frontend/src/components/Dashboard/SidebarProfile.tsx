@@ -9,12 +9,12 @@ export interface Profile {
   name: string,
   email: string,
   image: string,
-} 
+};
 
 export interface SidebarProfile {
   profile: Profile,
   isLoading: boolean,
-}
+};
 
 const SidebarProfile: React.FC<SidebarProfile> = ({ profile, isLoading }) => {
   
@@ -35,11 +35,11 @@ const SidebarProfile: React.FC<SidebarProfile> = ({ profile, isLoading }) => {
               profile.image : 
               BlankProfile 
             } 
-            alt={profile.name} 
+            alt={profile?.name} 
           />
           <div>
-            <p className="text-sm font-bold max-w-24 text-pretty">{profile.firstName} {profile.lastName}</p>
-            <p className="text-xs text-gray-500 max-w-24 truncate">{profile.email}</p>
+            <p className="text-sm font-bold max-w-24 text-pretty">{profile?.firstName} {profile?.lastName}</p>
+            <p className="text-xs text-gray-500 max-w-24 truncate">{profile?.email}</p>
           </div>
         </div>
       }

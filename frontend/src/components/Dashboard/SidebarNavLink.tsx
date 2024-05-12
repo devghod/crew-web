@@ -1,7 +1,13 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
-const SidebarNavLink: React.FC = ({ to, name, icon }: any) => {
+export interface SidebarNavLink {
+  to: string;
+  name: string;
+  icon: React.ReactNode;
+};
+
+const SidebarNavLink: React.FC<SidebarNavLink> = ({ to, name, icon }) => {
   const location = useLocation();
   const isActivePath = (path: string) => {
     return location.pathname.endsWith(path);
