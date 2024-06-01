@@ -21,12 +21,16 @@ const SidebarProfile: React.FC<SidebarProfile> = ({ profile, isLoading }) => {
   return (
     <>
       {(isLoading) &&
-        <div className='items-center justify-center bg-slate-100 text-center shadow shadow-inner text-sm'>
-          <Loader height={10} width={10} color="" />
+        <div className="h-20 flex animate-pulse gap-2 items-center justify-center bg-slate-100 p-2 shadow shadow-inner">
+          <div className="rounded-full bg-slate-200 h-16 w-16"></div>
+          <div className="w-24">
+            <div className="h-2 bg-slate-200 rounded mb-2"></div>
+            <div className="h-2 bg-slate-200 rounded"></div>
+          </div>
         </div>
       }
       {(!isLoading) &&
-        <div className="flex gap-2 items-center justify-center bg-slate-100 p-2 shadow shadow-inner">
+        <div className="h-20 flex gap-2 items-center justify-center bg-slate-100 p-2 shadow shadow-inner">
           <img 
             className="max-w-16 rounded-full bg-white" 
             src={
