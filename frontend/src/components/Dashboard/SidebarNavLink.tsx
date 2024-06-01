@@ -23,7 +23,7 @@ const SidebarNavLink: React.FC<SidebarNavLink> = ({ to, name, icon }) => {
       to={to}
     >
       <span className='mx-2'>{icon}</span>
-      <span>{name}</span>
+      <span className='text-sm'>{name}</span>
     </Link>
   );
 };
