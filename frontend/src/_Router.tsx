@@ -15,10 +15,13 @@ from "react-router-dom";
 
 const Root = lazy(() => import('./routes/root'));
 const Contact = lazy(() => import('./routes/contact'));
+
 const ErrorPage = lazy(() => import('./error-page'));
 const TodoPage = lazy(() => import('./pages/TodoPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const StatisticsPage = lazy(() => import('./pages/StatisticsPage'));
+const DebtCentralPage = lazy(() => import('./pages/DebtCentralPage'));
+
 const Dashboard = lazy(() => import('./components/Dashboard'));
 
 const Routers: React.FC = () => {
@@ -34,6 +37,7 @@ const Routers: React.FC = () => {
             <Route path="/dashboard" element={<Dashboard />}>
               <Route index element={<StatisticsPage />} />
               <Route path="todos" element={<TodoPage />} />
+              <Route path="debt" element={<DebtCentralPage />} />
             </Route>
             <Route path="*" element={<ErrorPage />} /> 
           </Routes>
