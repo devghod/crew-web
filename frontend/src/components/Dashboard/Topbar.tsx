@@ -19,15 +19,15 @@ const Topbar: React.FC = () => {
     } else {
       setShowOptions(true);
     }
-  }
+  };
 
   return (
-    <div className="grid grid-cols-6 gap-4 border h-16">
+    <div className="grid grid-cols-6 gap-4 border h-20">
       <div className="col-start-1 col-end-3 self-center mx-5">
         <img className="max-w-24" src={company.logo} alt={company.description} />
       </div>
-      <div className="col-end-7 col-span-1">
-        <div className="flex space-x-4 justify-end mx-5 my-4">
+      <div className="col-end-7 col-span-1 self-center">
+        <div className="flex space-x-4 justify-end mx-5">
           <div className="self-center">
           </div>
           <div className="relative inline-block text-left">
