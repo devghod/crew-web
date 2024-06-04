@@ -20,7 +20,7 @@ const ErrorPage = lazy(() => import('./error-page'));
 const TodoPage = lazy(() => import('./pages/TodoPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const StatisticsPage = lazy(() => import('./pages/StatisticsPage'));
-const DebtCentralPage = lazy(() => import('./pages/DebtCentralPage'));
+const DebtCentralPage = lazy(() => import('./pages/debt'));
 
 const Dashboard = lazy(() => import('./components/Dashboard'));
 
