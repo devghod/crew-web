@@ -1,5 +1,5 @@
 import React from 'react';
-import TodoItem from './TodoItem';
+import TodoItem from '../../components/Todo/TodoItem';
 
 export interface Todo {
   id: number;

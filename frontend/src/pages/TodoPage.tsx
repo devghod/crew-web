@@ -1,8 +1,8 @@
 import React from "react";
-import TodoList from "../features/todos/TodoList";
-import { Todo, Todos } from "../features/todos/TodoList";
+import TodoList from "../features/Todo/TodoList";
+import { Todo, Todos } from "../features/Todo/TodoList";
 import SkeletonLoader from "../components/SkeletonLoader";
-import TodoForm from "../features/todos/TodoForm";
+import TodoForm from "../components/Todo/TodoForm";
 
 const TodoPage: React.FC = () => {
   const [ loading, setLoading ] = React.useState(false);

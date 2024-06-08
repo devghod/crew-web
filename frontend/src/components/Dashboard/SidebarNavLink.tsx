@@ -8,6 +8,7 @@ export interface SidebarNavLink {
 };
 
 const SidebarNavLink: React.FC<SidebarNavLink> = ({ to, name, icon }) => {
+  
   const location = useLocation();
   const isActivePath = (path: string) => {
     return location.pathname.endsWith(path);

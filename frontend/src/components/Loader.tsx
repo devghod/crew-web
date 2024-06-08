@@ -7,6 +7,7 @@ export interface Loader {
 };
 
 const Loader: React.FC<Loader> = ({ height, width, color }) => {
+  
   height ? height : height = 16;
   width ? width : width = 16;
   color ? color : color = "#FF156D";
