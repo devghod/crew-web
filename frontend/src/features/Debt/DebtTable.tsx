@@ -3,7 +3,7 @@ import { Debt } from '../pages/debt/DebtInterface';
 import StatusPill from '../../components/StatusPill';
 
 export interface DebtTable {
-  debtors: Debt[],
+  debts: Debt[],
   openDelete: (id: number) => void;
   openEdit: (id: number) => void;
   openStatus: (id: number) => void;
@@ -11,7 +11,7 @@ export interface DebtTable {
 
 const DebtTable: React.FC<DebtTable> = (props) => {
 
-  const { debtors, openDelete, openEdit, openStatus } = props;
+  const { debts, openDelete, openEdit, openStatus } = props;
 
   const onDelete = (id: number) => {
     openDelete(id);
@@ -21,8 +21,8 @@ const DebtTable: React.FC<DebtTable> = (props) => {
     openEdit();
   };
 
-  const onStatus = () => {
-    openStatus();
+  const onStatus = (id: number) => {
+    openStatus(id);
   };
   
   return (
@@ -30,7 +30,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
       <div className="my-4">
         <table className="w-full table-auto border-collapse border border-slate-100">
           <thead>
-            <tr className="text-left">
+            <tr className="text-left text-slate-500 text-sm">
               <th className="p-2">ID</th>
               <th className="p-2">Name</th>
               <th className="p-2">Amount</th>
@@ -42,7 +42,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
           </thead>
           <tbody>
             {
-              debtors.map((debtor: Debt, index: number) => (
+              debts.map((debtor: Debt, index: number) => (
                 <tr key={index}>
                   <td className="border-y border-slate-100 p-2">{debtor.id}</td>
                   <td className="border-y border-slate-100 p-2">{debtor.name}</td>
@@ -58,15 +58,15 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                   </td>
                   <td className="border-y border-slate-100 p-2 text-sm space-x text-center">
                     <button 
-                      className="text-orange-500 hover:text-orange-700 hover:bg-orange-100 text-white font-medium px-2 rounded"
-                      onClick={onEdit}
+                      className="text-orange-500 hover:text-orange-700 hover:bg-orange-100 font-medium px-2 rounded"
+                      onClick={() => onEdit(debtor.id)}
                     >Edit</button>
                     <button 
-                      className="text-green-500 hover:text-green-700 hover:bg-green-100 text-white font-medium px-2 rounded"
-                      onClick={onStatus}
+                      className="text-green-500 hover:text-green-700 hover:bg-green-100 font-medium px-2 rounded"
+                      onClick={() => onStatus(debtor.id)}
                     >Paid</button>
                     <button 
-                      className="text-red-500 hover:text-red-700 hover:bg-red-100 text-white font-medium px-2 rounded"
+                      className="text-red-500 hover:text-red-700 hover:bg-red-100 font-medium px-2 rounded"
                       onClick={() => onDelete(debtor.id)}
                     >Delete</button>
                   </td>
