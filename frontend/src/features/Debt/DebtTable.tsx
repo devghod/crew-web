@@ -17,8 +17,8 @@ const DebtTable: React.FC<DebtTable> = (props) => {
     openDelete(id);
   };
 
-  const onEdit = () => {
-    openEdit();
+  const onEdit = (id: number) => {
+    openEdit(id);
   };
 
   const onStatus = (id: number) => {

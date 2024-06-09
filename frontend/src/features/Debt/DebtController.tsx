@@ -2,11 +2,12 @@ import React from "react";
 
 export interface DebtController {
   open: () => void;
+  debtTotal: number;
 };
 
 const DebtController: React.FC<DebtController> = (props) => {
   
-  const { open, setType } = props; 
+  const { open, debtTotal } = props; 
   
   const onOpen = () => {
     open();
@@ -14,7 +15,7 @@ const DebtController: React.FC<DebtController> = (props) => {
   
   return (
     <div className="rounded container bg-white py-2 px-4">
-      <div className="my-4">
+      <div className="my-4 grid grid-cols-2">
         <div className="flex gap-x-4">
           <button 
             className="p-2 bg-sky-500 hover:bg-sky-700 rounded text-white flex gap-x-1"
@@ -26,6 +27,14 @@ const DebtController: React.FC<DebtController> = (props) => {
             </svg>
             Create
           </button>
+        </div>
+        <div className="self-center">
+          <h2 className="font-bold text-slate-500">
+            Total Debts:
+            <span className="ml-1">
+              {debtTotal}
+            </span>
+          </h2>
         </div>
       </div>
     </div>
