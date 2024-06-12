@@ -1,5 +1,5 @@
 import React from "react";
-import { Debt } from '../pages/debt/DebtInterface';
+import { Debt } from '../pages/debt/DebtTypes';
 import StatusPill from '../../components/StatusPill';
 
 export interface DebtTable {
@@ -12,6 +12,9 @@ export interface DebtTable {
 const DebtTable: React.FC<DebtTable> = (props) => {
 
   const { debts, openDelete, openEdit, openStatus } = props;
+  const [ debtList, setDebtList ] = React.useState([]);
+
+  React.useEffect(() => setDebtList(debts), [debts]);
 
   const onDelete = (id: number) => {
     openDelete(id);
@@ -50,7 +53,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                   <td className="border-y border-slate-100 p-2">{debtor.date_requested}</td>
                   <td 
                     className={
-                      `border-y border-slate-100 p-2 ${ifDateIsDue(debtor.due_date) ? "text-red-500" : ""}`
+                      `border-y border-slate-100 p-2 ${ifDateIsDue(debtor.due_date) ? "bg-red-500 text-white font-semibold" : ""}`
                     }
                   >{debtor.due_date}</td>
                   <td className="border-y border-slate-100 p-2">

@@ -20,7 +20,7 @@ const DebtDialogUpdateStatus: React.FC<DebtDialogUpdateStatus> = (props) => {
         <div className="w-full bg-white rounded-lg flex flex-col divide-y">
           <h2 className="text-lg font-bold px-4 py-3">Update Status</h2>
           <div className="p-4">
-            <p className="text-right p-2">Are you sure you want to delete this?</p>
+            <p className="text-right p-2">Are you sure you want to update status?</p>
           </div>
           <div className="px-4 py-3 flex gap-x-2">
             <button 

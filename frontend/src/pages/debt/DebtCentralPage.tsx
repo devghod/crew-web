@@ -8,6 +8,7 @@ import DebtModalUpdateStatus from "../../features/Debt/DebtModalUpdateStatus";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useDebtStore } from "./DebtState";
+import { Debt } from "./DebtTypes";
         
 export interface DebtCentralPage {};
 
@@ -45,12 +46,13 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
   };
 
   const addDebt = (data: any) => {
-    const dueDate = new Date(data.dueDate).toISOString().slice(0, 10); 
+    const dueDate = new Date(data.due_date).toISOString().slice(0, 10); 
     const dateNow = new Date().toISOString().slice(0, 10); 
     newDebt({
       id: debts.length + 1,
       name: data.name,
       amount: data.amount,
+      amount_remaining: data.amount,
       due_date: dueDate,
       status: "Unpaid",
       date_requested: dateNow,
@@ -149,6 +151,7 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
           isLoading={isLoading}
           debt={debt}
           close={onEditModal}
+          editDebt={editDebt}
         />)
       }
     </div>

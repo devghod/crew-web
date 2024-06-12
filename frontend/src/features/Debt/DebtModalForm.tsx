@@ -11,7 +11,7 @@ const DebtDialogTest: React.FC<DebtDialogTest> = (props) => {
   const [ form, setForm ] = React.useState({
     name: '',
     amount: 0,
-    dueDate: '',
+    due_date: '',
   });
 
   const handleSubmit = (e) => {
@@ -19,16 +19,21 @@ const DebtDialogTest: React.FC<DebtDialogTest> = (props) => {
     addDebt({
       name: form.name,
       amount: form.amount,
-      dueDate: form.dueDate,
+      due_date: form.due_date,
     });
     clearForm();
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
   };
 
   const clearForm = () => {
     setForm({
       name: '',
       amount: 0,
-      dueDate: '',
+      due_date: '',
     });
   };
   
@@ -42,29 +47,32 @@ const DebtDialogTest: React.FC<DebtDialogTest> = (props) => {
             <div className="col-span-3">
               <input 
                 className="w-full border rounded p-2" 
+                name="name"
                 placeholder="Name here" 
                 value={form.name} 
-                onChange={(e) => setForm({ ...form, name: e.target.value})} 
+                onChange={handleInputChange} 
               />
             </div>
             <div className="text-right p-2">Amount</div>
             <div className="col-span-3">
               <input 
                 className="w-full border rounded p-2" 
+                name="amount"
                 placeholder="00" 
                 type="number"
                 value={form.amount} 
-                onChange={(e) => setForm({ ...form, amount: e.target.value})} 
+                onChange={handleInputChange} 
               />
             </div>
             <div className="text-right p-2">Due Date</div>
             <div className="col-span-3">
               <input 
                 className="w-full border rounded p-2" 
+                name="due_date"
                 placeholder="MM/DD/YYYY" 
                 type="date"
-                value={form.dueDate} 
-                onChange={(e) => setForm({ ...form, dueDate: e.target.value})} 
+                value={form.due_date} 
+                onChange={handleInputChange} 
               />
             </div>
           </div>

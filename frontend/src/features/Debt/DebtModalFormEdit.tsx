@@ -1,18 +1,28 @@
 import React from "react";
-import { Debt } from "../../pages/debt/DebtInterface";
+import { Debt } from "../../pages/debt/DebtTypes";
 
 export interface DebtModalFormEdit {
   close: () => void;
   debt: Debt;
   isLoading: boolean;
+  editDebt: (data: any) => void;
 };
 
 const DebtModalFormEdit: React.FC<DebtModalFormEdit> = (props) => {
 
-  const { debt, isLoading, close } = props;
+  const { debt, isLoading, close, editDebt } = props;
+  const [ form, setForm ] = React.useState<Debt>({ ...debt });
 
-  console.log(`%c ${isLoading}`, "color: red");
-  console.log("debt", debt);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const update = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("form", form);
+    editDebt(form);
+  };
   
   return (
     <div className="bg-gray-900 bg-opacity-50 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-40 outline-none focus:outline-none">
@@ -24,36 +34,39 @@ const DebtModalFormEdit: React.FC<DebtModalFormEdit> = (props) => {
             <div className="col-span-3">
               <input 
                 className="w-full border rounded p-2" 
+                name="name"
                 placeholder="Name here" 
-                value={debt.name} 
-                // onChange={(e) => setForm({ ...form, name: e.target.value})} 
+                value={form.name} 
+                onChange={handleInputChange} 
               />
             </div>
             <div className="text-right p-2">Amount</div>
             <div className="col-span-3">
               <input 
                 className="w-full border rounded p-2" 
+                name="amount"
                 placeholder="00" 
                 type="number"
-                value={debt.amount} 
-                // onChange={(e) => setForm({ ...form, amount: e.target.value})} 
+                value={form.amount} 
+                onChange={handleInputChange} 
               />
             </div>
             <div className="text-right p-2">Due Date</div>
             <div className="col-span-3">
               <input 
                 className="w-full border rounded p-2" 
+                name="due_date"
                 placeholder="MM/DD/YYYY" 
                 type="date"
-                value={debt.dueDate} 
-                // onChange={(e) => setForm({ ...form, dueDate: e.target.value})} 
+                value={form.due_date} 
+                onChange={handleInputChange} 
               />
             </div>
           </div>
           <div className="px-4 py-3 flex gap-x-2">
             <button 
               className="p-2 bg-sky-500 hover:bg-sky-700 rounded text-white"
-              // onClick={handleSubmit}
+              onClick={update}
             >
               Create
             </button>

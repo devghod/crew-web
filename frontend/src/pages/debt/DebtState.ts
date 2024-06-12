@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Debt } from './DebtInterface';
+import { Debt } from './DebtTypes';
 
 export interface DebtState {
   debts: Debt[];
@@ -47,7 +47,13 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
   },
   updateDebt: (debt: Debt) => {
     set((state) => ({ 
-      debts: { ...state.debts, debt }
+      debts: state.debts.map(data => {
+        if (data.id === debt.id) {
+          return { ...debt };
+        } else {
+          return data;
+        };
+      })
     }));
     get().setDebtTotal();
   },
