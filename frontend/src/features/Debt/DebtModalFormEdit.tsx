@@ -1,7 +1,7 @@
 import React from "react";
 import { Debt } from "../../pages/debt/DebtTypes";
 
-export interface DebtModalFormEdit {
+export type DebtModalFormEdit = {
   close: () => void;
   debt: Debt;
   isLoading: boolean;
@@ -20,7 +20,6 @@ const DebtModalFormEdit: React.FC<DebtModalFormEdit> = (props) => {
 
   const update = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("form", form);
     editDebt(form);
   };
   

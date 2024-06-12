@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface DebtController {
+export type DebtController = {
   open: () => void;
   debtTotal: number;
 };

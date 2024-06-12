@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface SkeletonLoader {};
+export type SkeletonLoader = {};
 
 const SkeletonLoader: React.FC<SkeletonLoader> = (props) => {
   

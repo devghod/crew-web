@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface Loader {
+export type Loader = {
   height: number,
   width: number,
   color: string,

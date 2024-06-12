@@ -2,7 +2,7 @@ import React from 'react';
 import BlankProfile from '../../assets/blank-profile-picture.png';
 import Loader from '../Loader';
 
-export interface Profile {
+export type Profile = {
   id: number,
   firstName: string,
   lastName: string,
@@ -11,7 +11,7 @@ export interface Profile {
   image: string,
 };
 
-export interface SidebarProfile {
+export type SidebarProfile = Profile & {
   profile: Profile,
   isLoading: boolean,
 };

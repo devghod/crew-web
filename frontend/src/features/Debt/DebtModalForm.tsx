@@ -1,11 +1,11 @@
 import React from "react";
 
-export interface DebtDialogTest {
+export type DebtModalForm = {
   close: () => void;
   addDebt: (data: any) => void;
 };
 
-const DebtDialogTest: React.FC<DebtDialogTest> = (props) => {
+const DebtModalForm: React.FC<DebtModalForm> = (props) => {
 
   const { close, addDebt } = props;
   const [ form, setForm ] = React.useState({
@@ -97,4 +97,4 @@ const DebtDialogTest: React.FC<DebtDialogTest> = (props) => {
   )
 };
 
-export default DebtDialogTest;
+export default DebtModalForm;

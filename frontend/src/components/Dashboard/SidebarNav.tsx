@@ -2,7 +2,7 @@ import React from 'react';
 import SidebarNavLink from './SidebarNavLink';
 import { Navigates } from './Sidebar';
 
-export interface SidebarNav {
+export type SidebarNav = {
   navigates: Navigates;
 };
 

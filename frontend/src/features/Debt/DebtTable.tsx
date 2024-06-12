@@ -2,7 +2,7 @@ import React from "react";
 import { Debt } from '../pages/debt/DebtTypes';
 import StatusPill from '../../components/StatusPill';
 
-export interface DebtTable {
+export type DebtTable = {
   debts: Debt[],
   openDelete: (id: number) => void;
   openEdit: (id: number) => void;

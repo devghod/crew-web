@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
-export interface SidebarNavLink {
+export type SidebarNavLink = {
   to: string;
   name: string;
   icon: React.ReactNode;

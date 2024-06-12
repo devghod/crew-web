@@ -10,7 +10,7 @@ import { Column } from 'primereact/column';
 import { useDebtStore } from "./DebtState";
 import { Debt } from "./DebtTypes";
         
-export interface DebtCentralPage {};
+export type DebtCentralPage = {};
 
 const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
 

@@ -2,13 +2,13 @@ import React from 'react';
 import SidebarNav from './SidebarNav';
 import SidebarProfile, { Profile } from './SidebarProfile';
 
-export interface Navigate {
+export type Navigate = {
   name: string;
   path: string;
   icon: Function;
 };
 
-export interface Navigates extends Array<Navigate> {};
+export type Navigates = Array<Navigate> & {};
 
 const Sidebar: React.FC = () => {
   

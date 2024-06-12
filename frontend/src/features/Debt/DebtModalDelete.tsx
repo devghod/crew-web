@@ -1,12 +1,12 @@
 import React from "react";
 
-export interface DebtDialogDelete {
+export type DebtModalDelete = {
   close: () => void;
   deleteDebt: (id: number) => void;
   id: number;
 };
 
-const DebtDialogDelete: React.FC<DebtDialogDelete> = (props) => {
+const DebtModalDelete: React.FC<DebtModalDelete> = (props) => {
 
   const { close, deleteDebt, id } = props;
 
@@ -43,4 +43,4 @@ const DebtDialogDelete: React.FC<DebtDialogDelete> = (props) => {
   )
 };
 
-export default DebtDialogDelete;
+export default DebtModalDelete;

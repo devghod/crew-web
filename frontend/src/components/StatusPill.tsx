@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface StatusPill {
+export type StatusPill = {
   data: String;
 };
 

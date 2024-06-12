@@ -1,12 +1,12 @@
 import React from "react";
 
-export interface DebtDialogUpdateStatus {
+export type DebtModalUpdateStatus = {
   close: () => void;
   updateStatus: (id: number) => void;
   id: number;
 };
 
-const DebtDialogUpdateStatus: React.FC<DebtDialogUpdateStatus> = (props) => {
+const DebtModalUpdateStatus: React.FC<DebtModalUpdateStatus> = (props) => {
 
   const { close, updateStatus, id } = props;
 
@@ -43,4 +43,4 @@ const DebtDialogUpdateStatus: React.FC<DebtDialogUpdateStatus> = (props) => {
   )
 };
 
-export default DebtDialogUpdateStatus;
+export default DebtModalUpdateStatus;
