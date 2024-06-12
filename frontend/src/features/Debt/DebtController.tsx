@@ -29,9 +29,9 @@ const DebtController: React.FC<DebtController> = (props) => {
           </button>
         </div>
         <div className="self-center">
-          <h2 className="font-bold text-slate-500">
+          <h2 className="text-slate-500">
             Total Debts:
-            <span className="ml-1">
+            <span className="font-bold ml-1">
               {debtTotal}
             </span>
           </h2>
