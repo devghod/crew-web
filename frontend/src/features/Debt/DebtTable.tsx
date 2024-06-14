@@ -83,6 +83,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                             onClick={handleMenuClick}
                           >
                             <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <title>dots-vertical</title>
                               <path fillRule="evenodd" d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" />
                             </svg>
                           </button>
@@ -90,7 +91,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                         <div 
                           className={ 
                             menuOpen[index] ? 
-                            "absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" : 
+                            "absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" : 
                             "hidden"
                           } 
                           role="menu" 

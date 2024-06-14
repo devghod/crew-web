@@ -19,7 +19,7 @@ const Topbar: React.FC = () => {
       setShowOptions(false);
     } else {
       setShowOptions(true);
-    }
+    };
   };
 
   return (
