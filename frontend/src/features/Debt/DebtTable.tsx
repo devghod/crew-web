@@ -7,29 +7,39 @@ export type DebtTable = {
   openDelete: (id: number) => void;
   openEdit: (id: number) => void;
   openStatus: (id: number) => void;
+  openDetail: (id: number) => void;
 };
 
 const DebtTable: React.FC<DebtTable> = (props) => {
 
-  const { debts, openDelete, openEdit, openStatus } = props;
+  const { debts, openDelete, openEdit, openStatus, openDetail } = props;
   const [ debtList, setDebtList ] = React.useState([]);
-  const [menuOpen, setMenuOpen] = React.useState({});
+  const [ menuOpen, setMenuOpen ] = React.useState({});
 
   React.useEffect(() => setDebtList(debts), [debts]);
 
   const onDelete = (event) => {
     const { value } = event.target;
     openDelete(parseInt(value));
+    setMenuOpen(false); 
   };
 
   const onEdit = (event) => {
     const { value } = event.target;
     openEdit(parseInt(value));
+    setMenuOpen(false); 
   };
 
   const onStatus = (event) => {
     const { value } = event.target;
     openStatus(parseInt(value));
+    setMenuOpen(false); 
+  };
+
+  const onDetail = (event) => {
+    const { value } = event.target;
+    openDetail(parseInt(value));
+    setMenuOpen(false); 
   };
 
   const handleMenuClick = (event) => {
@@ -46,6 +56,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
               <th className="p-2">ID</th>
               <th className="p-2">Name</th>
               <th className="p-2">Amount</th>
+              <th className="p-2">Method</th>
               <th className="p-2">Requested On</th>
               <th className="p-2">Due On</th>
               <th className="p-2">Status</th>
@@ -57,10 +68,11 @@ const DebtTable: React.FC<DebtTable> = (props) => {
             (<tbody>
               {
                 debts.map((debtor: Debt, index: number) => (
-                  <tr key={index}>
-                    <td className="border-y border-slate-100 p-2">{debtor.id}</td>
+                  <tr key={debtor.id} className="hover:bg-gray-100">
+                    <td className="border-y border-slate-100 p-2 w-20">{debtor.id}</td>
                     <td className="border-y border-slate-100 p-2">{debtor.name}</td>
                     <td className="border-y border-slate-100 p-2">{debtor.amount}</td>
+                    <td className="border-y border-slate-100 p-2 w-32">{debtor.method}</td>
                     <td className="border-y border-slate-100 p-2 w-32">{debtor.date_requested}</td>
                     <td 
                       className={
@@ -75,7 +87,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                         <div>
                           <button 
                             type="button" 
-                            className="inline-flex w-full justify-center gap-x-1.5 rounded-full bg-white px-3 py-2"
+                            className="inline-flex w-full justify-center gap-x-1.5 rounded-full bg-transparent px-3 py-2"
                             id={`menu-button-${index}`}
                             aria-expanded={menuOpen[index]? 'true' : 'false'}
                             aria-haspopup="true"
@@ -99,6 +111,11 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                           aria-labelledby={`menu-button-${index}`}
                         >
                           <div className="py-1" role="none">
+                            <button 
+                              className="w-full text-left py-2 text-slate-500 hover:bg-slate-100 px-2 rounded"
+                              value={debtor.id}
+                              onClick={onDetail}
+                            >Details</button>
                             <button 
                               className="w-full text-left py-2 text-slate-500 hover:bg-slate-100 px-2 rounded"
                               value={debtor.id}

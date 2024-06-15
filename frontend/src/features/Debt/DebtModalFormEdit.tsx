@@ -50,6 +50,48 @@ const DebtModalFormEdit: React.FC<DebtModalFormEdit> = (props) => {
                 onChange={handleInputChange} 
               />
             </div>
+            <div className="text-right p-2">Installment</div>
+            <div className="col-span-3">
+              <select 
+                className="w-full border rounded p-2" 
+                name="installment" 
+                id="installment"
+                value={form.installment} 
+                onChange={handleInputChange} 
+              >
+                <option default value="None">None</option>
+                <option value="Daily">Daily</option>
+                <option value="Weekly">Weekly</option>
+                <option value="15 days">15 days</option>
+                <option value="Monthly">Monthly</option>
+              </select>
+            </div>
+            <div className="text-right p-2">Interest Rate</div>
+            <div className="col-span-3">
+              <input 
+                className="w-full border rounded p-2" 
+                name="interest_rate"
+                placeholder="0" 
+                type="number"
+                value={form.interest_rate} 
+                onChange={handleInputChange} 
+              />
+            </div>
+            <div className="text-right p-2">Method</div>
+            <div className="col-span-3">
+              <select 
+                className="w-full border rounded p-2" 
+                name="method" 
+                id="method"
+                value={form.method} 
+                onChange={handleInputChange} 
+              >
+                <option default value="None">None</option>
+                <option value="Full Paid">Full Paid</option>
+                <option value="Flat">Flat</option>
+                <option value="Diminishing">Diminishing</option>
+              </select>
+            </div>
             <div className="text-right p-2">Due Date</div>
             <div className="col-span-3">
               <input 
@@ -64,10 +106,10 @@ const DebtModalFormEdit: React.FC<DebtModalFormEdit> = (props) => {
           </div>
           <div className="px-4 py-3 flex gap-x-2">
             <button 
-              className="p-2 bg-sky-500 hover:bg-sky-700 rounded text-white"
+              className="p-2 bg-green-500 hover:bg-green-700 rounded text-white"
               onClick={update}
             >
-              Create
+              Update
             </button>
             <button 
               className="p-2 bg-red-500 hover:bg-red-700 rounded text-white"

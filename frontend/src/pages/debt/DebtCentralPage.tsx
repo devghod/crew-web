@@ -5,6 +5,7 @@ import DebtModalForm from "../../features/Debt/DebtModalForm";
 import DebtModalFormEdit from "../../features/Debt/DebtModalFormEdit";
 import DebtModalDelete from "../../features/Debt/DebtModalDelete";
 import DebtModalUpdateStatus from "../../features/Debt/DebtModalUpdateStatus";
+import DebtModalDetail from "../../features/Debt/DebtModalDetail";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useDebtStore } from "./DebtState";
@@ -28,6 +29,7 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
   const [ deleteModal, setDeleteModal ] = React.useState(false);
   const [ editModal, setEditModal ] = React.useState(false);
   const [ statusModal, setStatusModal ] = React.useState(false);
+  const [ detailModal, setDetailModal ] = React.useState(false);
   const [ id, setId ] = React.useState<null | number>(null);
   const [ debt, setDebt ] = React.useState<null | Debt>(null);
 
@@ -48,12 +50,16 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
   const addDebt = (data: any) => {
     const dueDate = new Date(data.due_date).toISOString().slice(0, 10); 
     const dateNow = new Date().toISOString().slice(0, 10); 
+    
     newDebt({
       id: debts.length + 1,
       name: data.name,
       amount: data.amount,
       amount_remaining: data.amount,
       due_date: dueDate,
+      installment: data.installment,
+      interest_rate: data.interest_rate,
+      method: data.method,
       status: "Unpaid",
       date_requested: dateNow,
     });
@@ -110,6 +116,17 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
     setEditModal(false);
   };
 
+  const onDetailModal = async (id: number) => {
+    if (detailModal) {
+      setDetailModal(false);
+      setDebt(null);
+    } else {
+      const res = await getDebt(id);
+      setDebt(res.data);
+      setDetailModal(true);
+    };    
+  };
+
   return (
     <div className="flex flex-col gap-y-4"> 
       <DebtController 
@@ -121,6 +138,7 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
         openDelete={onDeleteModal}
         openEdit={onEditModal}
         openStatus={onStatusModal}
+        openDetail={onDetailModal}
       />
       {
         createModal && 
@@ -152,6 +170,14 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
           debt={debt}
           close={onEditModal}
           editDebt={editDebt}
+        />)
+      }
+      {
+        detailModal && 
+        (<DebtModalDetail
+          isLoading={isLoading}
+          debt={debt}
+          close={onDetailModal}
         />)
       }
     </div>
