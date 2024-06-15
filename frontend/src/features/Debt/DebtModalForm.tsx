@@ -1,4 +1,14 @@
 import React from "react";
+import { object, string, number, date, InferType } from 'yup';
+
+let debtSchema = object({
+  name: string().required(),
+  amount: number().required(),
+  due_date: date().required(),
+  installment: string().required(),
+  interest_rate: number().required(),
+  method: string().required()
+});
 
 export type DebtModalForm = {
   close: () => void;
@@ -16,18 +26,36 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
     interest_rate: 0,
     method: ''
   });
+  const [ error, setError ] = React.useState({
+    status: false,
+    message: "",
+  });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addDebt({
-      name: form.name,
-      amount: form.amount,
-      due_date: form.due_date,
-      installment: form.installment,
-      interest_rate: form.interest_rate,
-      method: form.method
-    });
-    clearForm();
+    await debtSchema
+      .validate(form)
+      .then((data) => {
+        setError({
+          status: false,
+          message: "",
+        });
+        addDebt({
+          name: form.name,
+          amount: form.amount,
+          due_date: form.due_date,
+          installment: form.installment,
+          interest_rate: form.interest_rate,
+          method: form.method
+        });
+        clearForm();
+      })
+      .catch((error) => {
+        setError({
+          status: true,
+          message: error.errors,
+        });
+      });
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +79,13 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
       <div className="relative w-auto my-6 mx-auto max-w-3xl">
         <div className="w-full bg-white rounded-lg flex flex-col divide-y">
           <h2 className="text-lg font-bold px-4 py-3">Create Form</h2>
+          <div
+            className={
+              error.status ? "bg-red-100 p-4 rounded-lg" : "hidden"
+            }
+          >
+            <p className="text-red-500">{error.message}</p>
+          </div>
           <div className="grid grid-cols-4 gap-4 p-4">
             <div className="text-right p-2">Name</div>
             <div className="col-span-3">

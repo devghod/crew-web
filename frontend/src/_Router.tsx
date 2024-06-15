@@ -17,7 +17,6 @@ const Root = lazy(() => import('./routes/root'));
 const Contact = lazy(() => import('./routes/contact'));
 
 const ErrorPage = lazy(() => import('./error-page'));
-const TodoPage = lazy(() => import('./pages/TodoPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const StatisticsPage = lazy(() => import('./pages/StatisticsPage'));
 const DebtCentralPage = lazy(() => import('./pages/debt'));
@@ -36,7 +35,6 @@ const Routers: React.FC = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dashboard" element={<Dashboard />}>
               <Route index element={<StatisticsPage />} />
-              <Route path="todos" element={<TodoPage />} />
               <Route path="debt" element={<DebtCentralPage />} />
             </Route>
             <Route path="*" element={<ErrorPage />} /> 
