@@ -1,5 +1,5 @@
 import React from "react";
-import { object, string, number, date, InferType } from 'yup';
+import { object, string, number, date } from 'yup';
 
 let debtSchema = object({
   name: string().required(),
@@ -102,7 +102,7 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
               <input 
                 className="w-full border rounded p-2" 
                 name="amount"
-                placeholder="00" 
+                placeholder="0" 
                 type="number"
                 value={form.amount} 
                 onChange={handleInputChange} 
@@ -117,7 +117,7 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
                 value={form.installment} 
                 onChange={handleInputChange} 
               >
-                <option default value="None">None</option>
+                <option value="None" selected>None</option>
                 <option value="Daily">Daily</option>
                 <option value="Weekly">Weekly</option>
                 <option value="15 days">15 days</option>
@@ -144,7 +144,7 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
                 value={form.method} 
                 onChange={handleInputChange} 
               >
-                <option default value="None">None</option>
+                <option value="None" selected>None</option>
                 <option value="Full Paid">Full Paid</option>
                 <option value="Flat">Flat</option>
                 <option value="Diminishing">Diminishing</option>
