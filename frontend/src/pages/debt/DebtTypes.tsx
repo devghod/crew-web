@@ -1,5 +1,4 @@
 export type Debt = {
-  id: number;
   name: string;
   amount: number;
   amount_remaining: number;

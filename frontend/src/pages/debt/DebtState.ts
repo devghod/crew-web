@@ -25,11 +25,14 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
   getDebts: async () => {
     try {
       set((state) => ({ isLoading: true }));
-      // const fetchData = await apiFetch.get<IUser>(GET_ARTICLES, {});
-      // set(() => ({
-      //   isLoading: false,
-      //   articles: fetchData,
-      // }));
+      const result = await fetch('http://localhost:4001/api/debt/get-debts');
+      if (result.ok) {
+        const { data, total } = await result.json();
+        set(() => ({
+          debts: data,
+          debtTotal: total,
+        }));
+      };
       set(() => ({ isLoading: false }));
       return { data: get().debts };
     } catch (err) {
@@ -37,18 +40,36 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
     };
   },
   setDebtTotal: () => set((state) => ({ debtTotal: state.debts.length })),
-  newDebt: (debt: Debt) => {
-    set((state) => ({ debts: [...state.debts, debt] }));
-    get().setDebtTotal();
+  newDebt: async (debt: Debt) => {
+    // set((state) => ({ debts: [...state.debts, debt] }));
+    // get().setDebtTotal();
+    try {
+      set((state) => ({ isLoading: true }));
+      const result = await fetch('http://localhost:4001/api/debt/post-debt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(debt)
+      });
+      if (result.ok) {
+        const { data } = await result.json();
+        set((state) => ({ debts: [...state.debts, data] }));
+      };
+      set(() => ({ isLoading: false }));
+      get().setDebtTotal();
+    } catch (error) {
+      set(() => ({ isLoading: false }));
+    };
   },
   deleteDebt: (id: number) => {
-    set((state) => ({ debts: state.debts.filter((debt) => debt.id != id)}));
+    set((state) => ({ debts: state.debts.filter((debt) => debt._id != id)}));
     get().setDebtTotal();
   },
   updateDebt: (debt: Debt) => {
     set((state) => ({ 
       debts: state.debts.map(data => {
-        if (data.id === debt.id) {
+        if (data._id === debt._id) {
           return { ...debt };
         } else {
           return data;
@@ -60,7 +81,7 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
   updateStatusDebt: (id: number) => {
     set((state) => ({ 
       debts: state.debts.map(debt => {
-        if (debt.id === id) {
+        if (debt._id === id) {
           const temp = debt.status = status === "Paid" ? "Unpaid" : "Paid";
           return { ...debt, status: temp };
         } else {

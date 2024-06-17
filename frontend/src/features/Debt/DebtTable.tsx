@@ -68,8 +68,8 @@ const DebtTable: React.FC<DebtTable> = (props) => {
             (<tbody>
               {
                 debts.map((debtor: Debt, index: number) => (
-                  <tr key={debtor.id} className="hover:bg-gray-100">
-                    <td className="border-y border-slate-100 p-2 w-20">{debtor.id}</td>
+                  <tr key={debtor._id} className="hover:bg-gray-100">
+                    <td className="border-y border-slate-100 p-2 w-20">{debtor._id}</td>
                     <td className="border-y border-slate-100 p-2">{debtor.name}</td>
                     <td className="border-y border-slate-100 p-2">{debtor.amount}</td>
                     <td className="border-y border-slate-100 p-2 w-32">{debtor.method}</td>
@@ -113,24 +113,24 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                           <div className="py-1" role="none">
                             <button 
                               className="w-full text-left py-2 text-slate-500 hover:bg-slate-100 px-2 rounded"
-                              value={debtor.id}
+                              value={debtor._id}
                               onClick={onDetail}
                             >Details</button>
                             <button 
                               className="w-full text-left py-2 text-slate-500 hover:bg-slate-100 px-2 rounded"
-                              value={debtor.id}
+                              value={debtor._id}
                               onClick={onEdit}
                             >Edit</button>
                             <button 
                               className="w-full text-left py-2 text-slate-500 hover:bg-slate-100 px-2 rounded"
-                              value={debtor.id}
+                              value={debtor._id}
                               onClick={onStatus}
                             >
                               {statusBtnTxt(debtor.status)}
                             </button>
                             <button 
                               className="w-full text-left py-2 text-slate-500 hover:bg-slate-100 px-2 rounded"
-                              value={debtor.id}
+                              value={debtor._id}
                               onClick={onDelete}
                             >Delete</button>
                           </div>

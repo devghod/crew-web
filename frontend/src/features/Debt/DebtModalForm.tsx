@@ -117,7 +117,7 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
                 value={form.installment} 
                 onChange={handleInputChange} 
               >
-                <option value="None" selected>None</option>
+                <option value="None" defaultValue>None</option>
                 <option value="Daily">Daily</option>
                 <option value="Weekly">Weekly</option>
                 <option value="15 days">15 days</option>
@@ -144,7 +144,7 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
                 value={form.method} 
                 onChange={handleInputChange} 
               >
-                <option value="None" selected>None</option>
+                <option value="None" defaultValue>None</option>
                 <option value="Full Paid">Full Paid</option>
                 <option value="Flat">Flat</option>
                 <option value="Diminishing">Diminishing</option>

@@ -19,7 +19,7 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
     debts, 
     debtTotal, 
     isLoading,
-    getDebt,
+    getDebts,
     deleteDebt, 
     updateDebt,
     updateStatusDebt,
@@ -34,7 +34,7 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
   const [ debt, setDebt ] = React.useState<null | Debt>(null);
 
   React.useEffect(() => {
-    // getDebts();
+    getDebts();
   }, []);
 
   React.useMemo(() => {
@@ -52,7 +52,6 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
     const dateNow = new Date().toISOString().slice(0, 10); 
     
     newDebt({
-      id: debts.length + 1,
       name: data.name,
       amount: data.amount,
       amount_remaining: data.amount,
