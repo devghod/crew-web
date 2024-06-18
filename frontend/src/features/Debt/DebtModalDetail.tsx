@@ -1,5 +1,7 @@
 import React from "react";
 import { Debt } from "../../pages/debt/DebtTypes";
+import { dateFormat } from '../../utils/dateHelper';
+import { currencyFormat } from '../../utils/currencyHelper';
 
 export type DebtModalDetail = {
   close: () => void;
@@ -30,10 +32,10 @@ const DebtModalDetail: React.FC<DebtModalDetail> = (props) => {
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-4 p-4 text-slate-500">
+          <div className="grid grid-cols-4 gap-4 p-10 text-slate-500">
             <div className="text-right grid gap-2 font-semibold">
-              <div className="">Borrower</div>
               <div className="">ID</div>
+              <div className="">Borrower</div>
               <div className="">Borrowed Amount </div>
               <div className="">Remaining Amount</div>
               <div className="">Date Requested</div>
@@ -44,12 +46,12 @@ const DebtModalDetail: React.FC<DebtModalDetail> = (props) => {
               <div className="">Interest Rate</div>
             </div>
             <div className="col-span-3 grid gap-2">
-              <div className="">{debt.name}</div>
-              <div className="">{debt.id}</div>
-              <div className="">Php {debt.amount}</div>
-              <div className="">Php {debt.amount_remaining}</div>
-              <div className="">{debt.date_requested}</div>
-              <div className="">{debt.due_date}</div>
+              <div className="">{debt._id}</div>
+              <div className="">{debt.name}</div>            
+              <div className="">{currencyFormat(debt.amount)}</div>
+              <div className="">{currencyFormat(debt.amount_remaining)}</div>
+              <div className="">{dateFormat(debt.date_created, 'YYYY-MM-DD')}</div>
+              <div className="">{dateFormat(debt.due_date, 'YYYY-MM-DD')}</div>
               <div className="">{debt.status}</div>
               <div className="">{debt.installment}</div>
               <div className="">{debt.method}</div>

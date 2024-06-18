@@ -20,6 +20,7 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
     debtTotal, 
     isLoading,
     getDebts,
+    getDebt,
     deleteDebt, 
     updateDebt,
     updateStatusDebt,

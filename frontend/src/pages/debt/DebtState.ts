@@ -14,9 +14,14 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
   getDebt: async (id: number) => {
     try {
       set((state) => ({ isLoading: true }));
-      const debt = get().debts.find((debt) => debt.id === id);
+      const result = await fetch(`http://localhost:4001/api/debt/get-debt/${id}`);
+      if (result.ok) {
+        const { data } = await result.json();
+        set((state) => ({ isLoading: false }));
+        return { data: data };
+      };
       set((state) => ({ isLoading: false }));
-      return { data: debt };
+      return { data: null };
     } catch (err) {
       console.log("Error", err);
       set(() => ({ isLoading: false }));
@@ -41,8 +46,6 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
   },
   setDebtTotal: () => set((state) => ({ debtTotal: state.debts.length })),
   newDebt: async (debt: Debt) => {
-    // set((state) => ({ debts: [...state.debts, debt] }));
-    // get().setDebtTotal();
     try {
       set((state) => ({ isLoading: true }));
       const result = await fetch('http://localhost:4001/api/debt/post-debt', {

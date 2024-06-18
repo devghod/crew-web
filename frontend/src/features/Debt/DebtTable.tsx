@@ -1,6 +1,8 @@
 import React from "react";
 import { Debt } from '../pages/debt/DebtTypes';
 import StatusPill from '../../components/StatusPill';
+import { dateFormat } from '../../utils/dateHelper';
+import { currencyFormat } from '../../utils/currencyHelper';
 
 export type DebtTable = {
   debts: Debt[],
@@ -20,25 +22,25 @@ const DebtTable: React.FC<DebtTable> = (props) => {
 
   const onDelete = (event) => {
     const { value } = event.target;
-    openDelete(parseInt(value));
+    openDelete(value);
     setMenuOpen(false); 
   };
 
   const onEdit = (event) => {
     const { value } = event.target;
-    openEdit(parseInt(value));
+    openEdit(value);
     setMenuOpen(false); 
   };
 
   const onStatus = (event) => {
     const { value } = event.target;
-    openStatus(parseInt(value));
+    openStatus(value);
     setMenuOpen(false); 
   };
 
   const onDetail = (event) => {
     const { value } = event.target;
-    openDetail(parseInt(value));
+    openDetail(value);
     setMenuOpen(false); 
   };
 
@@ -53,7 +55,6 @@ const DebtTable: React.FC<DebtTable> = (props) => {
         <table className="w-full table-auto border-collapse border border-slate-100">
           <thead>
             <tr className="text-left text-slate-500 text-sm">
-              <th className="p-2">ID</th>
               <th className="p-2">Name</th>
               <th className="p-2">Amount</th>
               <th className="p-2">Method</th>
@@ -69,17 +70,25 @@ const DebtTable: React.FC<DebtTable> = (props) => {
               {
                 debts.map((debtor: Debt, index: number) => (
                   <tr key={debtor._id} className="hover:bg-gray-100">
-                    <td className="border-y border-slate-100 p-2 w-20">{debtor._id}</td>
-                    <td className="border-y border-slate-100 p-2">{debtor.name}</td>
-                    <td className="border-y border-slate-100 p-2">{debtor.amount}</td>
-                    <td className="border-y border-slate-100 p-2 w-32">{debtor.method}</td>
-                    <td className="border-y border-slate-100 p-2 w-32">{debtor.date_requested}</td>
+                    <td className="border-y border-slate-100 p-2">
+                      <div className="font-medium text-sm">
+                        {debtor.name}
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {debtor._id}
+                      </div>
+                    </td>
+                    <td className="border-y border-slate-100 p-2 text-sm">{currencyFormat(debtor.amount)}</td>
+                    <td className="border-y border-slate-100 p-2 text-sm w-32">{debtor.method}</td>
+                    <td className="border-y border-slate-100 p-2 text-sm w-32">{dateFormat(debtor.date_created, 'YYYY-MM-DD')}</td>
                     <td 
                       className={
-                        `border-y border-slate-100 p-2 w-32 ${ifDateIsDue(debtor.due_date) ? "bg-red-500 text-white font-semibold" : ""}`
+                        `border-y border-slate-100 p-2 text-sm w-32 ${ifDateIsDue(debtor.due_date) ? "bg-red-500 text-white font-semibold" : ""}`
                       }
-                    >{debtor.due_date}</td>
-                    <td className="border-y border-slate-100 p-2 w-16">
+                    >
+                      {dateFormat(debtor.due_date, 'YYYY-MM-DD')}
+                    </td>
+                    <td className="border-y border-slate-100 p-2 text-sm w-16">
                       {<StatusPill data={debtor.status} />}
                     </td>
                     <td className="border-y border-slate-100 p-2 text-sm space-x text-center w-16">
