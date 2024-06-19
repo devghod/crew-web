@@ -1,5 +1,6 @@
 import React from "react";
 import { Debt } from "../../pages/debt/DebtTypes";
+import { dateFormat } from '../../utils/dateHelper';
 
 export type DebtModalFormEdit = {
   close: () => void;
@@ -59,7 +60,8 @@ const DebtModalFormEdit: React.FC<DebtModalFormEdit> = (props) => {
                 value={form.installment} 
                 onChange={handleInputChange} 
               >
-                <option value="None" selected>None</option>
+                <option value="" disabled>Select Installment</option>
+                <option value="None">None</option>
                 <option value="Daily">Daily</option>
                 <option value="Weekly">Weekly</option>
                 <option value="15 days">15 days</option>
@@ -86,7 +88,8 @@ const DebtModalFormEdit: React.FC<DebtModalFormEdit> = (props) => {
                 value={form.method} 
                 onChange={handleInputChange} 
               >
-                <option value="None" selected>None</option>
+                <option value="" disabled>Select Method</option>
+                <option value="None">None</option>
                 <option value="Full Paid">Full Paid</option>
                 <option value="Flat">Flat</option>
                 <option value="Diminishing">Diminishing</option>
