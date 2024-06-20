@@ -18,7 +18,7 @@ const getDebts = async (req: Request, res: Response) => {
       });
   } catch (error) {
     res
-      .status(400)
+      .status(500)
       .json({
         success: false, 
         message: `Error ${error}` 
@@ -41,7 +41,7 @@ const getDebtById = async (req: Request, res: Response) => {
       });
   } catch (error) {
     res
-      .status(400)
+      .status(500)
       .json({ 
         success: false, 
         message: `Error ${error}` 
@@ -64,7 +64,7 @@ const createDebt = async (req: Request, res: Response) => {
       });
   } catch (error) {
     res
-      .status(400)
+      .status(500)
       .json({ 
         success: false, 
         message: `Error ${error}` 
@@ -79,7 +79,7 @@ const deleteDebt = async (req: Request, res: Response) => {
     
     if (!deleted) {
       res
-      .status(400)
+      .status(404)
       .json({ 
         success: true, 
         message: 'Not data' 
@@ -94,7 +94,7 @@ const deleteDebt = async (req: Request, res: Response) => {
       });
   } catch (error) {
     res
-      .status(400)
+      .status(500)
       .json({ 
         success: false, 
         message: `Error ${error}` 
@@ -116,7 +116,7 @@ const updateDebt = async (req: Request, res: Response) => {
     
     if (!updated) {
       res
-        .status(200)
+        .status(404)
         .json({ 
           success: false, 
           message: 'No data' 
@@ -132,7 +132,55 @@ const updateDebt = async (req: Request, res: Response) => {
       });
   } catch (error) {
     res
-      .status(400)
+      .status(500)
+      .json({ 
+        success: false, 
+        message: `Error ${error}` 
+      });
+  };
+};
+
+const updateDebtStatus = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    let statusChange = "";
+
+    const temp = await DebtModel
+      .findOne({ _id: id })
+      .select({ status: 1 });
+
+    if (!temp) {
+      res
+        .status(404)
+        .json({ 
+          success: false, 
+          message: 'Not found' 
+        });
+    };
+
+    if (temp.status.toLowerCase() === "paid") {
+      statusChange = "Unpaid";
+    } else {
+      statusChange = "Paid";
+    };
+
+    const debt = await DebtModel
+      .findOneAndUpdate(
+        { _id: id }, 
+        { status: statusChange }, 
+        { new: true, useFindAndModify: false }
+      );
+    
+    res
+      .status(200)
+      .json({ 
+        data: debt, 
+        success: true, 
+        message: 'STATUS UPDATED' 
+      });
+  } catch (error) {
+    res
+      .status(500)
       .json({ 
         success: false, 
         message: `Error ${error}` 
@@ -146,4 +194,5 @@ module.exports = {
   createDebt,
   deleteDebt,
   updateDebt,
+  updateDebtStatus,
 };

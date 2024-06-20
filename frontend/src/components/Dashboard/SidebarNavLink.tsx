@@ -17,7 +17,7 @@ const SidebarNavLink: React.FC<SidebarNavLink> = ({ to, name, icon }) => {
   return (
     <Link
       className={
-        `flex rounded-full px-3 py-2 text-gray-500 font-semibold hover:text-gray-900 hover:bg-gray-100 ${
+        `flex rounded-full px-3 py-2 text-gray-500 font-semibold hover:text-gray-900 hover:bg-gray-100 tracking-wide ${
           isActivePath(to) ? 'bg-gray-200 text-gray-900' : ''
         }`
       }

@@ -1,5 +1,6 @@
 import React from "react";
 import { object, string, number, date } from 'yup';
+import { dateFormat } from '../../utils/dateHelper';
 
 let debtSchema = object({
   name: string().required(),
@@ -10,14 +11,15 @@ let debtSchema = object({
   method: string().required()
 });
 
-export type DebtModalForm = {
+export type DebtModalFormCreate = {
+  isLoading: boolean;
   close: () => void;
   addDebt: (data: any) => void;
 };
 
-const DebtModalForm: React.FC<DebtModalForm> = (props) => {
+const DebtModalFormCreate: React.FC<DebtModalFormCreate> = (props) => {
 
-  const { close, addDebt } = props;
+  const { close, addDebt, isLoading } = props;
   const [ form, setForm ] = React.useState({
     name: '',
     amount: 0,
@@ -35,12 +37,12 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
     e.preventDefault();
     await debtSchema
       .validate(form)
-      .then((data) => {
+      .then(async (data) => {
         setError({
           status: false,
           message: "",
         });
-        addDebt({
+        await addDebt({
           name: form.name,
           amount: form.amount,
           due_date: form.due_date,
@@ -168,13 +170,22 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
             <button 
               className="p-2 bg-sky-500 hover:bg-sky-700 rounded text-white"
               onClick={handleSubmit}
+              disabled={isLoading}
             >
-              Create
+              {
+                isLoading ? 
+                (
+                <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                </svg>
+                ) : 
+                'Create'
+              }
             </button>
             <button 
               className="p-2 bg-red-500 hover:bg-red-700 rounded text-white"
               type="button"
               onClick={close}
+              disabled={isLoading}
             >
               Cancel
             </button>
@@ -185,4 +196,4 @@ const DebtModalForm: React.FC<DebtModalForm> = (props) => {
   )
 };
 
-export default DebtModalForm;
+export default DebtModalFormCreate;

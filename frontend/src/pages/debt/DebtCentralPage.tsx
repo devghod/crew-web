@@ -1,7 +1,7 @@
 import React from "react";
 import DebtTable from "../../features/Debt/DebtTable";
 import DebtController from "../../features/Debt/DebtController";
-import DebtModalForm from "../../features/Debt/DebtModalForm";
+import DebtModalFormCreate from "../../features/Debt/DebtModalFormCreate";
 import DebtModalFormEdit from "../../features/Debt/DebtModalFormEdit";
 import DebtModalDelete from "../../features/Debt/DebtModalDelete";
 import DebtModalUpdateStatus from "../../features/Debt/DebtModalUpdateStatus";
@@ -48,11 +48,11 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
       setCreateModal(true);
   };
 
-  const addDebt = (data: any) => {
+  const addDebt = async (data: any) => {
     const dueDate = new Date(data.due_date).toISOString().slice(0, 10); 
     const dateNow = new Date().toISOString().slice(0, 10); 
     
-    newDebt({
+    await newDebt({
       name: data.name,
       amount: data.amount,
       amount_remaining: data.amount,
@@ -76,8 +76,8 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
     };    
   };
 
-  const onDeleteDebt = () => {
-    deleteDebt(id);
+  const onDeleteDebt = async () => {
+    await deleteDebt(id);
     setId(null);
     setDeleteModal(false);
   };
@@ -92,8 +92,8 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
     };  
   };
 
-  const updateStatus = () => {
-    updateStatusDebt(id);
+  const updateStatus = async () => {
+    await updateStatusDebt(id);
     setId(null);
     setStatusModal(false);
   };
@@ -111,8 +111,8 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
     };  
   };
 
-  const editDebt = (updatedData: Debt) => {
-    updateDebt(updatedData);
+  const editDebt = async (updatedData: Debt) => {
+    await updateDebt(updatedData);
     setEditModal(false);
   };
 
@@ -142,7 +142,8 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
       />
       {
         createModal && 
-        (<DebtModalForm
+        (<DebtModalFormCreate
+          isLoading={isLoading}
           addDebt={addDebt}
           close={onCreateModal}
         />)

@@ -71,7 +71,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                 debts.map((debtor: Debt, index: number) => (
                   <tr key={debtor._id} className="hover:bg-gray-100">
                     <td className="border-y border-slate-100 p-2">
-                      <div className="font-medium text-sm">
+                      <div className="font-medium text-sm tracking-wide">
                         {debtor.name}
                       </div>
                       <div className="text-xs text-slate-500">

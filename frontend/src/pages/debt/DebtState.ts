@@ -118,16 +118,33 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
       set(() => ({ isLoading: false }));
     };
   },
-  updateStatusDebt: (id: number) => {
-    set((state) => ({ 
-      debts: state.debts.map(debt => {
-        if (debt._id === id) {
-          const temp = debt.status = status === "Paid" ? "Unpaid" : "Paid";
-          return { ...debt, status: temp };
-        } else {
-          return debt;
-        };
-      })
-    }));
+  updateStatusDebt: async (id: number) => {
+    try {
+      set((state) => ({ isLoading: true }));
+      const result = await fetch(`http://localhost:4001/api/debt/put-debt/status/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+      if (result.ok) {
+        const { data } = await result.json();
+        set((state) => ({ 
+          debts: state.debts.map(debt => {
+            if (debt._id === id) {
+              // const temp = debt.status = status === "Paid" ? "Unpaid" : "Paid";
+              // return { ...debt, status: temp };
+              return { ...data };
+            } else {
+              return debt;
+            };
+          })
+        }));
+      };
+      set(() => ({ isLoading: false }));
+    } catch (error) {
+      set(() => ({ isLoading: false }));
+    };
   },
 }));

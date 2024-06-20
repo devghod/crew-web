@@ -102,7 +102,7 @@ const DebtModalFormEdit: React.FC<DebtModalFormEdit> = (props) => {
                 name="due_date"
                 placeholder="MM/DD/YYYY" 
                 type="date"
-                value={form.due_date} 
+                value={dateFormat(form.due_date, 'YYYY-MM-DD')} 
                 onChange={handleInputChange} 
               />
             </div>
