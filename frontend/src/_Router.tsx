@@ -13,14 +13,11 @@ import
   } 
 from "react-router-dom";
 
-const Root = lazy(() => import('./routes/root'));
-const Contact = lazy(() => import('./routes/contact'));
-
 const ErrorPage = lazy(() => import('./error-page'));
+const RootPage = lazy(() => import('./pages/root'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const StatisticsPage = lazy(() => import('./pages/StatisticsPage'));
 const DebtCentralPage = lazy(() => import('./pages/debt'));
-
 const Dashboard = lazy(() => import('./components/Dashboard'));
 
 const Routers: React.FC = () => {
@@ -30,8 +27,7 @@ const Routers: React.FC = () => {
       <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/" element={<Root />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/" element={<RootPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dashboard" element={<Dashboard />}>
               <Route index element={<StatisticsPage />} />
