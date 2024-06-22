@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { 
   getDebts, 
+  getDebtStats,
   getDebtById, 
   createDebt,
   deleteDebt,
@@ -10,6 +11,7 @@ const {
 } = require('../controllers/debt.controller');
 
 router.get('/get-debts', getDebts);
+router.get('/get-debts-stats', getDebtStats);
 router.get('/get-debt/:id', getDebtById);
 router.post('/post-debt', createDebt);
 router.delete('/delete-debt/:id', deleteDebt);

@@ -17,14 +17,14 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
 
   const { 
     debts, 
-    debtTotal, 
+    debtStats,
     isLoading,
     getDebts,
     getDebt,
     deleteDebt, 
     updateDebt,
     updateStatusDebt,
-    newDebt 
+    newDebt,
   } = useDebtStore();
   const [ createModal, setCreateModal ] = React.useState(false);
   const [ deleteModal, setDeleteModal ] = React.useState(false);
@@ -131,10 +131,12 @@ const DebtCentralPage: React.FC<DebtCentralPage> = (props) => {
     <div className="flex flex-col gap-y-4"> 
       <DebtController 
         open={onCreateModal}
-        debtTotal={debtTotal}
+        debtStats={debtStats}
+        isLoading={isLoading}
       />
       <DebtTable 
         debts={debts}
+        isLoading={isLoading}
         openDelete={onDeleteModal}
         openEdit={onEditModal}
         openStatus={onStatusModal}

@@ -3,13 +3,17 @@ import { Debt } from './DebtTypes';
 
 export interface DebtState {
   debts: Debt[];
-  debtTotal: number;
+  debtStats: object;
   isLoading: boolean;
 };
 
 export const useDebtStore = create<DebtState>()((set, get, store) => ({
   debts: [],
-  debtTotal: 0,
+  debtStats: {
+    total: 0,
+    paid: 0,
+    unpaid: 0,
+  },
   isLoading: false,
   getDebt: async (id: number) => {
     try {
@@ -32,19 +36,38 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
       set((state) => ({ isLoading: true }));
       const result = await fetch('http://localhost:4001/api/debt/get-debts');
       if (result.ok) {
-        const { data, total } = await result.json();
-        set(() => ({
-          debts: data,
-          debtTotal: total,
-        }));
+        const { data } = await result.json();
+        set(() => ({ debts: data }));
+        get().setDebtStats();
       };
-      set(() => ({ isLoading: false }));
-      return { data: get().debts };
+      setTimeout(() => {
+        set(() => ({ isLoading: false }));
+        return { data: get().debts };
+      }, 3000);
     } catch (err) {
       set(() => ({ isLoading: false }));
     };
   },
-  setDebtTotal: () => set((state) => ({ debtTotal: state.debts.length })),
+  setDebtStats: async () => {
+    try {
+      const result = await fetch(`http://localhost:4001/api/debt/get-debts-stats`);
+      if (result.ok) {
+        const { data } = await result.json();
+        set(() => ({ debtStats: data }));
+        return { data: data };
+      };
+      return { 
+        data: {
+          total: 0,
+          paid: 0,
+          unpaid: 0,
+        }
+      };
+    } catch (error) {
+      console.log("Error", err);
+      set(() => ({ isLoading: false }));
+    };
+  },
   newDebt: async (debt: Debt) => {
     try {
       set((state) => ({ isLoading: true }));
@@ -61,7 +84,7 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
         set((state) => ({ debts: [...state.debts, data] }));
       };
       set(() => ({ isLoading: false }));
-      get().setDebtTotal();
+      get().setDebtStats();
     } catch (error) {
       set(() => ({ isLoading: false }));
     };
@@ -78,7 +101,7 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
         });
       if (result.ok) {
         set((state) => ({ debts: state.debts.filter((debt) => debt._id != id)}));
-        get().setDebtTotal();
+        get().setDebtStats();
         set((state) => ({ isLoading: false }));
       };
       set((state) => ({ isLoading: false }));
@@ -113,7 +136,7 @@ export const useDebtStore = create<DebtState>()((set, get, store) => ({
         }));
       };
       set(() => ({ isLoading: false }));
-      get().setDebtTotal();
+      get().setDebtStats();
     } catch (error) {
       set(() => ({ isLoading: false }));
     };

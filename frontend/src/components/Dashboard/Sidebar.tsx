@@ -55,7 +55,6 @@ const Sidebar: React.FC = () => {
 
   const getProfile = () => {
     setLoading(true);
-
     setTimeout(() => {
       setProfile({
         id: 100,

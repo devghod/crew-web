@@ -188,8 +188,52 @@ const updateDebtStatus = async (req: Request, res: Response) => {
   };
 };
 
+const getDebtStats = async (req: Request, res: Response) => {
+  try {
+    const debts = await DebtModel.aggregate([
+      {
+        $match: { deleted: false }
+      },
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+    
+    const result = debts.reduce((acc: any, curr: any) => {
+      acc[curr._id === 'Paid' ? 'paid' : curr._id === 'Unpaid' ? 'unpaid' : 'total'] = curr.count;
+      return acc;
+    }, { total: 0, paid: 0, unpaid: 0 });
+    
+
+    const data = {
+      total: result.total + result.paid + result.unpaid,
+      paid: result.paid,
+      unpaid: result.unpaid
+    };
+
+    res
+      .status(200)
+      .json({ 
+        data: data, 
+        success: true, 
+        message: 'DEBTS Statistics' 
+      });
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        success: false, 
+        message: `Error ${error}` 
+      });
+  };
+};
+
 module.exports = { 
   getDebts, 
+  getDebtStats,
   getDebtById, 
   createDebt,
   deleteDebt,
