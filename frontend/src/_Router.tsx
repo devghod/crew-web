@@ -15,7 +15,7 @@ from "react-router-dom";
 
 const ErrorPage = lazy(() => import('./error-page'));
 const RootPage = lazy(() => import('./pages/root'));
-const LoginPage = lazy(() => import('./pages/LoginPage'));
+const LoginPage = lazy(() => import('./pages/login'));
 const StatisticsPage = lazy(() => import('./pages/StatisticsPage'));
 const DebtCentralPage = lazy(() => import('./pages/debt'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
