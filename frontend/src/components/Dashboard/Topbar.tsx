@@ -14,6 +14,19 @@ const Topbar: React.FC = () => {
     website: '',
   });
 
+  React.useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!event.target.closest('.relative.inline-block.text-left')) {
+        setShowOptions(false);
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [showOptions]);
+
+
   const onShowOptions: React.FC = () => {
     if (showOptions) {
       setShowOptions(false);
