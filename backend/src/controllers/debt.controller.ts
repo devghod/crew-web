@@ -1,5 +1,8 @@
-const DebtModel = require('../models/debt.model');
 import { Request, Response } from 'express';
+const DebtModel = require('../models/debt.model');
+const LogModel = require('../models/log.model');
+
+const collection = 'Debt';
 
 const getDebts = async (req: Request, res: Response) => {
   try {
@@ -54,6 +57,18 @@ const createDebt = async (req: Request, res: Response) => {
     const body = req.body;
     const newDebt = new DebtModel({ ...body });
     const result = await newDebt.save();
+
+    if (result) {
+      new LogModel({
+        collection: collection,
+        id_in_table: result._id,
+        action: 'CREATE',
+        description: 'Debt created',
+        // user_id_execute: req.user.id, // assuming req.user.id is the user who made the request
+        new_data: result,
+        old_data: {},
+      }).save();
+    };
     
     res
       .status(201)

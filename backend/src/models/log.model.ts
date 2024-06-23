@@ -1,30 +1,27 @@
 import mongoose from 'mongoose';
 
-const debtSchema = new mongoose.Schema({
-  name: {
+const logSchema = new mongoose.Schema({
+  collection: {
     type: String,
   },
-  amount: {
-    type: Number,
-  },
-  amount_remaining: {
-    type: Number
-  },
-  interest_rate: {
-    type: Number
-  },
-  installment: {
+  id_in_table: {
     type: String,
   },
-  method: {
+  action: {
+    type: String, // CRUD
+  },
+  description: {
     type: String,
   },
-  status: {
-    type: String,
+  user_id_execute: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User',
   },
-  due_date: {
-    type: Date,
-    required: true,
+  new_data: {
+    type: Object,
+  },
+  old_data: {
+    type: Object,
   },
   
   // necessary fields
@@ -47,5 +44,5 @@ const debtSchema = new mongoose.Schema({
   }
 });
 
-const Debt = mongoose.model('Debt', debtSchema);
-module.exports = Debt;
+const Log = mongoose.model('Log', logSchema);
+module.exports = Log;
