@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Debt } from './DebtTypes';
 
-export interface DebtState {
+export type DebtState = {
   debts: Debt[];
   debtStats: object;
   isLoading: boolean;
