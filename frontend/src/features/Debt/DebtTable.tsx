@@ -68,8 +68,7 @@ const DebtTable: React.FC<DebtTable> = (props) => {
                   <th className="p-2"></th>
                 </tr>
               </thead>
-              {
-                debts.length > 0 &&
+              {debts.length > 0 &&
                 (<tbody>
                   {
                     debts.map((debtor: Debt, index: number) => (
