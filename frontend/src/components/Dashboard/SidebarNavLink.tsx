@@ -19,8 +19,7 @@ const SidebarNavLink: React.FC<SidebarNavLink> = ({ to, name, icon }) => {
       className={
         `flex rounded-full px-3 py-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 tracking-wide 
         ${isActivePath(to) && 'font-bold text-gray-900 border border-gray-50 shadow'}
-        ${!isActivePath(to) && 'font-normal'}
-        `
+        ${!isActivePath(to) && 'font-normal'}`
       }
       to={to}
     >

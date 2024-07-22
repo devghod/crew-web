@@ -9,7 +9,7 @@ const InventoryTable: React.FC<InventoryTable> = (props) => {
       <div className="my-4">
         <table className="w-full table-auto border-collapse border border-slate-100">
           <thead>
-            <tr className="text-left text-slate-500 text-xs">
+            <tr className="text-left text-slate-400 text-xs">
               <th className="w-16 p-2"></th>
               <th className="w-52 p-2">Product</th>
               <th className="p-2">Stocks</th>
@@ -23,7 +23,7 @@ const InventoryTable: React.FC<InventoryTable> = (props) => {
             (
               <tbody>
                 {datas.map((data, index) => (
-                  <tr key={index} className="text-left text-slate-500 text-sm">
+                  <tr key={index} className="text-left text-slate-700 text-xs font-medium">
                     <td className="border-y border-slate-100 p-2">
                       <img className="mx-auto" src={data.product_thumbnail} width="16" />
                     </td>
@@ -33,7 +33,7 @@ const InventoryTable: React.FC<InventoryTable> = (props) => {
                     <td className="border-y border-slate-100 p-2">{data.product_type}</td>
                     <td className="border-y border-slate-100 p-2">{data.product_status}</td>
                     <td className="border-y border-slate-100 p-2">
-                      <button className="text-gray-400">Edit</button>
+                      <button className="text-gray-400 rounded hover:bg-gray-100 p-1">Edit</button>
                     </td>
                   </tr>
                 ))}
