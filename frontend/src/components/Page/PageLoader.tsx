@@ -1,52 +1,9 @@
-import 
-  React,
-  { 
-    lazy, 
-    Suspense 
-  } 
-from "react";
-import 
-  {
-    BrowserRouter,
-    Routes,
-    Route,
-  } 
-from "react-router-dom";
+import React from "react";
 
-const ErrorPage = lazy(() => import('./error-page'));
-const RootPage = lazy(() => import('./pages/root'));
-const LoginPage = lazy(() => import('./pages/login'));
-const StatisticsPage = lazy(() => import('./pages/StatisticsPage'));
-const DebtCentralPage = lazy(() => import('./pages/debt'));
-const InventoryCentralPage = lazy(() => import('./pages/inventory'));
-const Dashboard = lazy(() => import('./components/Dashboard'));
+export type PageLoader = {};
 
-const Routers: React.FC = () => {
-
-  return (
-    <>
-      <BrowserRouter>
-        <Suspense fallback={<SuspenseLoader />}>
-          <Routes>
-            <Route path="/" element={<RootPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route index element={<StatisticsPage />} />
-              <Route path="debt" element={<DebtCentralPage />} />
-              <Route path="inventory" element={<InventoryCentralPage />} />
-            </Route>
-            <Route path="*" element={<ErrorPage />} /> 
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </>
-  );
-}
-
-export default Routers;
-
-const SuspenseLoader = () => {
-
+const PageLoader: React.FC<PageLoader> = (props) => {
+  
   return (
     <div 
       role="status" 
@@ -54,7 +11,7 @@ const SuspenseLoader = () => {
     >
       <svg 
         aria-hidden="true" 
-        className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" 
+        className="w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" 
         viewBox="0 0 100 101" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
@@ -72,3 +29,5 @@ const SuspenseLoader = () => {
     </div>
   )
 };
+
+export default PageLoader;
