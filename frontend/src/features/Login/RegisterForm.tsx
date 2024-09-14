@@ -3,13 +3,13 @@ import React from "react";
 export type RegisterForm = {
   isLoading: boolean;
   handleFormType: () => void;
-  submit: (data: any) => void;
+  handleSubmit: (data: any) => void;
   formType: string;
 };
 
 const RegisterForm: React.FC<RegisterForm> = (props) => {
 
-  const { isLoading, handleFormType, submit, formType } = props;
+  const { isLoading, handleFormType, handleSubmit, formType } = props;
   
   return (
     <div className="p-6">
@@ -71,7 +71,7 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           </div>
           <div className="text-right">
             <button 
-              onClick={submit}
+              onClick={handleSubmit}
               disabled={isLoading}
               className="bg-teal-500 hover:bg-teal-700 text-white px-3 py-2 rounded"
             >

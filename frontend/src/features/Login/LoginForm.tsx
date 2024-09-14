@@ -1,15 +1,41 @@
 import React from "react";
+import { Credentials } from "./LoginTypes";
 
 export type LoginForm = {
   isLoading: boolean;
   handleFormType: () => void;
-  submit: (data: any) => void;
+  handleSubmit: (data: any) => void;
   formType: string;
 };
 
 const LoginForm: React.FC<LoginForm> = (props) => {
 
-  const { isLoading, handleFormType, submit, formType } = props;
+  const { isLoading, handleFormType, handleSubmit, formType } = props;
+
+  const [ credentials, setCredentials ] = React.useState<Credentials>({ username: '', password: '' });
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    await handleSubmit({
+      username: credentials.username,
+      password: credentials.password,
+    });
+    clearForm();
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, id } = event.target;
+    setCredentials({ ...credentials, [id]: value });
+    console.log(credentials)
+  };
+
+  const clearForm = () => {
+    setCredentials({
+      username: '', 
+      password: ''
+    });
+  };
   
   return (
     <div className="p-6">
@@ -20,6 +46,8 @@ const LoginForm: React.FC<LoginForm> = (props) => {
           id="username" 
           placeholder="Username / Email / Mobile" 
           disabled={isLoading}
+          value={credentials.username} 
+          onChange={handleInputChange} 
         />
       </div>
       <label className="text-xs tracking-wider" htmlFor="password">Password</label>
@@ -30,6 +58,8 @@ const LoginForm: React.FC<LoginForm> = (props) => {
           placeholder="Password" 
           type="password"
           disabled={isLoading}
+          value={credentials.password} 
+          onChange={handleInputChange} 
         />
       </div>
       <div className="mt-3">
@@ -43,7 +73,7 @@ const LoginForm: React.FC<LoginForm> = (props) => {
           </div>
           <div className="text-right">
             <button 
-              onClick={submit}
+              onClick={onSubmit}
               disabled={isLoading}
               className="bg-teal-500 hover:bg-teal-700 text-white px-3 py-2 rounded"
             >

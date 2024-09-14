@@ -1,24 +1,28 @@
 import React from "react";
 import LoginForm from "../../features/Login/LoginForm";
 import RegisterForm from "../../features/Login/RegisterForm";
+import { useLoginStore } from "./LoginState";
+import { Credentials } from "./LoginTypes";
 
 export type LoginPage = {};
 
 const LoginPage: React.FC<LoginPage> = (props) => {
 
+  const { 
+    login,
+    isLoading,
+  } = useLoginStore();
+
   const [ loading, setLoading ] = React.useState(false);
-  const [ credentials, setCredentials ] = React.useState({ username: '', password: '' });
   const [ temp, setTemp ] = React.useState({
     name: "Crew",
     logo: "../../../public/crew-logo.png",
   });
   const [ formType, setFormType ] = React.useState("login"); // login or register
 
-  const submit = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000);
+  const handleSubmit = async (data: Credentials) => {
+    console.log(data)
+    await login(data);
   };
 
   const handleFormType = () => {
@@ -44,17 +48,17 @@ const LoginPage: React.FC<LoginPage> = (props) => {
           <div className="">
             {formType === 'login' && (
               <LoginForm 
-                isLoading={loading} 
+                isLoading={isLoading} 
                 handleFormType={handleFormType}
-                submit={submit}
+                handleSubmit={handleSubmit}
                 formType={formType}
               />
             )}
             {formType === 'register' && (
               <RegisterForm 
-                isLoading={loading} 
+                isLoading={isLoading} 
                 handleFormType={handleFormType}
-                submit={submit}
+                handleSubmit={handleSubmit}
                 formType={formType}
               />
             )}
