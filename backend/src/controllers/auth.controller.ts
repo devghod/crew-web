@@ -87,11 +87,17 @@ const login = async (req: Request, res: Response) => {
       process.env.SECRET_KEY, 
       { expiresIn: '1 hour'});
 
+    const refreshToken = jwt.sign(
+      { userId: user._id }, 
+      process.env.REFRESH_SECRET_KEY, 
+      { expiresIn: '10h'});
+
     res
       .status(200)
       .json({ 
         success: true,
-        token: token 
+        token: token,
+        refreshToken: refreshToken,
       });
   
   } catch (error) {
@@ -106,44 +112,99 @@ const login = async (req: Request, res: Response) => {
 
 // Verify token
 const verify = async (req: Request, res: Response) => {
-  const { token } = req.body;
+  const { token, refreshToken } = req.body;
 
   try {
 
-    jwt.verify(token, process.env.SECRET_KEY, async (err: any, decoded: any) => {
+    jwt.verify(
+      token, 
+      process.env.SECRET_KEY, 
+      async (error: any, decoded: any) => {
+        console.log(error, decoded)
+        if (error) {
+          if (
+            error?.name && 
+            error.name === 'TokenExpiredError' &&
+            error?.message &&
+            error.message === 'jwt expired'
+          ) {
+            jwt.verify(
+              refreshToken, 
+              process.env.REFRESH_SECRET_KEY, 
+              async (error: any, decoded: any) => {
+                if (error) {
+                  res
+                    .status(400)
+                    .json({ 
+                      success: false, 
+                      message: `Token verification failed: ${error.message}` 
+                    });
+                } else {
+                  const id = decoded.userId;
+                  const user = await UserModel
+                    .findOne({ _id: id })
+                    .select({ 
+                      first_name: 1, 
+                      middle_name: 1, 
+                      last_name: 1, 
+                      email: 1,
+                      status: 1,
+                      username: 1,
+                      date_created: 1,
+                      image: 1
+                    });
 
-      if (err) {
-        res
-          .status(400)
-          .json({ 
-            success: false, 
-            message: `Token verification failed: ${err.message}` 
-          });
-      } else {
-        const id = decoded.userId;
-        const user = await UserModel
-          .findOne({ _id: id })
-          .select({ 
-            first_name: 1, 
-            middle_name: 1, 
-            last_name: 1, 
-            email: 1,
-            status: 1,
-            username: 1,
-            date_created: 1,
-            image: 1
-          });
-        
-        res
-          .status(200)
-          .json({ 
-            success: true, 
-            decoded: decoded, 
-            profile: user, 
-            message: `Decoded Token` 
-          });
-      
-      }
+                  const newToken = jwt.sign(
+                    { userId: user._id }, 
+                    process.env.SECRET_KEY, 
+                    { expiresIn: '1 hour'});
+
+                  res
+                    .status(200)
+                    .json({ 
+                      success: true, 
+                      decoded: decoded,
+                      accessToken: newToken, 
+                      refreshToken: refreshToken,
+                      profile: user, 
+                      message: `Decoded Token` 
+                    });
+                }
+              });
+          } else {
+            res
+              .status(400)
+              .json({ 
+                success: false, 
+                message: `Token verification failed: ${error.message}` 
+              });
+          }
+        } else {
+          const id = decoded.userId;
+          const user = await UserModel
+            .findOne({ _id: id })
+            .select({ 
+              first_name: 1, 
+              middle_name: 1, 
+              last_name: 1, 
+              email: 1,
+              status: 1,
+              username: 1,
+              date_created: 1,
+              image: 1
+            });
+
+          res
+            .status(200)
+            .json({ 
+              success: true, 
+              accessToken: token,
+              refreshToken: refreshToken,
+              decoded: decoded, 
+              profile: user, 
+              message: `Decoded Token` 
+            });
+        }
     });
 
   } catch (error) {
