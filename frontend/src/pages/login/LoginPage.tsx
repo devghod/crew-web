@@ -8,10 +8,7 @@ export type LoginPage = {};
 
 const LoginPage: React.FC<LoginPage> = (props) => {
 
-  const { 
-    login,
-    isLoading,
-  } = useLoginStore();
+  const { isLoading } = useLoginStore();
 
   const [ loading, setLoading ] = React.useState(false);
   const [ temp, setTemp ] = React.useState({
@@ -19,11 +16,6 @@ const LoginPage: React.FC<LoginPage> = (props) => {
     logo: "../../../public/crew-logo.png",
   });
   const [ formType, setFormType ] = React.useState("login"); // login or register
-
-  const handleSubmit = async (data: Credentials) => {
-    console.log(data)
-    await login(data);
-  };
 
   const handleFormType = () => {
     if (formType === 'login') {
@@ -50,7 +42,6 @@ const LoginPage: React.FC<LoginPage> = (props) => {
               <LoginForm 
                 isLoading={isLoading} 
                 handleFormType={handleFormType}
-                handleSubmit={handleSubmit}
                 formType={formType}
               />
             )}
@@ -58,7 +49,6 @@ const LoginPage: React.FC<LoginPage> = (props) => {
               <RegisterForm 
                 isLoading={isLoading} 
                 handleFormType={handleFormType}
-                handleSubmit={handleSubmit}
                 formType={formType}
               />
             )}

@@ -1,33 +1,29 @@
 import React from "react";
 import { Credentials } from "./LoginTypes";
+import { useLoginStore } from "../../pages/login/LoginState";
 
 export type LoginForm = {
   isLoading: boolean;
   handleFormType: () => void;
-  handleSubmit: (data: any) => void;
   formType: string;
 };
 
 const LoginForm: React.FC<LoginForm> = (props) => {
 
-  const { isLoading, handleFormType, handleSubmit, formType } = props;
+  const { isLoading, handleFormType, formType } = props;
 
-  const [ credentials, setCredentials ] = React.useState<Credentials>({ username: '', password: '' });
+  const { login, isError, message, credentials, setFormData } = useLoginStore();
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    await handleSubmit({
-      username: credentials.username,
-      password: credentials.password,
-    });
-    clearForm();
+    await login();
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, id } = event.target;
-    setCredentials({ ...credentials, [id]: value });
-    console.log(credentials)
+    // setCredentials({ ...credentials, [id]: value });
+    // set({credentials: { [id]: value } });
+    setFormData({...credentials, [id]: value });
   };
 
   const clearForm = () => {
@@ -39,6 +35,9 @@ const LoginForm: React.FC<LoginForm> = (props) => {
   
   return (
     <div className="p-6">
+      {isError && (
+        <p className="mb-2 border border-red-500 text-red-500 font-bold p-2 text-xs rounded">{message}</p>
+      )}
       <label className="text-xs tracking-wider" htmlFor="username">Username / Email / Mobile</label>
       <div className="mt-px">
         <input 
