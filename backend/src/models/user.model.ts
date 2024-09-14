@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
@@ -29,15 +30,14 @@ const userSchema = new mongoose.Schema({
   birth_date: {
     type: String,
   },
-
+  // active, inactive, hold
   status: {
     type: String,
+    default: "inactive",
   },
   role: {
     type: String,
   },
-
-  
   password: {
     type: String,
   },
@@ -73,14 +73,6 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-// userSchema.pre('save', async function (next) {
-//   const user = this
-//   if (user.isModified('password')) {
-//       user.password = await bcrypt.hash(user.password, 8)
-//   }
-//   next()
-// })
-
 // Hash the password before saving it to the database
 userSchema.pre('save', async function (next) {
   const user = this;
@@ -88,7 +80,8 @@ userSchema.pre('save', async function (next) {
 
   try {
     const salt = await bcrypt.genSalt();
-    user.password = await bcrypt.hash(user.password, salt);
+    bcrypt.hash(user.password, salt);    
+
     next();
   } catch (error) {
     return next(error);
@@ -96,8 +89,8 @@ userSchema.pre('save', async function (next) {
 });
 
 // Compare the given password with the hashed password in the database
-userSchema.methods.comparePassword = async function (password) {
-  return bcrypt.compare(password, this.password);
+userSchema.methods.comparePassword = async function (password: String) {
+  return bcrypt.compare(password.toString(), this.password);
 };
 
 const User = mongoose.model('User', userSchema);
