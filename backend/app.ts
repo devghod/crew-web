@@ -16,7 +16,7 @@ connectToDatabase();
 app.get('/', (req: Request, res: Response) => {
   const result = indexts.welcomeFunction();
   console.log(`Hello World! ${result}`);
-  res.send(`Hello World! ${result}`);
+  res.status(200).send(`Hello World! ${result}`);
 });
 
 const authRoute = require("./src/routes/auth.route");
