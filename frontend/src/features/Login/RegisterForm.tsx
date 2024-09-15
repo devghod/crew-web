@@ -1,4 +1,6 @@
 import React from "react";
+import { RegistrationForm } from "./LoginTypes";
+import { useLoginStore } from "../../pages/login/LoginState";
 
 export type RegisterForm = {
   isLoading: boolean;
@@ -9,6 +11,18 @@ export type RegisterForm = {
 const RegisterForm: React.FC<RegisterForm> = (props) => {
 
   const { isLoading, handleFormType, formType } = props;
+
+  const { register, isError, message, registration, setFormDataRegistration } = useLoginStore();
+
+  const onRegister = async (e) => {
+    e.preventDefault();
+    await register();
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, id } = event.target;
+    setFormDataRegistration({...registration, [id]: value });
+  };
   
   return (
     <div className="p-6">
@@ -19,6 +33,8 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           id="username" 
           placeholder="Username" 
           disabled={isLoading}
+          value={registration.username} 
+          onChange={handleInputChange} 
         />
       </div>
       <label className="text-xs tracking-wider" htmlFor="username">Email</label>
@@ -28,6 +44,8 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           id="email" 
           placeholder="Email" 
           disabled={isLoading}
+          value={registration.email} 
+          onChange={handleInputChange} 
         />
       </div>
       <label className="text-xs tracking-wider" htmlFor="username">Mobile</label>
@@ -37,6 +55,8 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           id="mobile" 
           placeholder="Mobile" 
           disabled={isLoading}
+          value={registration.mobile} 
+          onChange={handleInputChange} 
         />
       </div>
       <label className="text-xs tracking-wider" htmlFor="password">Password</label>
@@ -47,16 +67,20 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           placeholder="Password" 
           type="password"
           disabled={isLoading}
+          value={registration.password} 
+          onChange={handleInputChange} 
         />
       </div>
       <label className="text-xs tracking-wider" htmlFor="password">Confirm Password</label>
       <div className="mt-px">
         <input 
           className="w-full text-sm border px-3 py-2 shadow-inner rounded-full" 
-          id="confirmpassword" 
+          id="confirmPassword" 
           placeholder="Confirm Password" 
           type="password"
           disabled={isLoading}
+          value={registration.confirmPassword} 
+          onChange={handleInputChange} 
         />
       </div>
       <div className="mt-3">
@@ -70,7 +94,7 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           </div>
           <div className="text-right">
             <button 
-              // onClick={handleSubmit}
+              onClick={onRegister}
               disabled={isLoading}
               className="bg-teal-500 hover:bg-teal-700 text-white px-3 py-2 rounded"
             >

@@ -21,16 +21,7 @@ const LoginForm: React.FC<LoginForm> = (props) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, id } = event.target;
-    // setCredentials({ ...credentials, [id]: value });
-    // set({credentials: { [id]: value } });
     setFormData({...credentials, [id]: value });
-  };
-
-  const clearForm = () => {
-    setCredentials({
-      username: '', 
-      password: ''
-    });
   };
   
   return (
