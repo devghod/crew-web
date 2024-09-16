@@ -12,6 +12,9 @@ import
     Route,
   } 
 from "react-router-dom";
+import PrivateRoute from "./utils/RouteController/PrivateRoute";
+import PublicRoute from "./utils/RouteController/PublicRoute";
+import { AuthProvider } from "./utils/RouteController/AuthProvider";
 
 const ErrorPage = lazy(() => import('./error-page'));
 const RootPage = lazy(() => import('./pages/root'));
@@ -27,17 +30,24 @@ const Routers: React.FC = () => {
     <>
       <BrowserRouter>
         <Suspense fallback={<SuspenseLoader />}>
-          <Routes>
-            <Route path="/" element={<RootPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route index element={<StatisticsPage />} />
-              <Route path="debt" element={<DebtCentralPage />} />
-              <Route path="inventory" element={<InventoryCentralPage />} />
-            </Route>
-            <Route path="*" element={<ErrorPage />} /> 
-          </Routes>
+          <AuthProvider>
+            <Routes>
+              <Route element={<PublicRoute />}>
+                <Route path="/" element={<RootPage />} />
+                <Route path="/login" element={<LoginPage />} />
+              </Route>
+              <Route element={<PrivateRoute />}>
+                <Route path="/dashboard" element={<Dashboard />}>
+                  <Route index element={<StatisticsPage />} />
+                  <Route path="debt" element={<DebtCentralPage />} />
+                  <Route path="inventory" element={<InventoryCentralPage />} />
+                </Route>
+              </Route>
+              <Route path="*" element={<ErrorPage />} /> 
+            </Routes>
+          </AuthProvider>
         </Suspense>
+        
       </BrowserRouter>
     </>
   );

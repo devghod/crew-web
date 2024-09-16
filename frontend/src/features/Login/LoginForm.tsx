@@ -1,6 +1,8 @@
 import React from "react";
 import { Credentials } from "./LoginTypes";
 import { useLoginStore } from "../../pages/login/LoginState";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../utils/RouteController/AuthProvider";
 
 export type LoginForm = {
   isLoading: boolean;
@@ -12,7 +14,22 @@ const LoginForm: React.FC<LoginForm> = (props) => {
 
   const { isLoading, handleFormType, formType } = props;
 
-  const { login, isError, message, credentials, setFormData } = useLoginStore();
+  const { 
+    login, 
+    isError, 
+    message, 
+    credentials, 
+    setFormData,
+    token,
+  } = useLoginStore();
+
+  const { login: loginAuth } = useAuth();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    loginAuth(token);
+    if (token) navigate("/dashboard");
+  }, [token]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
