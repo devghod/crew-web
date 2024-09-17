@@ -16,13 +16,14 @@ import PrivateRoute from "./utils/RouteController/PrivateRoute";
 import PublicRoute from "./utils/RouteController/PublicRoute";
 import { AuthProvider } from "./utils/RouteController/AuthProvider";
 
+const Dashboard = lazy(() => import('./components/Dashboard'));
 const ErrorPage = lazy(() => import('./error-page'));
 const RootPage = lazy(() => import('./pages/root'));
 const LoginPage = lazy(() => import('./pages/login'));
 const StatisticsPage = lazy(() => import('./pages/StatisticsPage'));
 const DebtCentralPage = lazy(() => import('./pages/debt'));
 const InventoryCentralPage = lazy(() => import('./pages/inventory'));
-const Dashboard = lazy(() => import('./components/Dashboard'));
+const AccountPage = lazy(() => import('./pages/account'));
 
 const Routers: React.FC = () => {
 
@@ -41,6 +42,7 @@ const Routers: React.FC = () => {
                   <Route index element={<StatisticsPage />} />
                   <Route path="debt" element={<DebtCentralPage />} />
                   <Route path="inventory" element={<InventoryCentralPage />} />
+                  <Route path="account" element={<AccountPage />} />
                 </Route>
               </Route>
               <Route path="*" element={<ErrorPage />} /> 

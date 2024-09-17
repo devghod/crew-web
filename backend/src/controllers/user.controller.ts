@@ -31,7 +31,7 @@ const getUsers = async (req: Request, res: Response) => {
   try {
 
     const users = await UserModel.find({ 
-      status: "active" ,
+      // status: "active" ,
     });
 
     res
