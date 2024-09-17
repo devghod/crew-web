@@ -143,12 +143,16 @@ export const useLoginStore = create<LoginState>()((set, get, store) => ({
           set({ isError: false });
           set({ token: accessToken });
           set({ refreshToken: refreshToken });
+          setCookie('token', accessToken, '30'); 
+          setCookie('refreshToken', refreshToken, '30');
         } else {
+          deleteCookie('token'); 
+          deleteCookie('refreshToken');
           set({ isAuthentic: false });
           set({ message: message });
           set({ isError: true });
-          // set({ token: '' });
-          // set({ refreshToken: '' });
+          set({ token: '' });
+          set({ refreshToken: '' });
         } 
       }
     } catch(error) {

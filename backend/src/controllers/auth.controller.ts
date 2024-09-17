@@ -120,7 +120,6 @@ const verify = async (req: Request, res: Response) => {
       token, 
       process.env.SECRET_KEY, 
       async (error: any, decoded: any) => {
-        console.log(error, decoded)
         if (error) {
           if (
             error?.name && 
