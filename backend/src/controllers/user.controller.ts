@@ -6,7 +6,7 @@ const getUser = async (req: Request, res: Response) => {
 
     const user = await UserModel.find({ 
       _id: req.params.id,
-      status: "active" ,
+      // status: "active" ,
     });
 
     res

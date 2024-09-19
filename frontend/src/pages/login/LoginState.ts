@@ -160,6 +160,11 @@ export const useLoginStore = create<LoginState>()((set, get, store) => ({
     }
   },
 
+  logout: () => {
+    set({ token: '' });
+    set({ refreshToken: '' });
+  },
+
   resetFormData: () => set({ credentials: { username: '', password: '' }}),
   resetFormDataRegistration: () => set({
     registration: {

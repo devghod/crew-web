@@ -10,7 +10,13 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-  const { token, refreshToken, isAuthentic, verify } = useLoginStore();
+  const { 
+    token, 
+    refreshToken, 
+    isAuthentic, 
+    verify, 
+    logout: signout 
+  } = useLoginStore();
 
   React.useEffect(() => {
     const checkCookie = () => {
@@ -33,6 +39,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     deleteCookie('token'); 
     deleteCookie('refreshToken');
+    signout();
   };
 
   const isAuthenticated = isAuthentic;

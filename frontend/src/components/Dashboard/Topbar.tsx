@@ -1,5 +1,8 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import Logo from '../../assets/logos/crew-sm.png';
+import { useAuth } from '../../utils/RouteController/AuthProvider';
+import { useLoginStore } from "../../pages/login/LoginState";
 
 const Topbar: React.FC = () => {
   
@@ -13,6 +16,12 @@ const Topbar: React.FC = () => {
     email: '',
     website: '',
   });
+  const { logout: signout } = useAuth();
+  const { 
+    token,
+    refreshToken
+  } = useLoginStore();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -26,13 +35,21 @@ const Topbar: React.FC = () => {
     };
   }, [showOptions]);
 
-
   const onShowOptions: React.FC = () => {
     if (showOptions) {
       setShowOptions(false);
     } else {
       setShowOptions(true);
     };
+  };
+
+  const handleSignOut = async () => {
+    signout();
+    
+    if (!token && !refreshToken) {
+      navigate('/login');
+      window.location.href = '/login'; 
+    }
   };
 
   return (
@@ -74,9 +91,12 @@ const Topbar: React.FC = () => {
                 <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0">Account settings</a>
                 <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-1">Support</a>
                 <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-2">License</a>
-                <form method="POST" action="#" role="none">
-                  <button type="submit" className="text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" id="menu-item-3">Sign out</button>
-                </form>
+                <button 
+                  onClick={() => handleSignOut()} 
+                  className="text-gray-700 block w-full px-4 py-2 text-left text-sm" 
+                  role="menuitem" 
+                  id="menu-item-3"
+                >Sign out</button>
               </div>
             </div>
           </div>
