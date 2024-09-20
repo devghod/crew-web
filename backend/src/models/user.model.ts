@@ -67,9 +67,9 @@ const userSchema = new mongoose.Schema({
   created_by: {
     type: String,
   },
-  deleted: {
-    type: Boolean,
-    default: false,
+  deleted_at: {
+    type: Date,
+    default: null,
   }
 });
 
