@@ -1,6 +1,7 @@
 import React from "react";
 import { useAccountStore } from "../../pages/account/AccountState";
 import { dateFormat } from '../../utils/dateHelper';
+import AccountTableRow from '../../components/Account/AccountTableRow';
 
 export type AccountTable = {};
 
@@ -31,13 +32,7 @@ const AccountTable: React.FC<AccountTable> = (props) => {
         </thead>
         <tbody className="bg-gray-50">
           {usersTemp.map((user) => (
-            <tr key={user._id} className="border border-gray-300">
-              <td className="p-2 w-1/5 text-left">{user._id}</td>
-              <td className="p-2 w-1/5 text-right">{user.username}</td>
-              <td className="p-2 w-1/5 text-right">{user.email}</td>
-              <td className="p-2 w-1/5 text-right">{dateFormat(user.date_created, 'YYYY-MM-DD')}</td>
-              <td className="p-2 w-1/12 text-right capitalize">{user.status}</td>
-            </tr>
+            <AccountTableRow key={user._id} user={user} />
           ))}
         </tbody>
       </table>
