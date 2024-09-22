@@ -57,6 +57,36 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 };
 
+export const postUsersList = async (req: Request, res: Response) => {
+  try {
+    const { size, page } = req.body;
+
+    const users = await UserModel.find({ 
+        deleted_at: { $eq: null },
+      })
+      .skip((page - 1) * size)
+      .limit(size);
+
+    res
+      .status(200)
+      .json({ 
+        success: true,
+        message: "Users List Paginated",
+        data: users,
+        size: size,
+        page: page,
+      });
+  
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        success: false, 
+        message: `Error ${error}` 
+      });
+  }
+};
+
 export const getUsersSelections = async (req: Request, res: Response) => {
   try {
 

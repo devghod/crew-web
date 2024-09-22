@@ -7,6 +7,7 @@ const {
   getUser,
   getUsers, 
   getUsersSelections,
+  postUsersList,
   createUser,
   updateUser,
   deleteUser,
@@ -16,6 +17,7 @@ const {
 router.get('/get-user/:id', authenticate, getUser);
 router.get('/get-users', authenticate, getUsers);
 router.get('/get-users-selections', authenticate, getUsersSelections);
+router.post('/post-users-list', authenticate, postUsersList);
 router.post('/post-user', authenticate, createUser);
 router.put('/put-user/:id', authenticate, updateUser);
 router.put('/put-softdelete/:id', authenticate, softDelete);
