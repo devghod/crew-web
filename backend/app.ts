@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { port } from './src/configs/config';
+import { port, nodeEnv } from './src/configs/config';
 import { connectToDatabase } from './src/configs/db.config';
 
 const cors = require('cors');
@@ -28,6 +28,10 @@ app.use('/api/user', userRoute);
 const debtRoute = require("./src/routes/debt.route");
 app.use('/api/debt', debtRoute);
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
+if (nodeEnv != 'test') {
+  app.listen(port, () => {
+    console.log(`App listening on port ${port}`);
+  });
+};
+
+export default app;
