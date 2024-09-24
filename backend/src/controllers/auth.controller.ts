@@ -23,7 +23,10 @@ const register = async (req: Request, res: Response) => {
     if (existed.length > 0) {
       return res
         .status(400)
-        .json({ message: 'Username or email already exists' });
+        .json({ 
+          success: false, 
+          message: 'Username or email already exists' 
+        });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
