@@ -8,6 +8,7 @@ import {
 import { useAuth } from "../../utils/RouteController/AuthProvider";
 
 export type LoginState = {
+  profile: object;
   isAuthentic: boolean;
   token: string;
   refreshToken: string;
@@ -18,9 +19,12 @@ export type LoginState = {
   message: string;
   login: () => void;
   register: () => void;
+  resetFormData: () => void;
+  resetFormDataRegistration: () => void;
 };
 
 export const useLoginStore = create<LoginState>()((set, get, store) => ({
+  profile: {},
   isAuthentic: false,
   token: '',
   refreshToken: '',
@@ -56,13 +60,15 @@ export const useLoginStore = create<LoginState>()((set, get, store) => ({
           success, 
           message, 
           token, 
-          refreshToken 
+          refreshToken,
+          profile
         } = await result.json();
   
       if (success) {
         setCookie('token', token, '30'); 
         setCookie('refreshToken', refreshToken, '30');
         get().resetFormData();
+        set({ profile: profile });
         set({ token: token });
         set({ refreshToken: refreshToken });
         set({ message: message });
@@ -117,7 +123,7 @@ export const useLoginStore = create<LoginState>()((set, get, store) => ({
       console.log(">", error);
     }
   },
-  verify: async (tokens) => {
+  verify: async (tokens: any) => {
     try {
       if (tokens.token && tokens.refreshToken) {
         const result = await fetch('http://localhost:4001/api/auth/verify', 
@@ -138,6 +144,7 @@ export const useLoginStore = create<LoginState>()((set, get, store) => ({
         } = await result.json();
 
         if (success) {
+          set({ profile: profile });
           set({ isAuthentic: true });
           set({ message: message });
           set({ isError: false });
@@ -176,7 +183,7 @@ export const useLoginStore = create<LoginState>()((set, get, store) => ({
     }
   }),
 
-  setFormData: (data) => set({ credentials: data }),
-  setFormDataRegistration: (data) => set({ registration: data }),
+  setFormData: (data: Credentials) => set({ credentials: data }),
+  setFormDataRegistration: (data: RegistrationForm) => set({ registration: data }),
   
 }));

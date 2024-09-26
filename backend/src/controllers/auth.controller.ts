@@ -95,12 +95,28 @@ const login = async (req: Request, res: Response) => {
       process.env.REFRESH_SECRET_KEY, 
       { expiresIn: '10h'});
 
+    const profile = await UserModel.findOne({ 
+        $or: [
+          { username: username },
+          { email: username },
+          { mobile: username },
+        ],
+        status: "active" 
+      }, {
+        _id: 1,
+        first_name: 1,
+        last_name: 1,
+        email: 1,
+        image: 1,
+      });
+
     res
       .status(200)
       .json({ 
         success: true,
         token: token,
         refreshToken: refreshToken,
+        profile: profile,
       });
   
   } catch (error) {

@@ -1,14 +1,13 @@
 import React from 'react';
 import BlankProfile from '../../assets/blank-profile-picture.png';
-import Loader from '../Loader';
+import { useLoginStore } from "../../pages/login/LoginState";
 
 export type Profile = {
-  id: number,
-  firstName: string,
-  lastName: string,
-  name: string,
-  email: string,
-  image: string,
+  _id?: number,
+  first_name?: string,
+  last_name?: string,
+  email?: string,
+  image?: string,
 };
 
 export type SidebarProfile = Profile & {
@@ -16,7 +15,18 @@ export type SidebarProfile = Profile & {
   isLoading: boolean,
 };
 
-const SidebarProfile: React.FC<SidebarProfile> = ({ profile, isLoading }) => {
+const SidebarProfile: React.FC = () => {
+
+  const { isLoading, profile } = useLoginStore();
+  const [ user, setUser ] = React.useState<Profile>();
+
+  React.useEffect(() => {
+    setUser(profile);
+  }, []);
+
+  React.useMemo(() => {
+    return profile;
+  }, [profile]);
   
   return (
     <>
@@ -34,16 +44,16 @@ const SidebarProfile: React.FC<SidebarProfile> = ({ profile, isLoading }) => {
           <img 
             className="max-w-16 rounded-full bg-white" 
             src={
-              profile?.image && 
-              profile?.image !== '' ? 
-              profile.image : 
+              user?.image && 
+              user?.image !== '' ? 
+              user.image : 
               BlankProfile 
             } 
-            alt={profile?.name} 
+            alt={`${user?.first_name} ${user?.last_name}`}
           />
           <div>
-            <p className="text-sm font-bold max-w-24 text-pretty">{profile?.firstName} {profile?.lastName}</p>
-            <p className="text-xs text-gray-500 max-w-24 truncate">{profile?.email}</p>
+            <p className="text-sm font-bold max-w-24 text-pretty">{user?.first_name} {user?.last_name}</p>
+            <p className="text-xs text-gray-500 max-w-24 truncate">{user?.email}</p>
           </div>
         </div>
       }

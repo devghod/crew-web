@@ -1,6 +1,6 @@
 import React from 'react';
 import SidebarNav from './SidebarNav';
-import SidebarProfile, { Profile } from './SidebarProfile';
+import SidebarProfile from './SidebarProfile';
 
 export type Navigate = {
   name: string;
@@ -12,15 +12,6 @@ export type Navigates = Array<Navigate> & {};
 
 const Sidebar: React.FC = () => {
   
-  const [ loading, setLoading ] = React.useState(false);
-  const [ profile, setProfile ] = React.useState<Profile>({
-    id: 0,
-    firstName: '',
-    lastName: '',
-    name: '',
-    email: '',
-    image: '',
-  });
   const [ navigates, setNavigates ] = React.useState<Navigates>([
     {
       name: 'Dashboard',
@@ -72,36 +63,9 @@ const Sidebar: React.FC = () => {
     },
   ]);
 
-  const getProfile = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setProfile({
-        id: 100,
-        firstName: 'Hanzo',
-        lastName: 'Hattori',
-        name: 'Hanzo Hattori',
-        email: 'hanzo.hattor@test.com',
-        image: '',
-      });
-      setLoading(false);
-    }, 3000);    
-  };
-
-  React.useEffect(() => {
-    // setLoading(true);
-    // fetch(`https://dummyjson.com/users/${randomNumber}`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setProfile(data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => console.error('Error:', error));
-    getProfile();
-  }, []);
-
   return (
     <div className="border-r shadow ease-in-out duration-300 h-full">
-      <SidebarProfile profile={profile} isLoading={loading} />
+      <SidebarProfile />
       <SidebarNav navigates={navigates} />
     </div>
   );
