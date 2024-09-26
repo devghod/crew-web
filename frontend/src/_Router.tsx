@@ -34,8 +34,8 @@ const Routers: React.FC = () => {
           <AuthProvider>
             <Routes>
               <Route element={<PublicRoute />}>
-                <Route path="/" element={<RootPage />} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route path="" element={<RootPage />} />
+                <Route path="login" element={<LoginPage />} />
               </Route>
               <Route element={<PrivateRoute />}>
                 <Route path="/dashboard" element={<Dashboard />}>
@@ -49,7 +49,6 @@ const Routers: React.FC = () => {
             </Routes>
           </AuthProvider>
         </Suspense>
-        
       </BrowserRouter>
     </>
   );

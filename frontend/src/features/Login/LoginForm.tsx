@@ -1,5 +1,4 @@
 import React from "react";
-import { Credentials } from "./LoginTypes";
 import { useLoginStore } from "../../pages/login/LoginState";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/RouteController/AuthProvider";
@@ -12,7 +11,7 @@ export type LoginForm = {
 
 const LoginForm: React.FC<LoginForm> = (props) => {
 
-  const { isLoading, handleFormType, formType } = props;
+  const { isLoading, handleFormType } = props;
 
   const { 
     login, 
@@ -46,7 +45,7 @@ const LoginForm: React.FC<LoginForm> = (props) => {
       {isError && (
         <p className="mb-2 border border-red-500 text-red-500 font-bold p-2 text-xs rounded">{message}</p>
       )}
-      <label className="text-xs tracking-wider" htmlFor="username">Username / Email / Mobile</label>
+      <label className="text-slate-700 text-xs tracking-wider" htmlFor="username">Username / Email / Mobile</label>
       <div className="mt-px">
         <input 
           className="w-full text-sm border px-3 py-2 shadow-inner rounded-full" 
@@ -57,7 +56,7 @@ const LoginForm: React.FC<LoginForm> = (props) => {
           onChange={handleInputChange} 
         />
       </div>
-      <label className="text-xs tracking-wider" htmlFor="password">Password</label>
+      <label className="text-slate-700 text-xs tracking-wider" htmlFor="password">Password</label>
       <div className="mt-px">
         <input 
           className="w-full text-sm border px-3 py-2 shadow-inner rounded-full" 

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React from "react";
 import { useLoginStore } from "../../pages/login/LoginState";
 import {
   setCookie,
@@ -6,9 +6,9 @@ import {
   deleteCookie,
 } from '../../utils/cookies';
 
-const AuthContext = createContext();
+const AuthContext = React.createContext<unknown>(undefined);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: any) => {
 
   const { 
     token, 
@@ -52,7 +52,8 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
+  const context = React.useContext(AuthContext);
+  
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }

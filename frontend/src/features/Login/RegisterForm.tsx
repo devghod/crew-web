@@ -26,7 +26,7 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
   
   return (
     <div className="p-6">
-      <label className="text-xs tracking-wider" htmlFor="username">Username</label>
+      <label className="text-slate-700 text-xs tracking-wider" htmlFor="username">Username</label>
       <div className="mt-px">
         <input 
           className="w-full text-sm border px-3 py-2 shadow-inner rounded-full" 
@@ -37,7 +37,7 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           onChange={handleInputChange} 
         />
       </div>
-      <label className="text-xs tracking-wider" htmlFor="username">Email</label>
+      <label className="text-slate-700 text-xs tracking-wider" htmlFor="username">Email</label>
       <div className="mt-px">
         <input 
           className="w-full text-sm border px-3 py-2 shadow-inner rounded-full" 
@@ -48,7 +48,7 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           onChange={handleInputChange} 
         />
       </div>
-      <label className="text-xs tracking-wider" htmlFor="username">Mobile</label>
+      <label className="text-slate-700 text-xs tracking-wider" htmlFor="username">Mobile</label>
       <div className="mt-px">
         <input 
           className="w-full text-sm border px-3 py-2 shadow-inner rounded-full" 
@@ -59,7 +59,7 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           onChange={handleInputChange} 
         />
       </div>
-      <label className="text-xs tracking-wider" htmlFor="password">Password</label>
+      <label className="text-slate-700 text-xs tracking-wider" htmlFor="password">Password</label>
       <div className="mt-px">
         <input 
           className="w-full text-sm border px-3 py-2 shadow-inner rounded-full" 
@@ -71,7 +71,7 @@ const RegisterForm: React.FC<RegisterForm> = (props) => {
           onChange={handleInputChange} 
         />
       </div>
-      <label className="text-xs tracking-wider" htmlFor="password">Confirm Password</label>
+      <label className="text-slate-700 text-xs tracking-wider" htmlFor="password">Confirm Password</label>
       <div className="mt-px">
         <input 
           className="w-full text-sm border px-3 py-2 shadow-inner rounded-full" 

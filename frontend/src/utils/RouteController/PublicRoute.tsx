@@ -1,14 +1,16 @@
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
-import {
-  setCookie,
-  getCookie,
-  deleteCookie,
-} from './cookies';
+import PrivateRoute from "./PrivateRoute";
+
 
 const PublicRoute = () => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Navigate to="/dashboard" /> : <Outlet />;
+  const { isAuthenticated }: any = useAuth();
+
+  if (isAuthenticated) {
+    return <PrivateRoute />;
+  } else {
+    return <Outlet />;
+  };
 };
 
 export default PublicRoute;

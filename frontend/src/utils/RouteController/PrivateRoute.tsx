@@ -1,14 +1,14 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
-import {
-  setCookie,
-  getCookie,
-  deleteCookie,
-} from './cookies';
 
 const PrivateRoute = () => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  const { isAuthenticated }: any = useAuth();
+
+  if (isAuthenticated) {
+    return <Outlet />;
+  } else {
+    return <Navigate to="/login" replace />;
+  };
 };
 
 export default PrivateRoute;

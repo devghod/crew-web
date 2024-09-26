@@ -2,10 +2,8 @@ import { create } from 'zustand';
 import { Credentials, RegistrationForm } from './LoginTypes';
 import {
   setCookie,
-  getCookie,
   deleteCookie,
 } from '../../utils/cookies';
-import { useAuth } from "../../utils/RouteController/AuthProvider";
 
 export type LoginState = {
   profile: object;
@@ -17,6 +15,8 @@ export type LoginState = {
   isLoading: boolean;
   isError: boolean;
   message: string;
+  verify: (tokens: any) => void;
+  logout: () => void;
   login: () => void;
   register: () => void;
   resetFormData: () => void;
@@ -166,12 +166,10 @@ export const useLoginStore = create<LoginState>()((set, get, store) => ({
       console.log("> " + error);
     }
   },
-
   logout: () => {
     set({ token: '' });
     set({ refreshToken: '' });
   },
-
   resetFormData: () => set({ credentials: { username: '', password: '' }}),
   resetFormDataRegistration: () => set({
     registration: {
@@ -182,7 +180,6 @@ export const useLoginStore = create<LoginState>()((set, get, store) => ({
       confirmPassword: '',
     }
   }),
-
   setFormData: (data: Credentials) => set({ credentials: data }),
   setFormDataRegistration: (data: RegistrationForm) => set({ registration: data }),
   
