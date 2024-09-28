@@ -10,8 +10,14 @@ export type Navigate = {
 
 export type Navigates = Array<Navigate> & {};
 
-const Sidebar: React.FC = () => {
+export type Sidebar = {
+  shrink: boolean;
+  handleShrink: () => void;
+};
+
+const Sidebar: React.FC<Sidebar> = (data) => {
   
+  const { handleShrink, shrink } = data;
   const [ navigates, setNavigates ] = React.useState<Navigates>([
     {
       name: 'Dashboard',
@@ -65,8 +71,14 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="border-r shadow ease-in-out duration-300 h-full">
-      <SidebarProfile />
-      <SidebarNav navigates={navigates} />
+      <SidebarProfile 
+        shrink={shrink}
+        handleShrink={handleShrink} 
+      />
+      <SidebarNav 
+        shrink={shrink}
+        navigates={navigates} 
+      />
     </div>
   );
 };

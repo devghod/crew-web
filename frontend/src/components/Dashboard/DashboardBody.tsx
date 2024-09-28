@@ -2,15 +2,27 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
-const DashboardBody: React.FC = () => {
+export type DashboardBody = {};
 
+const DashboardBody: React.FC<DashboardBody> = () => {
+
+  const [ shrink, setShrink ] = React.useState(false);
   const location = useLocation();
   const path = location.pathname.split('/').filter(Boolean);
 
+  const handleShrink = () => shrink ? setShrink(false) : setShrink(true);
+
   return (
     <div className="flex h-screen overflow-hidden">
-      <div className="flex-initial w-64">
-        <Sidebar />
+      <div className={`flex-initial 
+        ${shrink && 'w-20'}
+        ${!shrink && 'w-64'}`
+      }
+      >
+        <Sidebar 
+          handleShrink={handleShrink} 
+          shrink={shrink}
+        />
       </div>
       <div className="flex-1 px-4 bg-gray-100 overflow-y-auto overflow-x-hidden">
         <div className="my-2">
@@ -24,7 +36,7 @@ const DashboardBody: React.FC = () => {
 
 export default DashboardBody;
 
-const Pathname = (data: Object) => {
+const Pathname = (data: any) => {
 
   const { path } = data;
   const lengthIndex = path.length - 1;
@@ -32,7 +44,7 @@ const Pathname = (data: Object) => {
   return (
     <div className="flex">
       {
-        path.map((item, index) => {
+        path.map((item: string, index: number) => {
           return (
             <div key={index} className="">
               <span key={index} className="font-medium text-xs text-gray-400 hover:text-gray-900 capitalize">

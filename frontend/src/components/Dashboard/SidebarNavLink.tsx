@@ -5,10 +5,12 @@ export type SidebarNavLink = {
   to: string;
   name: string;
   icon: React.ReactNode;
+  shrink: boolean;
 };
 
-const SidebarNavLink: React.FC<SidebarNavLink> = ({ to, name, icon }) => {
+const SidebarNavLink: React.FC<SidebarNavLink> = (props) => {
   
+  const { to, name, icon, shrink } = props;
   const location = useLocation();
   const isActivePath = (path: string) => {
     return location.pathname.endsWith(path);
@@ -24,7 +26,9 @@ const SidebarNavLink: React.FC<SidebarNavLink> = ({ to, name, icon }) => {
       to={to}
     >
       <span className='mr-4'>{icon}</span>
-      <span className='text-sm'>{name}</span>
+      {!shrink && (
+        <span className='text-sm'>{name}</span>
+      )}
     </Link>
   );
 };
