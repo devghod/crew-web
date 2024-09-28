@@ -14,7 +14,7 @@ const DashboardBody: React.FC<DashboardBody> = () => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <div className={`flex-initial 
+      <div className={`flex-initial transition-width duration-700
         ${shrink && 'w-20'}
         ${!shrink && 'w-64'}`
       }

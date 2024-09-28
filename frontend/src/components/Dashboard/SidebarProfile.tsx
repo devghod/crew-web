@@ -49,13 +49,13 @@ const SidebarProfile: React.FC<SidebarProfile> = (props) => {
           }
         >
           {shrink && (<div></div>)}
-          <div className={
-              `${shrink && ('col-span-3')}
+          <div className={`transition-width duration-700
+              ${shrink && ('col-span-3')}
               ${!shrink && ('col-span-2')}`
             }
           >
             <img 
-              className="rounded-full bg-white" 
+              className="rounded-full bg-white w-full h-full transition duration-700 ease-in-out" 
               src={
                 user?.image && 
                 user?.image !== '' ? 
@@ -65,12 +65,13 @@ const SidebarProfile: React.FC<SidebarProfile> = (props) => {
               alt={`${user?.first_name} ${user?.last_name}`}
             />
           </div>
-          {!shrink && (
-            <div className='col-span-4'>
-              <p className="text-sm font-bold max-w-24 text-pretty">{user?.first_name} {user?.last_name}</p>
-              <p className="text-xs text-gray-500 max-w-24 truncate">{user?.email}</p>
-            </div>
-          )}
+          <div className={`col-span-4 transition-visibility duration-700
+              ${shrink && ('hidden')}`
+            }
+          >
+            <p className="text-sm font-bold max-w-24 text-pretty">{user?.first_name} {user?.last_name}</p>
+            <p className="text-xs text-gray-500 max-w-24 truncate">{user?.email}</p>
+          </div>
           <div className='col-span-1 mb-auto justify-self-end'>
             <button 
               type="button"
