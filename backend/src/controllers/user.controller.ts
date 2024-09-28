@@ -57,6 +57,41 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 };
 
+export const getUsersStatistics = async (req: Request, res: Response) => {
+  
+  try {
+    const users = await UserModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalCount: { $sum: { $cond: [ {}, 1, 0] } },
+          activeCount: { $sum: { $cond: [{ $eq: ['$status', 'active'] }, 1, 0] } },
+          inactiveCount: { $sum: { $cond: [{ $eq: ['$status', 'inactive'] }, 1, 0] } },
+          holdCount: { $sum: { $cond: [{ $eq: ['$status', 'onhold'] }, 1, 0] } },
+          softDeleteCount: { $sum: { $cond: [{ $ne: ['$deleted_at', null ] }, 1, 0] } },
+        }
+      }
+    ]);  
+    
+    res
+        .status(200)
+        .json({ 
+          success: true,
+          message: "Users",
+          data: users[0],
+        });
+
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        success: false, 
+        message: `Error ${error}` 
+      });
+  }
+
+};
+
 export const postUsersList = async (req: Request, res: Response) => {
   try {
     const { size, page } = req.body;

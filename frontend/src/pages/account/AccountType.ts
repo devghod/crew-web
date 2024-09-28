@@ -4,3 +4,12 @@ export type User = {
   email: string;
   status: string;
 };
+
+export type Statistics = {
+  _id?: null;
+  totalCount?: number;
+  activeCount?: number;
+  inactiveCount?: number;
+  softDeleteCount?: number;
+  holdCount?: number;
+};
