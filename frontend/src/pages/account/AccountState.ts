@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 import { User } from './AccountType';
 import {
-  setCookie,
   getCookie,
-  deleteCookie,
 } from '../../utils/cookies';
 
 export type AccountState = {
-  user: User;
+  user: object;
   users: User[];
   isLoading: boolean;
+  getUser: (id: number) => void;
+  getUsers: () => void;
 };
 
 export const useAccountStore = create<AccountState>()((set, get, store) => ({
@@ -18,22 +18,22 @@ export const useAccountStore = create<AccountState>()((set, get, store) => ({
   isLoading: false,
   getUser: async (id: number) => {
     try {
-      set((state) => ({ isLoading: true }));
+      set({ isLoading: true });
       const result = await fetch(`http://localhost:4001/api/user/get-user/${id}`);
 
       if (result.ok) {
         const { data } = await result.json();
-        set((state) => ({ isLoading: false }));
+        set({ isLoading: false });
       }
-      set((state) => ({ isLoading: false }));
+      set({ isLoading: false });
     } catch (err) {
       console.log("Error", err);
-      set(() => ({ isLoading: false }));
+      set({ isLoading: false });
     };
   },
   getUsers: async () => {
     try {
-      set((state) => ({ isLoading: true }));
+      set({ isLoading: true });
       const token = getCookie('token');
       const authToken = `Bearer ${token}`;
 

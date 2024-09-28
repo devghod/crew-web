@@ -4,7 +4,7 @@ import { useAccountStore } from "./AccountState";
 
 export type AccountPage = {};
 
-const AccountPage: React.FC<AccountPage> = (props) => {
+const AccountPage: React.FC<AccountPage> = () => {
 
   const {
     getUsers,
