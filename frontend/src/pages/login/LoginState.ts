@@ -7,7 +7,7 @@ import {
 
 export type LoginState = {
   profile: object;
-  isAuthentic: boolean;
+  isAuthentic: boolean | null;
   token: string;
   refreshToken: string;
   credentials: Credentials;
@@ -25,7 +25,7 @@ export type LoginState = {
 
 export const useLoginStore = create<LoginState>()((set, get, store) => ({
   profile: {},
-  isAuthentic: false,
+  isAuthentic: null,
   token: '',
   refreshToken: '',
   credentials: {

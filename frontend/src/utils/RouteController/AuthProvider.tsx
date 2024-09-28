@@ -18,11 +18,15 @@ export const AuthProvider = ({ children }: any) => {
     logout: signout 
   } = useLoginStore();
 
+  const [ isLoading, setIsLoading ] = React.useState(false);
+
   React.useEffect(() => {
-    const checkCookie = () => {
+    const checkCookie = async () => {
+      setIsLoading(true);
       const tokenc = getCookie('token');
       const refreshToken = getCookie('refreshToken');
-      verify({ 'token': tokenc, 'refreshToken': refreshToken });
+      await verify({ 'token': tokenc, 'refreshToken': refreshToken });
+      setIsLoading(false);
     }
     checkCookie();
   }, []);
@@ -45,7 +49,7 @@ export const AuthProvider = ({ children }: any) => {
   const isAuthenticated = isAuthentic;
   
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
