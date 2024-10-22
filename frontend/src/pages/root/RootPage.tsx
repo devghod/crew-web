@@ -1,14 +1,16 @@
-import React from "react";
+import React from 'react'
 
-export type RootPage = {};
+export type RootPage = {}
 
-const RootPage: React.FC<RootPage> = (props) => {
-  
+const RootPage: React.FC<RootPage> = props => {
   return (
-    <div className="w-full h-screen text-center content-center">
-      <div className="">Hey, this is an awesome website to <span className="hover:text-sky-500">discover</span>.</div>
+    <div className='w-full h-screen text-center content-center'>
+      <div className=''>
+        Hey, this is an awesome website to{' '}
+        <span className='hover:text-sky-500'>discover</span>.
+      </div>
     </div>
   )
-};
+}
 
-export default RootPage;
+export default RootPage

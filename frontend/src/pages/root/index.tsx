@@ -1,2 +1,2 @@
-import RootPage from "./RootPage";
-export default RootPage;
+import RootPage from './RootPage'
+export default RootPage

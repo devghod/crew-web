@@ -1,19 +1,19 @@
-import { Outlet, Navigate } from "react-router-dom";
-import { useAuth } from "./AuthProvider";
-import SuspenseLoader from "../../components/SuspenseLoader";
+import { Outlet, Navigate } from 'react-router-dom'
+import { useAuth } from './AuthProvider'
+import SuspenseLoader from '../../components/SuspenseLoader'
 
 const PrivateRoute = () => {
-  const { isAuthenticated, isLoading }: any = useAuth();
+  const { isAuthenticated, isLoading }: any = useAuth()
 
   if (isLoading) {
     return <SuspenseLoader />
-  };
+  }
 
   if (isAuthenticated || isAuthenticated == null) {
-    return <Outlet />;
+    return <Outlet />
   } else {
-    return <Navigate to="/login" replace />;
-  };
-};
+    return <Navigate to='/login' replace />
+  }
+}
 
-export default PrivateRoute;
+export default PrivateRoute
