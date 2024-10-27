@@ -1,28 +1,25 @@
-import React from 'react'
-import { RegistrationForm } from './LoginTypes'
-import { useLoginStore } from '../../stores/LoginState'
+import React from 'react';
+import { useLoginStore } from '../../stores/LoginState';
 
 export type RegisterForm = {
-  isLoading: boolean
-  handleFormType: () => void
-  formType: string
-}
+  isLoading: boolean;
+  handleFormType: () => void;
+  formType: string;
+};
 
 const RegisterForm: React.FC<RegisterForm> = props => {
-  const { isLoading, handleFormType, formType } = props
+  const { isLoading, handleFormType } = props;
 
-  const { register, isError, message, registration, setFormDataRegistration } =
-    useLoginStore()
+  const { register, registration, setFormDataRegistration } = useLoginStore();
 
-  const onRegister = async e => {
-    e.preventDefault()
-    await register()
-  }
+  const onRegister = async () => {
+    register();
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, id } = event.target
-    setFormDataRegistration({ ...registration, [id]: value })
-  }
+    const { value, id } = event.target;
+    setFormDataRegistration({ ...registration, [id]: value });
+  };
 
   return (
     <div className='p-6'>
@@ -162,7 +159,7 @@ const RegisterForm: React.FC<RegisterForm> = props => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RegisterForm
+export default RegisterForm;

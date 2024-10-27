@@ -1,8 +1,6 @@
-import * as React from 'react'
+import * as React from 'react';
 
-export type SuspenseLoader = {}
-
-const SuspenseLoader: React.FC<SuspenseLoader> = () => {
+const SuspenseLoader: React.FC = () => {
   return (
     <div
       role='status'
@@ -26,7 +24,7 @@ const SuspenseLoader: React.FC<SuspenseLoader> = () => {
       </svg>
       <span className='sr-only'>Loading...</span>
     </div>
-  )
-}
+  );
+};
 
-export default SuspenseLoader
+export default SuspenseLoader;

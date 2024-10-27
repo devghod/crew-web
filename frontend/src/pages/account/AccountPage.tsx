@@ -1,17 +1,15 @@
-import React from 'react'
-import AccountTable from '../../features/Account/AccountTable'
-import { useAccountStore } from '../../stores/AccountState'
-import AccountStats from '../../components/Account/AccountStats'
+import React from 'react';
+import AccountTable from '../../components/Account/AccountTable';
+import { useAccountStore } from '../../stores/AccountState';
+import AccountStats from '../../components/Account/AccountStats';
 
-export type AccountPage = {}
-
-const AccountPage: React.FC<AccountPage> = () => {
-  const { getUsers, statistics } = useAccountStore()
+const AccountPage = () => {
+  const { getUsers, statistics } = useAccountStore();
 
   React.useEffect(() => {
-    const fnGetUsers = () => getUsers()
-    fnGetUsers()
-  }, [])
+    const fnGetUsers = () => getUsers();
+    fnGetUsers();
+  }, [getUsers]);
 
   return (
     <div className='grid gap-y-4 grid-cols-1'>
@@ -22,7 +20,7 @@ const AccountPage: React.FC<AccountPage> = () => {
         <AccountTable />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AccountPage
+export default AccountPage;

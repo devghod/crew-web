@@ -1,15 +1,13 @@
-import React from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
-import Sidebar from './Sidebar'
+import React from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
-export type DashboardBody = {}
+const DashboardBody: React.FC = () => {
+  const [shrink, setShrink] = React.useState(false);
+  const location = useLocation();
+  const path = location.pathname.split('/').filter(Boolean);
 
-const DashboardBody: React.FC<DashboardBody> = () => {
-  const [shrink, setShrink] = React.useState(false)
-  const location = useLocation()
-  const path = location.pathname.split('/').filter(Boolean)
-
-  const handleShrink = () => (shrink ? setShrink(false) : setShrink(true))
+  const handleShrink = () => (shrink ? setShrink(false) : setShrink(true));
 
   return (
     <div className='flex h-screen overflow-hidden'>
@@ -27,14 +25,18 @@ const DashboardBody: React.FC<DashboardBody> = () => {
         <Outlet />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardBody
+export default DashboardBody;
 
-const Pathname = (data: any) => {
-  const { path } = data
-  const lengthIndex = path.length - 1
+type TData = {
+  path: string[];
+};
+
+const Pathname = (data: TData) => {
+  const { path } = data;
+  const lengthIndex = path.length - 1;
 
   return (
     <div className='flex'>
@@ -68,8 +70,8 @@ const Pathname = (data: any) => {
               </span>
             )}
           </div>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};

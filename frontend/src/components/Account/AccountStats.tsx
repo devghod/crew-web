@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { Statistics } from '../../types/AccountType'
+import * as React from 'react';
+import { TStatistics } from '../../types/AccountType';
 
 export type AccountStats = {
-  statistics: Statistics
-}
+  statistics: TStatistics;
+};
 
 const AccountStats: React.FC<AccountStats> = props => {
-  const { statistics } = props
+  const { statistics } = props;
 
   return (
     <div className='grid gap-x-4 grid-cols-4'>
@@ -83,7 +83,7 @@ const AccountStats: React.FC<AccountStats> = props => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AccountStats
+export default AccountStats;

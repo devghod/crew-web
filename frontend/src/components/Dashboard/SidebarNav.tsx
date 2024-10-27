@@ -1,20 +1,20 @@
-import React from 'react'
-import SidebarNavLink from './SidebarNavLink'
-import { Navigates } from './Sidebar'
+import React from 'react';
+import SidebarNavLink from './SidebarNavLink';
+import { Navigates, Navigate } from './Sidebar';
 
 export type SidebarNav = {
-  navigates: Navigates
-  shrink: boolean
-}
+  navigates: Navigates;
+  shrink: boolean;
+};
 
 const SidebarNav: React.FC<SidebarNav> = ({ navigates, shrink }) => {
   return (
     <nav>
       <div className='flex flex-col gap-1 p-4'>
-        {navigates.map((curr: any, idx: number) => (
+        {navigates.map((curr: Navigate, idx: number) => (
           <SidebarNavLink
             key={idx}
-            icon={curr.icon()}
+            icon={curr.icon}
             to={curr.path}
             name={curr.name}
             shrink={shrink}
@@ -22,7 +22,7 @@ const SidebarNav: React.FC<SidebarNav> = ({ navigates, shrink }) => {
         ))}
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default SidebarNav
+export default SidebarNav;

@@ -1,34 +1,34 @@
-import React from 'react'
-import BlankProfile from '../../assets/blank-profile-picture.png'
-import { useLoginStore } from '../../stores/LoginState'
+import React from 'react';
+import BlankProfile from '../../assets/blank-profile-picture.png';
+import { useLoginStore } from '../../stores/LoginState';
 
 export type Profile = {
-  _id?: number
-  first_name?: string
-  last_name?: string
-  email?: string
-  image?: string
-}
+  _id?: number;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  image?: string;
+};
 
 // export type SidebarProfile = Profile & {
 // profile: Profile,
 export type SidebarProfile = {
-  shrink: boolean
-  handleShrink: () => void
-}
+  shrink: boolean;
+  handleShrink: () => void;
+};
 
 const SidebarProfile: React.FC<SidebarProfile> = props => {
-  const { handleShrink, shrink } = props
-  const { isLoading, profile } = useLoginStore()
-  const [user, setUser] = React.useState<Profile>()
+  const { handleShrink, shrink } = props;
+  const { isLoading, profile } = useLoginStore();
+  const [user, setUser] = React.useState<Profile>();
 
   React.useEffect(() => {
-    setUser(profile)
-  }, [])
+    setUser(profile);
+  }, [profile]);
 
   React.useMemo(() => {
-    return profile
-  }, [profile])
+    return profile;
+  }, [profile]);
 
   return (
     <>
@@ -109,7 +109,7 @@ const SidebarProfile: React.FC<SidebarProfile> = props => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default SidebarProfile
+export default SidebarProfile;

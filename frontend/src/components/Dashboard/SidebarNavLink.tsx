@@ -1,19 +1,19 @@
-import React from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import React from 'react';
+import { useLocation, Link } from 'react-router-dom';
 
 export type SidebarNavLink = {
-  to: string
-  name: string
-  icon: React.ReactNode
-  shrink: boolean
-}
+  to: string;
+  name: string;
+  icon: () => React.ReactNode;
+  shrink: boolean;
+};
 
 const SidebarNavLink: React.FC<SidebarNavLink> = props => {
-  const { to, name, icon, shrink } = props
-  const location = useLocation()
+  const { to, name, icon, shrink } = props;
+  const location = useLocation();
   const isActivePath = (path: string) => {
-    return location.pathname.endsWith(path)
-  }
+    return location.pathname.endsWith(path);
+  };
 
   return (
     <Link
@@ -22,10 +22,10 @@ const SidebarNavLink: React.FC<SidebarNavLink> = props => {
         ${!isActivePath(to) && 'font-normal'}`}
       to={to}
     >
-      <span className='mr-4'>{icon}</span>
+      <span className='mr-4'>{icon()}</span>
       {!shrink && <span className='text-sm'>{name}</span>}
     </Link>
-  )
-}
+  );
+};
 
-export default SidebarNavLink
+export default SidebarNavLink;

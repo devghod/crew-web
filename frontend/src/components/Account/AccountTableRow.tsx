@@ -1,11 +1,19 @@
-import React from 'react'
-import StatusPill from '../../components/StatusPill'
-import { dateFormat } from '../../utils/dateHelper'
+import { memo } from 'react';
+import StatusPill from '../../components/StatusPill';
+import { dateFormat } from '../../utils/dateHelper';
 
-export type AccountTableRow = {}
+export type AccountTableRow = {
+  user: {
+    _id: string;
+    username: string;
+    email: string;
+    date_created: string;
+    status: string;
+  };
+};
 
-const AccountTableRow: React.FC<AccountTableRow> = props => {
-  const { user } = props
+const AccountTableRow = memo((props: AccountTableRow) => {
+  const { user } = props;
 
   return (
     <tr className='border border-gray-200 text-slate-700 text-sm leading-6'>
@@ -19,7 +27,7 @@ const AccountTableRow: React.FC<AccountTableRow> = props => {
         <StatusPill data={user.status} />
       </td>
     </tr>
-  )
-}
+  );
+});
 
-export default AccountTableRow
+export default AccountTableRow;

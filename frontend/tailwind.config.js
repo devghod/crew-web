@@ -1,4 +1,4 @@
-import fluid, { extract } from 'fluid-tailwind'
+import fluid, { extract } from 'fluid-tailwind';
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: {
@@ -13,4 +13,4 @@ module.exports = {
     },
   },
   plugins: [fluid],
-}
+};

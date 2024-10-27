@@ -1,20 +1,20 @@
-import React from 'react'
-import LoginForm from '../../features/Login/LoginForm'
-import RegisterForm from '../../features/Login/RegisterForm'
-import { useLoginStore } from '../../stores/LoginState'
-import { Configuration as config } from '../../constants/configuration'
+import React from 'react';
+import LoginForm from '../../features/Login/LoginForm';
+import RegisterForm from '../../features/Login/RegisterForm';
+import { useLoginStore } from '../../stores/LoginState';
+import { Configuration as config } from '../../constants/configuration';
 
 const LoginPage: React.FC = () => {
-  const { isLoading } = useLoginStore()
-  const [formType, setFormType] = React.useState('login') // login or register
+  const { isLoading } = useLoginStore();
+  const [formType, setFormType] = React.useState('login'); // login or register
 
   const handleFormType = () => {
     if (formType === 'login') {
-      setFormType('register')
+      setFormType('register');
     } else {
-      setFormType('login')
+      setFormType('login');
     }
-  }
+  };
 
   return (
     <div className='w-full h-screen grid md:grid-cols-4 content-center'>
@@ -49,7 +49,7 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

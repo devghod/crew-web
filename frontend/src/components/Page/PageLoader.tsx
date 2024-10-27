@@ -1,8 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-export type PageLoader = {}
-
-const PageLoader: React.FC<PageLoader> = props => {
+const PageLoader: React.FC = () => {
   return (
     <div
       role='status'
@@ -26,7 +24,7 @@ const PageLoader: React.FC<PageLoader> = props => {
       </svg>
       <span className='sr-only'>Loading...</span>
     </div>
-  )
-}
+  );
+};
 
-export default PageLoader
+export default PageLoader;

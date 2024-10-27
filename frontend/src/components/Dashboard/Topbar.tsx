@@ -1,52 +1,60 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import Logo from '../../assets/logos/crew-sm.png'
-import { useAuth } from '../../utils/RouteController/AuthProvider'
-import { useLoginStore } from '../../stores/LoginState'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Logo from '../../assets/logos/crew-sm.png';
+import { useAuth } from '../../utils/RouteController/Auth';
+import { useLoginStore } from '../../stores/LoginState';
 
 const Topbar: React.FC = () => {
-  const [showOptions, setShowOptions] = React.useState(false)
-  const [company, setCompany] = React.useState({
-    logo: Logo,
-    name: '',
-    description: 'CREW Logo',
-    address: '',
-    phone: '',
-    email: '',
-    website: '',
-  })
-  const { logout: signout } = useAuth()
-  const { token, refreshToken } = useLoginStore()
-  const navigate = useNavigate()
+  const [showOptions, setShowOptions] = React.useState(false);
+  const [company, setCompany] = React.useState({});
+  const { logout: signout } = useAuth();
+  const { token, refreshToken } = useLoginStore();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (!event.target.closest('.relative.inline-block.text-left')) {
-        setShowOptions(false)
+        setShowOptions(false);
       }
-    }
-    document.addEventListener('click', handleOutsideClick)
+    };
+    document.addEventListener('click', handleOutsideClick);
     return () => {
-      document.removeEventListener('click', handleOutsideClick)
-    }
-  }, [showOptions])
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [showOptions]);
 
-  const onShowOptions: React.FC = () => {
+  React.useEffect(() => {
+    const handleCompany = () => {
+      setCompany({
+        logo: Logo,
+        name: '',
+        description: 'CREW Logo',
+        address: '',
+        phone: '',
+        email: '',
+        website: '',
+      });
+    };
+
+    handleCompany();
+  }, []);
+
+  const onShowOptions = () => {
     if (showOptions) {
-      setShowOptions(false)
+      setShowOptions(false);
     } else {
-      setShowOptions(true)
+      setShowOptions(true);
     }
-  }
+  };
 
   const handleSignOut = async () => {
-    signout()
+    signout();
 
     if (!token && !refreshToken) {
-      navigate('/login')
-      window.location.href = '/login'
+      navigate('/login');
+      window.location.href = '/login';
     }
-  }
+  };
 
   return (
     <div className='grid grid-cols-6 gap-4 border h-20'>
@@ -133,7 +141,7 @@ const Topbar: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Topbar
+export default Topbar;

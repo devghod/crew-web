@@ -1,7 +1,7 @@
-import React from 'react'
-import DashboardHeader from './DashboardHeader'
-import DashboardFooter from './DashboardFooter'
-import DashboardBody from './DashboardBody'
+import React from 'react';
+import DashboardHeader from './DashboardHeader';
+import DashboardFooter from './DashboardFooter';
+import DashboardBody from './DashboardBody';
 
 const Dashboard: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
       <DashboardBody />
       <DashboardFooter />
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

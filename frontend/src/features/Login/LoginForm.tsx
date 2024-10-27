@@ -1,37 +1,37 @@
-import React from 'react'
-import { useLoginStore } from '../../stores/LoginState'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../utils/RouteController/AuthProvider'
+import React from 'react';
+import { useLoginStore } from '../../stores/LoginState';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../utils/RouteController/Auth';
+import { TAuthContext } from '../../utils/RouteController/AuthProvider';
 
 export type LoginForm = {
-  isLoading: boolean
-  handleFormType: () => void
-  formType: string
-}
+  isLoading: boolean;
+  handleFormType: () => void;
+  formType: string;
+};
 
 const LoginForm: React.FC<LoginForm> = props => {
-  const { isLoading, handleFormType } = props
+  const { isLoading, handleFormType } = props;
 
   const { login, isError, message, credentials, setFormData, token } =
-    useLoginStore()
+    useLoginStore();
 
-  const { login: loginAuth } = useAuth()
-  const navigate = useNavigate()
+  const { loginAuth }: TAuthContext = useAuth();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
-    loginAuth(token)
-    if (token) navigate('/dashboard')
-  }, [token])
+    loginAuth && loginAuth();
+    if (token) navigate('/dashboard');
+  }, [token, loginAuth, navigate]);
 
-  const onSubmit = async e => {
-    e.preventDefault()
-    await login()
-  }
+  const onSubmit = async () => {
+    login();
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, id } = event.target
-    setFormData({ ...credentials, [id]: value })
-  }
+    const { value, id } = event.target;
+    setFormData({ ...credentials, [id]: value });
+  };
 
   return (
     <div className='p-6'>
@@ -127,7 +127,7 @@ const LoginForm: React.FC<LoginForm> = props => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

@@ -1,18 +1,11 @@
-import React from 'react'
-import { useAccountStore } from '../../stores/AccountState'
-import { dateFormat } from '../../utils/dateHelper'
-import AccountTableRow from '../../components/Account/AccountTableRow'
+import { useMemo } from 'react';
+import { useAccountStore } from '../../stores/AccountState';
+import AccountTableRow from './AccountTableRow';
 
-export type AccountTable = {}
+const AccountTable = () => {
+  const { users, isLoading } = useAccountStore();
 
-const AccountTable: React.FC<AccountTable> = props => {
-  const { users, isLoading } = useAccountStore()
-
-  const [usersTemp, setUsersTemp] = React.useState(users)
-
-  React.useMemo(() => {
-    setUsersTemp(users)
-  }, [users])
+  const filterUsers = useMemo(() => users, [users]);
 
   return (
     <>
@@ -35,20 +28,20 @@ const AccountTable: React.FC<AccountTable> = props => {
               <td className='p-2 w-1/5 text-center'>Loading...</td>
             </tr>
           )}
-          {!isLoading && usersTemp.length === 0 && (
+          {!isLoading && filterUsers.length === 0 && (
             <tr className='border border-gray-200 text-slate-700 text-sm leading-6'>
               <td className='p-2 w-full text-center'>No data</td>
             </tr>
           )}
           {!isLoading &&
-            usersTemp.length > 0 &&
-            usersTemp.map(user => (
+            filterUsers.length > 0 &&
+            filterUsers.map(user => (
               <AccountTableRow key={user._id} user={user} />
             ))}
         </tbody>
       </table>
     </>
-  )
-}
+  );
+};
 
-export default AccountTable
+export default AccountTable;

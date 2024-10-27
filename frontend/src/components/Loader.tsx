@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 
 export type Loader = {
-  height: number
-  width: number
-  color: string
-}
+  height: number;
+  width: number;
+  color: string;
+};
 
 const Loader: React.FC<Loader> = ({ height, width, color }) => {
-  height ? height : (height = 16)
-  width ? width : (width = 16)
-  color ? color : (color = '#FF156D')
+  height ? height : (height = 16);
+  width ? width : (width = 16);
+  color ? color : (color = '#FF156D');
 
   return (
     <div className='flex items-center justify-center h-full'>
@@ -70,7 +70,7 @@ const Loader: React.FC<Loader> = ({ height, width, color }) => {
         </circle>
       </svg>
     </div>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader;

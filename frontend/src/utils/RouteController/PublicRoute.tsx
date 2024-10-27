@@ -1,15 +1,16 @@
-import { Outlet } from 'react-router-dom'
-import { useAuth } from './AuthProvider'
-import PrivateRoute from './PrivateRoute'
+import { Outlet } from 'react-router-dom';
+import { useAuth } from './Auth';
+import PrivateRoute from './PrivateRoute';
+import { TAuthContext } from './AuthProvider';
 
 const PublicRoute = () => {
-  const { isAuthenticated }: any = useAuth()
+  const { isAuthenticated }: TAuthContext = useAuth();
 
   if (isAuthenticated) {
-    return <PrivateRoute />
+    return <PrivateRoute />;
   } else {
-    return <Outlet />
+    return <Outlet />;
   }
-}
+};
 
-export default PublicRoute
+export default PublicRoute;

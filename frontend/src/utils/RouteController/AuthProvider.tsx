@@ -1,60 +1,82 @@
-import React from 'react'
-import { useLoginStore } from '../../stores/LoginState'
-import { setCookie, getCookie, deleteCookie } from '../../utils/cookies'
+import React, { ReactNode } from 'react';
+import { useLoginStore } from '../../stores/LoginState';
+import { setCookie, getCookie, deleteCookie } from '../../utils/cookies';
 
-const AuthContext = React.createContext<unknown>(undefined)
+export const AuthContext = React.createContext<unknown>(undefined);
 
-export const AuthProvider = ({ children }: any) => {
+type TAuthProvider = {
+  children: ReactNode;
+};
+
+export const AuthProvider = ({ children }: TAuthProvider) => {
   const {
     token,
     refreshToken,
     isAuthentic,
     verify,
     logout: signout,
-  } = useLoginStore()
+  } = useLoginStore();
 
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     const checkCookie = async () => {
-      setIsLoading(true)
-      const tokenc = getCookie('token')
-      const refreshToken = getCookie('refreshToken')
-      await verify({ token: tokenc, refreshToken: refreshToken })
-      setIsLoading(false)
-    }
-    checkCookie()
-  }, [])
+      setIsLoading(true);
+      const tempToken = getCookie('token');
+      const tokenc: string | null =
+        typeof tempToken === 'string' && tempToken != '' ? tempToken : null;
+      const tempRefreshToken = getCookie('refreshToken');
+      const refreshTokenc: string | null =
+        typeof tempRefreshToken === 'string' && tempRefreshToken != ''
+          ? tempRefreshToken
+          : null;
 
-  const login = () => {
-    let tokenc = getCookie('token')
-    let refreshTokenc = getCookie('refreshToken')
-    const tempToken = token || tokenc || ''
-    const tempRefreshToken = refreshToken || refreshTokenc || ''
-    setCookie('token', tempToken, '30')
-    setCookie('refreshToken', tempRefreshToken, '30')
-  }
+      type Verify = {
+        token: string | null;
+        refreshToken: string | null;
+      };
+
+      const tokens: Verify = {
+        token: tokenc,
+        refreshToken: refreshTokenc,
+      };
+
+      verify(tokens);
+      setIsLoading(false);
+    };
+    checkCookie();
+  }, [verify]);
+
+  const loginAuth = () => {
+    const tokenc = getCookie('token');
+    const refreshTokenc = getCookie('refreshToken');
+    const tempToken = token || tokenc || '';
+    const tempRefreshToken = refreshToken || refreshTokenc || '';
+    setCookie('token', tempToken, 30);
+    setCookie('refreshToken', tempRefreshToken, 30);
+  };
 
   const logout = () => {
-    deleteCookie('token')
-    deleteCookie('refreshToken')
-    signout()
-  }
+    deleteCookie('token');
+    deleteCookie('refreshToken');
+    signout();
+  };
 
-  const isAuthenticated = isAuthentic
+  const isAuthenticated = isAuthentic;
 
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, isLoading }}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
+  const params: TAuthContext = {
+    isAuthenticated,
+    loginAuth,
+    logout,
+    isLoading,
+  };
 
-export const useAuth = () => {
-  const context = React.useContext(AuthContext)
+  return <AuthContext.Provider value={params}>{children}</AuthContext.Provider>;
+};
 
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider')
-  }
-  return context
-}
+export type TAuthContext = {
+  isAuthenticated?: boolean | null;
+  loginAuth?: () => void;
+  logout?: () => void;
+  isLoading?: boolean;
+};
