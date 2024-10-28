@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoginStore } from '../../stores/LoginState';
+import { useLoginStore } from '../../stores/loginStore';
 
 export type RegisterForm = {
   isLoading: boolean;

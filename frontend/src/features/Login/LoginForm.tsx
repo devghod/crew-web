@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoginStore } from '../../stores/LoginState';
+import { useLoginStore } from '../../stores/loginStore';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/RouteController/Auth';
 import { TAuthContext } from '../../utils/RouteController/AuthProvider';

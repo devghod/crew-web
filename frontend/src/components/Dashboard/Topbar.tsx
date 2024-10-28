@@ -1,19 +1,27 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logos/crew-sm.png';
 import { useAuth } from '../../utils/RouteController/Auth';
-import { useLoginStore } from '../../stores/LoginState';
+import { useLoginStore } from '../../stores/loginStore';
+import { TAuthContext } from '../../utils/RouteController/AuthProvider';
+import { TCompany } from '../../types/CompanyType';
 
-const Topbar: React.FC = () => {
-  const [showOptions, setShowOptions] = React.useState(false);
-  const [company, setCompany] = React.useState({});
-  const { logout: signout } = useAuth();
+const Topbar = () => {
+  const [showOptions, setShowOptions] = useState(false);
+  const [company, setCompany] = useState<TCompany>();
+  const { logout: signout }: TAuthContext = useAuth();
   const { token, refreshToken } = useLoginStore();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      if (!event.target.closest('.relative.inline-block.text-left')) {
+      if (
+        !event ||
+        !(event.target as HTMLElement) ||
+        !(event.target as HTMLElement).closest(
+          '.relative.inline-block.text-left',
+        )
+      ) {
         setShowOptions(false);
       }
     };
@@ -23,9 +31,10 @@ const Topbar: React.FC = () => {
     };
   }, [showOptions]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleCompany = () => {
       setCompany({
+        _id: '1',
         logo: Logo,
         name: '',
         description: 'CREW Logo',
@@ -48,7 +57,7 @@ const Topbar: React.FC = () => {
   };
 
   const handleSignOut = async () => {
-    signout();
+    signout && signout();
 
     if (!token && !refreshToken) {
       navigate('/login');
@@ -61,8 +70,8 @@ const Topbar: React.FC = () => {
       <div className='col-start-1 col-end-3 self-center mx-5'>
         <img
           className='max-w-24'
-          src={company.logo}
-          alt={company.description}
+          src={company?.logo ? company.logo : ''}
+          alt={company?.description ? company.description : ''}
         />
       </div>
       <div className='col-end-7 col-span-1 self-center'>

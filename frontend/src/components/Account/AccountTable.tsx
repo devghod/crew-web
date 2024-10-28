@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useAccountStore } from '../../stores/AccountState';
+import { useAccountStore } from '../../stores/accountStore';
 import AccountTableRow from './AccountTableRow';
 
 const AccountTable = () => {

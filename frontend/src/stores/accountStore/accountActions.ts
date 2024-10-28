@@ -1,31 +1,21 @@
-import { create } from 'zustand';
-import { TUser, TStatistics } from '../types/AccountType';
-import { getCookie } from '../utils/cookies';
+import { StateCreator } from 'zustand';
+import { AccountState } from './accountState';
+import { getCookie } from '../../utils/cookies';
 
-export type AccountState = {
-  user: object;
-  users: TUser[];
-  statistics: TStatistics;
-  message: string;
-  isLoading: boolean;
-  getUser: (id: number) => void;
-  getUsers: () => void;
-  getUsersStatistics: () => void;
+export type AccountActions = {
+  getUser: (id: number) => Promise<void>;
+  getUsers: () => Promise<void>;
+  getUsersStatistics: () => Promise<void>;
 };
 
-export const useAccountStore = create<AccountState>()((set, get) => ({
-  user: {},
-  users: [],
-  statistics: {
-    _id: null,
-    totalCount: 0,
-    activeCount: 0,
-    inactiveCount: 0,
-    softDeleteCount: 0,
-    holdCount: 0,
-  },
-  message: '',
-  isLoading: false,
+export type AccountStore = AccountState & AccountActions;
+
+export const createAccountActions: StateCreator<
+  AccountStore,
+  [],
+  [],
+  AccountActions
+> = (set, get) => ({
   getUser: async (id: number) => {
     try {
       set({ isLoading: true });
@@ -34,21 +24,22 @@ export const useAccountStore = create<AccountState>()((set, get) => ({
       );
 
       if (result.ok) {
-        await result.json();
+        const data = await result.json();
+        set({ user: data, isLoading: false });
+      } else {
         set({ isLoading: false });
       }
-      set({ isLoading: false });
     } catch (err) {
-      console.log('Error', err);
+      console.error('Error', err);
       set({ isLoading: false });
     }
   },
+
   getUsers: async () => {
     try {
       set({ isLoading: true });
       const token = getCookie('token');
       const authToken = `Bearer ${token}`;
-
       const result = await fetch('http://localhost:4001/api/user/get-users', {
         method: 'GET',
         headers: {
@@ -58,23 +49,22 @@ export const useAccountStore = create<AccountState>()((set, get) => ({
       });
 
       const { success, data, message } = await result.json();
-
       if (result.ok && success) {
         get().getUsersStatistics();
-        set(() => ({ users: data }));
-        set(() => ({ isLoading: false }));
+        set({ users: data, isLoading: false });
       } else {
-        set({ message: message });
+        set({ message });
       }
     } catch (err) {
-      set(() => ({ isLoading: false }));
+      console.error('Error', err);
+      set({ isLoading: false });
     }
   },
+
   getUsersStatistics: async () => {
     try {
       const token = getCookie('token');
       const authToken = `Bearer ${token}`;
-
       const result = await fetch(
         'http://localhost:4001/api/user/get-users-statistics',
         {
@@ -87,15 +77,14 @@ export const useAccountStore = create<AccountState>()((set, get) => ({
       );
 
       const { success, data, message } = await result.json();
-
       if (result.ok && success) {
-        set(() => ({ statistics: data }));
-        set(() => ({ isLoading: false }));
+        set({ statistics: data, isLoading: false });
       } else {
-        set({ message: message });
+        set({ message });
       }
     } catch (err) {
-      console.log(`Error ${err}`);
+      console.error('Error', err);
+      set({ isLoading: false });
     }
   },
-}));
+});

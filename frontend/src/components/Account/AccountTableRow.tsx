@@ -14,7 +14,7 @@ export type AccountTableRow = {
 
 const AccountTableRow = memo((props: AccountTableRow) => {
   const { user } = props;
-
+  
   return (
     <tr className='border border-gray-200 text-slate-700 text-sm leading-6'>
       <td className='p-2 w-1/5 text-left'>{user._id}</td>

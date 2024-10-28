@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useLoginStore } from '../../stores/LoginState';
+import { useLoginStore } from '../../stores/loginStore';
 import { setCookie, getCookie, deleteCookie } from '../../utils/cookies';
 
 export const AuthContext = React.createContext<unknown>(undefined);

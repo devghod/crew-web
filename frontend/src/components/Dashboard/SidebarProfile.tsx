@@ -1,6 +1,6 @@
 import React from 'react';
 import BlankProfile from '../../assets/blank-profile-picture.png';
-import { useLoginStore } from '../../stores/LoginState';
+import { useLoginStore } from '../../stores/loginStore';
 
 export type Profile = {
   _id?: number;

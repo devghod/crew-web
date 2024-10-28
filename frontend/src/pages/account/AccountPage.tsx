@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountTable from '../../components/Account/AccountTable';
-import { useAccountStore } from '../../stores/AccountState';
+import { useAccountStore } from '../../stores/accountStore';
 import AccountStats from '../../components/Account/AccountStats';
 
 const AccountPage = () => {

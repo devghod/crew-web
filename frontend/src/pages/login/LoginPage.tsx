@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from '../../features/Login/LoginForm';
 import RegisterForm from '../../features/Login/RegisterForm';
-import { useLoginStore } from '../../stores/LoginState';
+import { useLoginStore } from '../../stores/loginStore';
 import { Configuration as config } from '../../constants/configuration';
 
 const LoginPage: React.FC = () => {
