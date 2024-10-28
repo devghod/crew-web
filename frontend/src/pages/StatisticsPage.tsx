@@ -1,6 +1,4 @@
-import React from 'react';
-
-const StatisticsPage: React.FC = () => {
+const StatisticsPage = () => {
   return <div>Statistics Page</div>;
 };
 
