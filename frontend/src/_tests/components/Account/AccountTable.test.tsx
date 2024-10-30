@@ -1,41 +1,39 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import AccountTable from '../../../components/Account/AccountTable';
+import { useAccountStore } from '../../hooks/Account.hooks';
 
-const mockUseAccountStore = jest.fn();
+jest.mock('../../hooks/Account.hooks', () => ({
+  useAccountStore: jest.fn(), // Create a mock function for the hook
+}));
 
 describe('AccountTable', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
+  const RenderAccountTable = () => {
+    const { users, isLoading } = useAccountStore();
+    render(<AccountTable users={users} isLoading={isLoading} />);
+  };
+
   it('renders loading state', () => {
-    mockUseAccountStore.mockReturnValue({
+    (useAccountStore as jest.Mock).mockReturnValue({
       users: [],
       isLoading: true,
     });
 
-    render(
-      <AccountTable
-        users={mockUseAccountStore().users}
-        isLoading={mockUseAccountStore().isLoading}
-      />,
-    );
+    RenderAccountTable();
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
   });
 
   it('renders no data message', () => {
-    mockUseAccountStore.mockReturnValue({
+    (useAccountStore as jest.Mock).mockReturnValue({
       users: [],
       isLoading: false,
     });
 
-    render(
-      <AccountTable
-        users={mockUseAccountStore().users}
-        isLoading={mockUseAccountStore().isLoading}
-      />,
-    );
+    RenderAccountTable();
     expect(screen.getByText(/no data/i)).toBeInTheDocument();
   });
 
@@ -57,17 +55,12 @@ describe('AccountTable', () => {
       },
     ];
 
-    mockUseAccountStore.mockReturnValue({
+    (useAccountStore as jest.Mock).mockReturnValue({
       users: mockUsers,
       isLoading: false,
     });
 
-    render(
-      <AccountTable
-        users={mockUseAccountStore().users}
-        isLoading={mockUseAccountStore().isLoading}
-      />,
-    );
+    RenderAccountTable();
 
     expect(screen.getByText('user1')).toBeInTheDocument();
     expect(screen.getByText('user2')).toBeInTheDocument();
