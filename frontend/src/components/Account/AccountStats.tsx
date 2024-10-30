@@ -1,11 +1,10 @@
-import * as React from 'react';
 import { TStatistics } from '../../types/AccountType';
 
-export type AccountStats = {
+export type TAccountStats = {
   statistics: TStatistics;
 };
 
-const AccountStats: React.FC<AccountStats> = props => {
+const AccountStats = (props: TAccountStats) => {
   const { statistics } = props;
 
   return (
