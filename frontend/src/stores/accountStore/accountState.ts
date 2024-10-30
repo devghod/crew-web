@@ -1,6 +1,6 @@
 import { TUser, TStatistics } from '../../types/AccountType';
 
-export type AccountState = {
+export type TAccountState = {
   user: object;
   users: TUser[];
   statistics: TStatistics;
@@ -8,7 +8,7 @@ export type AccountState = {
   isLoading: boolean;
 };
 
-export const initialAccountState: AccountState = {
+export const initialAccountState: TAccountState = {
   user: {},
   users: [],
   statistics: {

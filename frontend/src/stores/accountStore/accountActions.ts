@@ -1,20 +1,20 @@
 import { StateCreator } from 'zustand';
-import { AccountState } from './accountState';
+import { TAccountState } from './accountState';
 import { getCookie } from '../../utils/cookies';
 
-export type AccountActions = {
+export type TAccountActions = {
   getUser: (id: number) => Promise<void>;
   getUsers: () => Promise<void>;
   getUsersStatistics: () => Promise<void>;
 };
 
-export type AccountStore = AccountState & AccountActions;
+export type TAccountStore = TAccountState & TAccountActions;
 
 export const createAccountActions: StateCreator<
-  AccountStore,
+  TAccountStore,
   [],
   [],
-  AccountActions
+  TAccountActions
 > = (set, get) => ({
   getUser: async (id: number) => {
     try {

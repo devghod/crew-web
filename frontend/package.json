@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "format": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "format:fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "test": "cross-env NODE_ENV=test jest tests/"
+    "test": "cross-env NODE_ENV=test jest _tests/"
   },
   "dependencies": {
     "moment-timezone": "^0.5.45",

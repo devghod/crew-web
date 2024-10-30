@@ -1,6 +1,6 @@
 import { TCredentials, TRegistrationForm } from '../../types/LoginTypes';
 
-export type LoginState = {
+export type TLoginState = {
   profile: object;
   isAuthentic: boolean | null;
   token: string;
@@ -12,7 +12,7 @@ export type LoginState = {
   message: string;
 };
 
-export const initialLoginState: LoginState = {
+export const initialLoginState: TLoginState = {
   profile: {},
   isAuthentic: null,
   token: '',

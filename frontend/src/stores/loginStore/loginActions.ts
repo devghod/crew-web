@@ -1,9 +1,9 @@
 import { StateCreator } from 'zustand';
-import { LoginState } from './loginState';
+import { TLoginState } from './loginState';
 import { setCookie, deleteCookie } from '../../utils/cookies';
 import { TCredentials, TRegistrationForm } from '../../types/LoginTypes';
 
-export type LoginActions = {
+export type TLoginActions = {
   verify: (tokens: {
     token?: string | null;
     refreshToken?: string | null;
@@ -17,13 +17,13 @@ export type LoginActions = {
   setFormDataRegistration: (data: TRegistrationForm) => void;
 };
 
-export type LoginStore = LoginState & LoginActions;
+export type TLoginStore = TLoginState & TLoginActions;
 
 export const createLoginActions: StateCreator<
-  LoginStore,
+  TLoginStore,
   [],
   [],
-  LoginActions
+  TLoginActions
 > = (set, get, store) => ({
   login: async () => {
     try {

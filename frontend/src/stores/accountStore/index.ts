@@ -1,10 +1,10 @@
 import { create } from 'zustand';
-import { AccountState, initialAccountState } from './accountState';
-import { AccountActions, createAccountActions } from './accountActions';
+import { TAccountState, initialAccountState } from './accountState';
+import { TAccountActions, createAccountActions } from './accountActions';
 
-export type AccountStore = AccountState & AccountActions;
+export type TAccountStore = TAccountState & TAccountActions;
 
-export const useAccountStore = create<AccountStore>()((set, get, store) => ({
+export const useAccountStore = create<TAccountStore>()((set, get, store) => ({
   ...initialAccountState,
   ...createAccountActions(set, get, store),
 }));

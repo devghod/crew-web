@@ -4,7 +4,7 @@ import { useAccountStore } from '../../stores/accountStore';
 import AccountStats from '../../components/Account/AccountStats';
 
 const AccountPage = () => {
-  const { getUsers, statistics } = useAccountStore();
+  const { getUsers, statistics, users, isLoading } = useAccountStore();
 
   React.useEffect(() => {
     const fnGetUsers = () => getUsers();
@@ -17,7 +17,7 @@ const AccountPage = () => {
         <AccountStats statistics={statistics} />
       </div>
       <div className='border border-0 bg-white p-4 rounded'>
-        <AccountTable />
+        <AccountTable users={users} isLoading={isLoading} />
       </div>
     </div>
   );
