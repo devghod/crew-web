@@ -10,8 +10,7 @@ export type LoginForm = {
 const LoginForm: React.FC<LoginForm> = props => {
   const { isLoading, handleFormType } = props;
 
-  const { login, isError, message, credentials, setFormData } =
-    useLoginStore();
+  const { login, isError, message, credentials, setFormData } = useLoginStore();
 
   const onSubmit = async () => {
     login();

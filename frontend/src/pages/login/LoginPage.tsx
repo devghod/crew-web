@@ -20,15 +20,13 @@ const LoginPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isAuthentic) navigate('/dashboard')
-  }, [isAuthentic, navigate])
+    if (isAuthentic) navigate('/dashboard');
+  }, [isAuthentic, navigate]);
 
   return (
     <div className='w-full h-screen grid md:grid-cols-4 content-center'>
-      {(isLoading && formType === 'login') && (
-        <SuspenseLoader />
-      )} 
-      {(!isLoading && !isAuthentic) && (
+      {isLoading && formType === 'login' && <SuspenseLoader />}
+      {!isLoading && !isAuthentic && (
         <div className='md:col-start-2 md:col-span-2'>
           <div className='max-w-96 rounded-lg text-slate-500 mx-auto md:divide-y md:border md:shadow'>
             <div className=''>

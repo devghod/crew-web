@@ -46,14 +46,13 @@ export const createLoginActions: StateCreator<
 
         setTimeout(() => {
           if (success) {
-              resolve("Operation completed successfully!");
+            resolve('Operation completed successfully!');
           } else {
-              reject("Operation failed.");
+            reject('Operation failed.');
           }
-        }, 5000)
-
+        }, 5000);
       });
-    
+
       if (success) {
         await myDelay;
         setCookie('token', token, 30);
