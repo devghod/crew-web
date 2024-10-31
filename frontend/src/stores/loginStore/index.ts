@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { LoginState, initialLoginState } from './loginState';
-import { LoginActions, createLoginActions } from './loginActions';
+import { TLoginState, initialLoginState } from './loginState';
+import { TLoginActions, createLoginActions } from './loginActions';
 
-export type LoginStore = LoginState & LoginActions;
+export type LoginStore = TLoginState & TLoginActions;
 
 export const useLoginStore = create<LoginStore>()((set, get, store) => ({
   ...initialLoginState,

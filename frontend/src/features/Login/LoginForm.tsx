@@ -1,8 +1,5 @@
 import React from 'react';
 import { useLoginStore } from '../../stores/loginStore';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../utils/RouteController/Auth';
-import { TAuthContext } from '../../utils/RouteController/AuthProvider';
 
 export type LoginForm = {
   isLoading: boolean;
@@ -13,16 +10,8 @@ export type LoginForm = {
 const LoginForm: React.FC<LoginForm> = props => {
   const { isLoading, handleFormType } = props;
 
-  const { login, isError, message, credentials, setFormData, token } =
+  const { login, isError, message, credentials, setFormData } =
     useLoginStore();
-
-  const { loginAuth }: TAuthContext = useAuth();
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    loginAuth && loginAuth();
-    if (token) navigate('/dashboard');
-  }, [token, loginAuth, navigate]);
 
   const onSubmit = async () => {
     login();

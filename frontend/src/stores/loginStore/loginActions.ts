@@ -40,7 +40,22 @@ export const createLoginActions: StateCreator<
       const { success, message, token, refreshToken, profile } =
         await result.json();
 
+      // custom delay
+      const myDelay = new Promise((resolve, reject) => {
+        const success = true;
+
+        setTimeout(() => {
+          if (success) {
+              resolve("Operation completed successfully!");
+          } else {
+              reject("Operation failed.");
+          }
+        }, 5000)
+
+      });
+    
       if (success) {
+        await myDelay;
         setCookie('token', token, 30);
         setCookie('refreshToken', refreshToken, 30);
         get().resetFormData();
