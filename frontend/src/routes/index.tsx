@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PrivateRoute from '../utils/RouteController/PrivateRoute';
 import PublicRoute from '../utils/RouteController/PublicRoute';
@@ -12,7 +12,7 @@ const LoginPage = lazy(() => import('../pages/login'));
 const StatisticsPage = lazy(() => import('../pages/StatisticsPage'));
 const AccountPage = lazy(() => import('../pages/account'));
 
-const Routers: React.FC = () => {
+const Routers = () => {
   return (
     <>
       <BrowserRouter>

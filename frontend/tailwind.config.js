@@ -1,6 +1,7 @@
 import fluid, { extract } from 'fluid-tailwind';
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
+  darkMode: 'selector',
   content: {
     files: ['./src/**/*.{js,jsx,ts,tsx}'],
     extract,
