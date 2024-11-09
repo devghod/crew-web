@@ -44,7 +44,7 @@ const AccountPage = () => {
         <AccountStats statistics={statistics} />
       </div>
       <div className='border border-0 bg-white p-4 rounded-lg dark:bg-gray-800'>
-        <AccountController handleSearch={handleSearch} />
+        {!isLoading && (<AccountController handleSearch={handleSearch} />)}
         <AccountTable users={filterUsers} isLoading={isLoading} />
       </div>
     </div>
