@@ -1,6 +1,6 @@
 const currencyCode = 'PHP';
 
-export const currencyFormat = currency => {
+export const currencyFormat = (currency:number) => {
   const currFormat = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currencyCode,

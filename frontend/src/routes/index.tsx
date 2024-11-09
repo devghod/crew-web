@@ -14,27 +14,25 @@ const AccountPage = lazy(() => import('../pages/account'));
 
 const Routers = () => {
   return (
-    <>
-      <BrowserRouter>
-        <Suspense fallback={<SuspenseLoader />}>
-          <AuthProvider>
-            <Routes>
-              <Route element={<PublicRoute />}>
-                <Route path='' element={<RootPage />} />
-                <Route path='login' element={<LoginPage />} />
+    <BrowserRouter>
+      <Suspense fallback={<SuspenseLoader />}>
+        <AuthProvider>
+          <Routes>
+            <Route element={<PublicRoute />}>
+              <Route path='' element={<RootPage />} />
+              <Route path='login' element={<LoginPage />} />
+            </Route>
+            <Route element={<PrivateRoute />}>
+              <Route path='/dashboard' element={<Dashboard />}>
+                <Route index element={<StatisticsPage />} />
+                <Route path='account' element={<AccountPage />} />
               </Route>
-              <Route element={<PrivateRoute />}>
-                <Route path='/dashboard' element={<Dashboard />}>
-                  <Route index element={<StatisticsPage />} />
-                  <Route path='account' element={<AccountPage />} />
-                </Route>
-              </Route>
-              <Route path='*' element={<ErrorPage />} />
-            </Routes>
-          </AuthProvider>
-        </Suspense>
-      </BrowserRouter>
-    </>
+            </Route>
+            <Route path='*' element={<ErrorPage />} />
+          </Routes>
+        </AuthProvider>
+      </Suspense>
+    </BrowserRouter>
   );
 };
 

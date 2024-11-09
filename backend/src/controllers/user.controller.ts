@@ -35,7 +35,6 @@ export const getUsers = async (req: Request, res: Response) => {
   try {
 
     const users = await UserModel.find({ 
-      // status: "active" ,
       deleted_at: { $eq: null },
     });
 

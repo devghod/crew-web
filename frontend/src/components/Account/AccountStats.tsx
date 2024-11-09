@@ -9,7 +9,7 @@ const AccountStats = (props: TAccountStats) => {
 
   return (
     <div className='grid gap-x-4 grid-cols-4'>
-      <div className='border border-0 bg-white p-4 rounded'>
+      <div className='border border-0 bg-white p-4 rounded-lg dark:bg-gray-800 dark:text-slate-300 ease-in-out duration-500'>
         <div className='grid grid-cols-3'>
           <div className='grid grid-cols-1 gap-y-2 col-span-2'>
             <div className='leading-6 text-sm font-medium'>Active</div>
@@ -35,7 +35,7 @@ const AccountStats = (props: TAccountStats) => {
           </div>
         </div>
       </div>
-      <div className='border border-0 bg-white p-4 rounded'>
+      <div className='border border-0 bg-white p-4 rounded-lg dark:bg-gray-800 dark:text-slate-300 ease-in-out duration-500'>
         <div className='grid grid-cols-3'>
           <div className='grid grid-cols-1 gap-y-2 col-span-2'>
             <div className='leading-6 text-sm font-medium'>Inactive</div>
@@ -61,7 +61,7 @@ const AccountStats = (props: TAccountStats) => {
           </div>
         </div>
       </div>
-      <div className='border border-0 bg-white p-4 rounded col-span-2'>
+      <div className='border border-0 bg-white p-4 rounded-lg dark:bg-gray-800 dark:text-slate-300 ease-in-out duration-500'>
         <div className='text-xs leading-relaxed flex'>
           <div className='mr-2 font-semibold text-blue-500'>
             {statistics.totalCount}

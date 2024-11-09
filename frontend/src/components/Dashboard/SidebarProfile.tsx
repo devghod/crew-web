@@ -52,8 +52,7 @@ const SidebarProfile = (props: SidebarProfile) => {
             <img
               className={`rounded-full bg-white h-full transition-width duration-700 ease-in-out
                 ${shrink && 'w-12'}
-                ${!shrink && 'w-16'}`
-              }
+                ${!shrink && 'w-16'}`}
               src={
                 user?.image && user?.image !== '' ? user.image : BlankProfile
               }

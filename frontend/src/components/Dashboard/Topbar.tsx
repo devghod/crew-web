@@ -67,7 +67,7 @@ const Topbar = () => {
   };
 
   return (
-    <div className='grid grid-cols-6 gap-4 border-b h-20 dark:bg-gray-800'>
+    <div className='grid grid-cols-6 gap-4 border-b h-20 dark:border-gray-700 dark:bg-gray-800 ease-in-out duration-500'>
       <div className='col-start-1 col-end-3 self-center mx-5'>
         <img
           className='max-w-24'

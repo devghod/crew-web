@@ -18,7 +18,7 @@ const DashboardBody: React.FC = () => {
       >
         <Sidebar handleShrink={handleShrink} shrink={shrink} />
       </div>
-      <div className='flex-1 px-4 bg-gray-100 overflow-y-auto overflow-x-hidden'>
+      <div className='flex-1 px-4 bg-gray-100 dark:bg-gray-800/75 overflow-y-auto overflow-x-hidden'>
         <div className='my-2'>
           <Pathname path={path} />
         </div>
@@ -45,7 +45,7 @@ const Pathname = (data: TData) => {
           <div key={index} className=''>
             <span
               key={index}
-              className='font-medium text-xs text-gray-400 hover:text-gray-900 capitalize'
+              className='font-medium text-xs text-gray-400 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-200 capitalize'
             >
               {item}
             </span>
