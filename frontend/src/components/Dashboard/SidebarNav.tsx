@@ -10,7 +10,7 @@ export type SidebarNav = {
 const SidebarNav: React.FC<SidebarNav> = ({ navigates, shrink }) => {
   return (
     <nav>
-      <div className='flex flex-col gap-1 p-4'>
+      <div className='flex flex-col space-y-1 p-4'>
         {navigates.map((curr: Navigate, idx: number) => (
           <SidebarNavLink
             key={idx}

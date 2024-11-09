@@ -2,7 +2,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from './Auth';
 import { TAuthContext } from './AuthProvider';
 import SuspenseLoader from '../../components/SuspenseLoader';
-import { isDark } from '../darkMode';
+import { isDark, setIsDark } from '../darkMode';
 
 const PrivateRoute = () => {
   const { isAuthenticated, isLoading }: TAuthContext = useAuth();
@@ -12,11 +12,10 @@ const PrivateRoute = () => {
   }
 
   if (isAuthenticated) {
-    return (
-      <div className={`${isDark() ? 'dark' : ''}`}>
-        <Outlet />
-      </div>
-    );
+    const dark = isDark();
+    setIsDark(dark);
+
+    return <Outlet />;
   } else {
     return <Navigate to='/login' replace />;
   }

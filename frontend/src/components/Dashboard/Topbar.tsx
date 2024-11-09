@@ -78,7 +78,7 @@ const Topbar = () => {
       <div className='col-end-7 col-span-1 self-center'>
         <div className='flex space-x-4 justify-end mx-5'>
           <div className='self-center'></div>
-          <div className='relative inline-block text-left'>
+          <div className='relative inline-block text-left content-center'>
             <LightSwitch />
           </div>
           <div className='relative inline-block text-left'>
@@ -86,7 +86,7 @@ const Topbar = () => {
               <button
                 onClick={onShowOptions}
                 type='button'
-                className='inline-flex w-full justify-center gap-x-1.5 rounded-full bg-white px-3 py-2'
+                className='inline-flex w-full justify-center gap-x-1.5 rounded-full px-3 py-2'
                 id='menu-button'
                 aria-expanded='true'
                 aria-haspopup='true'
@@ -108,7 +108,7 @@ const Topbar = () => {
             <div
               className={
                 showOptions
-                  ? 'absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
+                  ? 'absolute right-0 z-10 mt-2 w-56 origin-top-right text-slate-600 dark:text-slate-400 rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
                   : 'hidden'
               }
               role='menu'
@@ -118,31 +118,39 @@ const Topbar = () => {
               <div className='py-1' role='none'>
                 <a
                   href='#'
-                  className='text-gray-700 block px-4 py-2 text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block px-4 py-2 text-sm'
                   role='menuitem'
                   id='menu-item-0'
                 >
-                  Account settings
+                  Profile
                 </a>
                 <a
                   href='#'
-                  className='text-gray-700 block px-4 py-2 text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block px-4 py-2 text-sm'
                   role='menuitem'
                   id='menu-item-1'
+                >
+                  Settings
+                </a>
+                <a
+                  href='#'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block px-4 py-2 text-sm'
+                  role='menuitem'
+                  id='menu-item-2'
                 >
                   Support
                 </a>
                 <a
                   href='#'
-                  className='text-gray-700 block px-4 py-2 text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block px-4 py-2 text-sm'
                   role='menuitem'
-                  id='menu-item-2'
+                  id='menu-item-3'
                 >
                   License
                 </a>
                 <button
                   onClick={() => handleSignOut()}
-                  className='text-gray-700 block w-full px-4 py-2 text-left text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block w-full px-4 py-2 text-left text-sm'
                   role='menuitem'
                   id='menu-item-3'
                 >

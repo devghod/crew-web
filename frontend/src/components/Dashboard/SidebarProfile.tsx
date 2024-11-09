@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import BlankProfile from '../../assets/blank-profile-picture.png';
 import { useLoginStore } from '../../stores/loginStore';
 
@@ -17,17 +17,13 @@ export type SidebarProfile = {
   handleShrink: () => void;
 };
 
-const SidebarProfile: React.FC<SidebarProfile> = props => {
+const SidebarProfile = (props: SidebarProfile) => {
   const { handleShrink, shrink } = props;
   const { isLoading, profile } = useLoginStore();
-  const [user, setUser] = React.useState<Profile>();
+  const [user, setUser] = useState<Profile>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setUser(profile);
-  }, [profile]);
-
-  React.useMemo(() => {
-    return profile;
   }, [profile]);
 
   return (
@@ -43,7 +39,7 @@ const SidebarProfile: React.FC<SidebarProfile> = props => {
       )}
       {!isLoading && (
         <div
-          className={`h-20 grid items-center bg-slate-100 shadow shadow-inner
+          className={`h-20 grid items-center bg-gray-100 dark:bg-gray-300 shadow shadow-inner
             ${shrink && 'grid-cols-5'}
             ${!shrink && 'grid-cols-7 pl-2 gap-2'}`}
         >
@@ -54,7 +50,10 @@ const SidebarProfile: React.FC<SidebarProfile> = props => {
               ${!shrink && 'col-span-2'}`}
           >
             <img
-              className='rounded-full bg-white w-full h-full transition duration-700 ease-in-out'
+              className={`rounded-full bg-white h-full transition-width duration-700 ease-in-out
+                ${shrink && 'w-12'}
+                ${!shrink && 'w-16'}`
+              }
               src={
                 user?.image && user?.image !== '' ? user.image : BlankProfile
               }
@@ -62,13 +61,13 @@ const SidebarProfile: React.FC<SidebarProfile> = props => {
             />
           </div>
           <div
-            className={`col-span-4 transition-visibility duration-700
+            className={`col-span-4 transition-all transition-visibility duration-700
               ${shrink && 'hidden'}`}
           >
-            <p className='text-sm font-bold max-w-24 text-pretty'>
+            <p className='text-sm font-bold max-w- text-pretty'>
               {user?.first_name} {user?.last_name}
             </p>
-            <p className='text-xs text-gray-500 max-w-24 truncate'>
+            <p className='text-xs text-gray-500 max-w-30 truncate'>
               {user?.email}
             </p>
           </div>

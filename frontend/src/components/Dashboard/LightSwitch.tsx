@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DarkIcon, LightIcon } from '../../utils/icons';
 import { isDark, setIsDark } from '../../utils/darkMode';
 
 const LightSwitch = () => {
-  const [dark, setDark] = useState(isDark());
+  const [dark, setDark] = useState<boolean | null>(null);
+
+  useEffect(() => setDark(isDark()), []);
 
   function handleSwitch() {
     setDark(!dark);
-    setIsDark(dark);
+    setIsDark(!dark);
   }
 
   return (

@@ -91,7 +91,7 @@ const Sidebar: React.FC<Sidebar> = data => {
   };
 
   return (
-    <div className='border-r shadow ease-in-out duration-300 h-full'>
+    <div className='border-r shadow ease-in-out duration-300 h-full dark:bg-gray-800'>
       <SidebarProfile shrink={shrink} handleShrink={handleShrink} />
       <SidebarNav shrink={shrink} navigates={navigates} />
     </div>
