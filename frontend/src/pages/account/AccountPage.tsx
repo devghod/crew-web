@@ -16,21 +16,26 @@ const AccountPage = () => {
 
   const filterUsers = useMemo(() => {
     if (search.length > 0 && !isWhiteSpace(search)) {
-      return users.filter((user) => {
+      return users.filter(user => {
         const data = search.toLocaleLowerCase();
 
-        if (user._id.toLowerCase().includes(data)) return user;
-        if (user.email.toLowerCase().includes(data)) return user;
-        if (user.username.toLowerCase().includes(data)) return user;
-        if (user.date_created.toLowerCase().includes(data)) return user;
+        if (
+          [
+            user._id.toLowerCase(),
+            user.email.toLowerCase(),
+            user.username.toLowerCase(),
+            user.date_created.toLowerCase(),
+          ].includes(data)
+        )
+          return user;
       });
     } else {
       return users;
     }
   }, [users, search]);
 
-  function handleSearch(data:string) {
-    setSearch(data)
+  function handleSearch(data: string) {
+    setSearch(data);
   }
 
   return (
