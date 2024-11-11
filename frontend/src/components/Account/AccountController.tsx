@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { AddAccountIcon, SearchIcon } from '../../utils/icons';
+import AccountModal from '../../features/Account/AccountModal';
 
 export type TAccountController = {
   handleSearch: (data: string) => void;
+  handleModalCreateUser: () => void;
+  modalCreateAccount: boolean;
 };
 
 const AccountController = (props: TAccountController) => {
-  const { handleSearch } = props;
+  const { handleSearch, modalCreateAccount, handleModalCreateUser } = props;
   const [search, setSearch] = useState('');
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -35,11 +38,17 @@ const AccountController = (props: TAccountController) => {
           </button>
         </div>
         <div className='flex'>
-          <button className='px-2 py-1 rounded-lg text-slate-200 bg-teal-500 hover:bg-teal-600'>
+          <button
+            onClick={handleModalCreateUser}
+            className='px-2 py-1 rounded-lg text-slate-200 bg-teal-500 hover:bg-teal-600'
+          >
             <AddAccountIcon />
           </button>
         </div>
       </div>
+      {modalCreateAccount && (
+        <AccountModal handleModal={handleModalCreateUser} />
+      )}
     </div>
   );
 };

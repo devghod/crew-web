@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../../app';
+import app from '../../../app';
 
 describe("User Controller", () => {
   
@@ -13,7 +13,7 @@ describe("User Controller", () => {
       message,
       success,
     } = result;
-    
+    console.log('>',result)
     expect(statusCode).toEqual(200);
     expect(result).toEqual({
       "success": true,

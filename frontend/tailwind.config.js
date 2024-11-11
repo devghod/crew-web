@@ -7,7 +7,11 @@ export default {
     extract,
   },
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+      },
+    },
     fontFamily: {
       satoshi: ['Satoshi', 'sans-serif'],
       inter: ['Inter', 'sans-serif'],

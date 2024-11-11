@@ -20,8 +20,8 @@ router.get('/get-users', authenticate, getUsers);
 router.get('/get-users-statistics', authenticate, getUsersStatistics);
 router.get('/get-users-selections', authenticate, getUsersSelections);
 router.post('/post-users-list', authenticate, postUsersList);
-router.post('/post-user', authenticate, createUser);
-router.put('/put-user/:id', authenticate, updateUser);
+router.post('/create-user', authenticate, createUser);
+router.put('/update-user/:id', authenticate, updateUser);
 router.put('/put-softdelete/:id', authenticate, softDelete);
 router.delete('/delete-user/:id', authenticate, deleteUser);
 

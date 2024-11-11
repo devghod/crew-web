@@ -1,7 +1,7 @@
 import { TUser, TStatistics } from '../../types/AccountType';
 
 export type TAccountState = {
-  user: object;
+  user: TUser;
   users: TUser[];
   statistics: TStatistics;
   message: string;

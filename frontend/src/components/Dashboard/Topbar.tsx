@@ -118,7 +118,7 @@ const Topbar = () => {
               <div className='py-1' role='none'>
                 <a
                   href='#'
-                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block px-4 py-2 text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-500/20 block px-4 py-2 text-sm'
                   role='menuitem'
                   id='menu-item-0'
                 >
@@ -126,7 +126,7 @@ const Topbar = () => {
                 </a>
                 <a
                   href='#'
-                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block px-4 py-2 text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-500/20 block px-4 py-2 text-sm'
                   role='menuitem'
                   id='menu-item-1'
                 >
@@ -134,7 +134,7 @@ const Topbar = () => {
                 </a>
                 <a
                   href='#'
-                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block px-4 py-2 text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-500/20 block px-4 py-2 text-sm'
                   role='menuitem'
                   id='menu-item-2'
                 >
@@ -142,7 +142,7 @@ const Topbar = () => {
                 </a>
                 <a
                   href='#'
-                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block px-4 py-2 text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-500/20 block px-4 py-2 text-sm'
                   role='menuitem'
                   id='menu-item-3'
                 >
@@ -150,7 +150,7 @@ const Topbar = () => {
                 </a>
                 <button
                   onClick={() => handleSignOut()}
-                  className='hover:bg-gray-200 dark:hover:bg-yellow-800 block w-full px-4 py-2 text-left text-sm'
+                  className='hover:bg-gray-200 dark:hover:bg-yellow-500/20 block w-full px-4 py-2 text-left text-sm'
                   role='menuitem'
                   id='menu-item-3'
                 >
