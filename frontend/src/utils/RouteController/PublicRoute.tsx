@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import { useAuth } from './Auth';
 import PrivateRoute from './PrivateRoute';
-import { TAuthContext } from './AuthProvider';
+import { useAuthStore } from '../../stores/authStore';
 
 const PublicRoute = () => {
-  const { isAuthenticated }: TAuthContext = useAuth();
+  const { isAuthentic } = useAuthStore();
 
-  if (isAuthenticated) {
+  if (isAuthentic) {
     return <PrivateRoute />;
   } else {
     return <Outlet />;

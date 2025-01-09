@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logos/crew-sm.png';
 import { useAuth } from '../../utils/RouteController/Auth';
-import { useLoginStore } from '../../stores/loginStore';
+import { useAuthStore } from '../../stores/authStore';
 import { TAuthContext } from '../../utils/RouteController/AuthProvider';
 import { TCompany } from '../../types/CompanyType';
 import LightSwitch from './LightSwitch';
@@ -11,7 +11,7 @@ const Topbar = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [company, setCompany] = useState<TCompany>();
   const { logout: signout }: TAuthContext = useAuth();
-  const { token, refreshToken } = useLoginStore();
+  const { token, refreshToken } = useAuthStore();
   const navigate = useNavigate();
 
   useEffect(() => {

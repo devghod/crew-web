@@ -17,7 +17,7 @@ export type Sidebar = {
 
 const Sidebar: React.FC<Sidebar> = data => {
   const { handleShrink, shrink } = data;
-  const [navigates, setNavigates] = React.useState<Navigates>([]);
+  const [ navigates, setNavigates ] = React.useState<Navigates>([]);
 
   React.useEffect(() => handleNavigates(), []);
 

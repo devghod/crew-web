@@ -9,7 +9,7 @@ const AccountModal = (props: TAccountModal) => {
   const { handleModal } = props;
 
   return (
-    <div className='relative z-20 transition ease-in-out duration-300'>
+    <div className='relative z-20 transition ease-in-out duration-700'>
       <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center h-screen'>
         <div className='absolute'>
           <div className='bg-white dark:bg-gray-800 rounded-lg w-full'>

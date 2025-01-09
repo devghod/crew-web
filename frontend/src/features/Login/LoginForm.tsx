@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoginStore } from '../../stores/loginStore';
+import { useAuthStore } from '../../stores/authStore';
 
 export type LoginForm = {
   isLoading: boolean;
@@ -10,7 +10,7 @@ export type LoginForm = {
 const LoginForm: React.FC<LoginForm> = props => {
   const { isLoading, handleFormType } = props;
 
-  const { login, isError, message, credentials, setFormData } = useLoginStore();
+  const { login, isError, message, credentials, setFormData } = useAuthStore();
 
   const onSubmit = async () => {
     login();

@@ -3,22 +3,23 @@ import { useAuth } from './Auth';
 import { TAuthContext } from './AuthProvider';
 import SuspenseLoader from '../../components/SuspenseLoader';
 import { isDark, setIsDark } from '../darkMode';
+import { useAuthStore } from '../../stores/authStore';
 
 const PrivateRoute = () => {
-  const { isAuthenticated, isLoading }: TAuthContext = useAuth();
+  const { isAuthentic, isLoading } = useAuthStore();
 
   if (isLoading) {
     return <SuspenseLoader />;
   }
 
-  if (isAuthenticated) {
+  if (isAuthentic) {
     const dark = isDark();
     setIsDark(dark);
 
     return <Outlet />;
-  } else {
-    return <Navigate to='/login' replace />;
   }
+
+  return <Navigate to='/login' replace />;
 };
 
 export default PrivateRoute;

@@ -18,6 +18,7 @@ export const createAccountActions: StateCreator<
   [],
   TAccountActions
 > = (set, get) => ({
+
   createUser: async (body: object) => {
     try {
       set({ isLoading: true });
@@ -110,4 +111,5 @@ export const createAccountActions: StateCreator<
       set({ isLoading: false });
     }
   },
+  
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoginStore } from '../../stores/loginStore';
+import { useAuthStore } from '../../stores/authStore';
 
 export type RegisterForm = {
   isLoading: boolean;
@@ -10,7 +10,7 @@ export type RegisterForm = {
 const RegisterForm: React.FC<RegisterForm> = props => {
   const { isLoading, handleFormType } = props;
 
-  const { register, registration, setFormDataRegistration } = useLoginStore();
+  const { register, registration, setFormDataRegistration } = useAuthStore();
 
   const onRegister = async () => {
     register();

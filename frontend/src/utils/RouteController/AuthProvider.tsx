@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
-import { useLoginStore } from '../../stores/loginStore';
+import { ReactNode, useEffect, useState, createContext } from 'react';
+import { useAuthStore } from '../../stores/authStore';
 import { setCookie, getCookie, deleteCookie } from '../../utils/cookies';
 
-export const AuthContext = React.createContext<unknown>(undefined);
+export const AuthContext = createContext<unknown>(undefined);
 
 type TAuthProvider = {
   children: ReactNode;
@@ -15,16 +15,20 @@ export const AuthProvider = ({ children }: TAuthProvider) => {
     isAuthentic,
     verify,
     logout: signout,
-  } = useLoginStore();
+  } = useAuthStore();
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkCookie = async () => {
       setIsLoading(true);
+
       const tempToken = getCookie('token');
       const tokenc: string | null =
-        typeof tempToken === 'string' && tempToken != '' ? tempToken : null;
+        typeof tempToken === 'string' && tempToken != '' 
+          ? tempToken 
+          : null;
+          
       const tempRefreshToken = getCookie('refreshToken');
       const refreshTokenc: string | null =
         typeof tempRefreshToken === 'string' && tempRefreshToken != ''
@@ -45,7 +49,7 @@ export const AuthProvider = ({ children }: TAuthProvider) => {
       setIsLoading(false);
     };
     checkCookie();
-  }, [verify]);
+  }, [ verify ]);
 
   const loginAuth = () => {
     const tokenc = getCookie('token');

@@ -1,33 +1,22 @@
 export type StatusPill = {
-  data: string;
+  data?: 'paid' | 'active' | 'unpaid' | 'inactive' | 'default';
 };
 
 const StatusPill = (props: StatusPill) => {
   const { data } = props;
-  const statusColor = (data: string) => {
-    const temp = data ? data.toLowerCase() : '';
+  const status = (data?.toLowerCase() || 'default') as keyof typeof objectStatusColor;
 
-    switch (temp) {
-      case 'paid':
-        return 'text-white bg-blue-500';
-
-      case 'active':
-        return 'text-blue-500 bg-blue-100 border border-1 border-blue-500 text-xs';
-
-      case 'unpaid':
-        return 'text-white bg-red-500';
-
-      case 'inactive':
-        return 'text-red-500 bg-red-100 border border-1 border-red-500 text-xs';
-
-      default:
-        return 'text-black bg-gray-200';
-    }
-  };
+  const objectStatusColor = {
+    paid: 'text-white bg-blue-500',
+    active: 'text-blue-500 bg-blue-100 border border-1 border-blue-500 text-xs',
+    unpaid: 'text-white bg-red-500',
+    inactive: 'text-red-500 bg-red-100 border border-1 border-red-500 text-xs',
+    default: 'text-black bg-gray-200'
+  }
 
   return (
     <div
-      className={`text-sm px-2 py-1 inline-block rounded-full ${statusColor(data)}`}
+      className={`text-sm px-2 py-1 inline-block rounded-full ${objectStatusColor[status]}`}
     >
       {data}
     </div>

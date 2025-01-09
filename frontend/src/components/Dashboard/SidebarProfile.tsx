@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import BlankProfile from '../../assets/blank-profile-picture.png';
-import { useLoginStore } from '../../stores/loginStore';
+import { useAuthStore } from '../../stores/authStore';
 
 export type Profile = {
   _id?: number;
@@ -19,7 +19,7 @@ export type SidebarProfile = {
 
 const SidebarProfile = (props: SidebarProfile) => {
   const { handleShrink, shrink } = props;
-  const { isLoading, profile } = useLoginStore();
+  const { isLoading, profile } = useAuthStore();
   const [user, setUser] = useState<Profile>();
 
   useEffect(() => {

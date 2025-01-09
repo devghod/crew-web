@@ -43,6 +43,7 @@ const AccountTable = (props: TAccountTable) => {
               <th className='p-2 w-1/5 text-right'>Email</th>
               <th className='p-2 w-1/5 text-right'>Date Created</th>
               <th className='p-2 w-1/12 text-right'>Status</th>
+              <th className='p-2 w-1/12 text-right'></th>
             </tr>
           </thead>
           <tbody className=''>

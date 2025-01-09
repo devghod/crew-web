@@ -1,15 +1,10 @@
 import { memo } from 'react';
 import StatusPill from '../../components/StatusPill';
 import { dateFormat } from '../../utils/dateHelper';
+import { TUser } from '../../types/AccountType';
 
 export type TAccountTableRow = {
-  user: {
-    _id: string;
-    username: string;
-    email: string;
-    date_created: string;
-    status: string;
-  };
+  user: TUser;
 };
 
 const AccountTableRow = memo((props: TAccountTableRow) => {
@@ -21,10 +16,13 @@ const AccountTableRow = memo((props: TAccountTableRow) => {
       <td className='p-2 w-1/5 text-right'>{user.username}</td>
       <td className='p-2 w-1/5 text-right'>{user.email}</td>
       <td className='p-2 w-1/5 text-right'>
-        {dateFormat(user.date_created, 'YYYY-MM-DD')}
+        {user?.date_created && dateFormat(user.date_created, 'YYYY-MM-DD')}
       </td>
       <td className='p-2 w-1/12 text-right capitalize'>
-        <StatusPill data={user.status} />
+        <StatusPill data={user?.status} />
+      </td>
+      <td className='p-2 w-1/12 text-right capitalize'>
+        action
       </td>
     </tr>
   );
