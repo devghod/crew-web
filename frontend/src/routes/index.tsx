@@ -9,8 +9,9 @@ const Dashboard = lazy(() => import('../components/Dashboard'));
 const ErrorPage = lazy(() => import('../error-page'));
 const RootPage = lazy(() => import('../pages/root'));
 const LoginPage = lazy(() => import('../pages/login'));
-const StatisticsPage = lazy(() => import('../pages/StatisticsPage'));
+const StatisticsPage = lazy(() => import('../pages/main'));
 const AccountPage = lazy(() => import('../pages/account'));
+const InventoryPage = lazy(() => import('../pages/inventory'));
 
 const Routers = () => {
   return (
@@ -26,6 +27,7 @@ const Routers = () => {
               <Route path='/dashboard' element={<Dashboard />}>
                 <Route path='' element={<StatisticsPage />} />
                 <Route path='account' element={<AccountPage />} />
+                <Route path='inventory' element={<InventoryPage />} />
               </Route>
             </Route>
             <Route path='*' element={<ErrorPage />} />

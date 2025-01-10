@@ -1,7 +1,6 @@
 import { StateCreator } from 'zustand';
 import { TAccountState } from './accountState';
-import { getCookie } from '../../utils/cookies';
-import { fetchAuth } from '../../utils/fetchUtil';
+import { getCookie, fetchAuth, debounce } from '../../utils';
 
 export type TAccountActions = {
   createUser: (body: object) => Promise<boolean | undefined>;
@@ -73,6 +72,9 @@ export const createAccountActions: StateCreator<
       });
 
       const { success, data, message } = await result.json();
+      
+      await debounce(() => console.log('3s delay'), 3000);
+
       if (result.ok && success) {
         get().getUsersStatistics();
         set({ users: data, isLoading: false });

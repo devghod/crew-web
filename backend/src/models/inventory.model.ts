@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 const inventorySchema = new mongoose.Schema({
   inventory_product_id: {
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Inventory',
+    ref: 'Product',
   },
-  inventory_product_available: {
+  inventory_product_availability: {
     type: Number,
   },
   

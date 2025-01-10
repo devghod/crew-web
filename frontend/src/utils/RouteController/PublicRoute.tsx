@@ -1,15 +1,18 @@
-import { Outlet } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
+import { useEffect } from 'react';
 
 const PublicRoute = () => {
-  const { isAuthentic } = useAuthStore();
+  const { isAuthentic, isLoading } = useAuthStore();
+  const navigate = useNavigate();
 
-  if (isAuthentic) {
-    return <PrivateRoute />;
-  } else {
-    return <Outlet />;
-  }
+  console.log('Public', isAuthentic, isLoading)
+
+  useEffect(() => {
+    if (isAuthentic) navigate('/dashboard');
+  }, [isAuthentic, navigate]);
+
+  return !isAuthentic ? <Outlet /> : null; 
 };
 
 export default PublicRoute;

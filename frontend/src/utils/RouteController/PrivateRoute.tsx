@@ -1,6 +1,4 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import { useAuth } from './Auth';
-import { TAuthContext } from './AuthProvider';
 import SuspenseLoader from '../../components/SuspenseLoader';
 import { isDark, setIsDark } from '../darkMode';
 import { useAuthStore } from '../../stores/authStore';
@@ -8,14 +6,15 @@ import { useAuthStore } from '../../stores/authStore';
 const PrivateRoute = () => {
   const { isAuthentic, isLoading } = useAuthStore();
 
+console.log('Private', isAuthentic, isLoading)
+
   if (isLoading) {
     return <SuspenseLoader />;
   }
 
-  if (isAuthentic) {
+  if (isAuthentic || isAuthentic === null) {
     const dark = isDark();
     setIsDark(dark);
-
     return <Outlet />;
   }
 

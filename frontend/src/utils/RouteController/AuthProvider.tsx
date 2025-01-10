@@ -9,6 +9,7 @@ type TAuthProvider = {
 };
 
 export const AuthProvider = ({ children }: TAuthProvider) => {
+
   const {
     token,
     refreshToken,
@@ -17,7 +18,7 @@ export const AuthProvider = ({ children }: TAuthProvider) => {
     logout: signout,
   } = useAuthStore();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
 
   useEffect(() => {
     const checkCookie = async () => {
@@ -48,8 +49,9 @@ export const AuthProvider = ({ children }: TAuthProvider) => {
       verify(tokens);
       setIsLoading(false);
     };
+
     checkCookie();
-  }, [ verify ]);
+  }, [verify, isAuthentic]);
 
   const loginAuth = () => {
     const tokenc = getCookie('token');
@@ -66,7 +68,7 @@ export const AuthProvider = ({ children }: TAuthProvider) => {
     signout();
   };
 
-  const isAuthenticated = isAuthentic;
+  const isAuthenticated = isAuthentic || false;
 
   const params: TAuthContext = {
     isAuthenticated,
@@ -75,11 +77,15 @@ export const AuthProvider = ({ children }: TAuthProvider) => {
     isLoading,
   };
 
-  return <AuthContext.Provider value={params}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={params}>
+      {children}
+    </AuthContext.Provider>
+  )
 };
 
 export type TAuthContext = {
-  isAuthenticated?: boolean | null;
+  isAuthenticated: boolean;
   loginAuth?: () => void;
   logout?: () => void;
   isLoading?: boolean;

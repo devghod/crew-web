@@ -30,6 +30,7 @@ export const createAuthActions: StateCreator<
   [],
   TAuthActions
 > = (set, get, store) => ({
+
   login: async () => {
     try {
       set({ isLoading: true });
@@ -131,7 +132,7 @@ export const createAuthActions: StateCreator<
       set({ isLoading: true });
 
       if (!tokens.token || !tokens.refreshToken) {
-        set({ isLoading: false });
+        set({ isLoading: false, isAuthentic: false });
         throw new Error('Empty Tokens!'); 
       }
 
@@ -175,7 +176,6 @@ export const createAuthActions: StateCreator<
           isLoading: false
         });
       }
-      
     } catch (error) {
       console.log('> ' + error);
     }

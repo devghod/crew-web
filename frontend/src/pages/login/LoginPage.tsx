@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import { useState } from 'react';
 import LoginForm from '../../features/Login/LoginForm';
 import RegisterForm from '../../features/Login/RegisterForm';
 import { useAuthStore } from '../../stores/authStore';
 import { Configuration as config } from '../../constants/configuration';
-import { useNavigate } from 'react-router-dom';
 import SuspenseLoader from '../../components/SuspenseLoader';
 
-const LoginPage: React.FC = () => {
+const LoginPage = () => {
   const { isLoading, isAuthentic } = useAuthStore();
-  const [ formType, setFormType ] = React.useState('login'); // login or register
-  const navigate = useNavigate();
+  const [ formType, setFormType ] = useState('login'); // login or register
 
   const handleFormType = () => {
     if (formType === 'login') {
@@ -18,10 +16,6 @@ const LoginPage: React.FC = () => {
       setFormType('login');
     }
   };
-
-  useEffect(() => {
-    if (isAuthentic) navigate('/dashboard');
-  }, [ isAuthentic, navigate ]);
 
   return (
     <div className='w-full h-screen grid md:grid-cols-4 content-center'>

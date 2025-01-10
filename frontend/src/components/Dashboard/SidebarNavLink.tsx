@@ -18,7 +18,7 @@ const SidebarNavLink: React.FC<SidebarNavLink> = props => {
   return (
     <Link
       className={
-        `flex rounded-lg px-3 py-2 text-gray-500 tracking-wide ease-in-out duration-500
+        `flex rounded-lg px-3 py-2 text-gray-500 tracking-wider ease-in-out duration-500
         ${isActivePath(to) && 'font-bold text-violet-600 dark:text-violet-400 bg-violet-300/50 dark:bg-violet-300/25 shadow'}
         ${!isActivePath(to) && 'font-medium dark:text-violet-400 hover:text-violet-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-500'}`
       }
