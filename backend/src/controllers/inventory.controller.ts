@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 const InventoryModel = require('../models/inventory.model');
 
-const collection = 'Inventory';
-
 const getInventories = async (req: Request, res: Response) => {
   try {
     const inventories = await InventoryModel

@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 const TransactionModel = require('../models/transaction.model');
 
-const collection = 'Transaction';
-
 const getTransactions = async (req: Request, res: Response) => {
   try {
     const transactions = await TransactionModel

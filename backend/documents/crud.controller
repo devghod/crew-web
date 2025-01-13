@@ -3,8 +3,6 @@ const TempModel = require('../models/temp.model');
 
 // Basic CRUD operation for this application
 
-const collection = 'Temp';
-
 const getTemps = async (req: Request, res: Response) => {
   try {
     const temps = await TempModel

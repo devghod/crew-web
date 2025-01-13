@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const logSchema = new mongoose.Schema({
-  collection: {
+  model: {
     type: String,
   },
   id_in_table: {

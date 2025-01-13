@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 const ProductModel = require('../models/product.model');
 
-const collection = 'Product';
-
 const getProducts = async (req: Request, res: Response) => {
   try {
     const products = await ProductModel

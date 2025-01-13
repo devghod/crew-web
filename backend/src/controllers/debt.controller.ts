@@ -2,8 +2,6 @@ import { Request, Response } from 'express';
 const DebtModel = require('../models/debt.model');
 const LogModel = require('../models/log.model');
 
-const collection = 'Debt';
-
 const getDebts = async (req: Request, res: Response) => {
   try {
     const debts = await DebtModel
@@ -60,7 +58,7 @@ const createDebt = async (req: Request, res: Response) => {
 
     if (result) {
       new LogModel({
-        collection: collection,
+        model: 'Debt',
         id_in_table: result._id,
         action: 'CREATE',
         description: 'Debt created',
