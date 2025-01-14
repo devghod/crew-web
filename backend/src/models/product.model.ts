@@ -4,6 +4,9 @@ const productSchema = new mongoose.Schema({
   product_name: {
     type: String,
   },
+  product_brand: {
+    type: String,
+  },
   product_description: {
     type: String,
   },
@@ -63,4 +66,4 @@ const productSchema = new mongoose.Schema({
 });
 
 const Product = mongoose.model('Product', productSchema);
-module.exports = Product;
+export default Product;

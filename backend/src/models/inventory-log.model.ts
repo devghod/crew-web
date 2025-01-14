@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
 
-const inventorySchema = new mongoose.Schema({
-  inventory_product_id: {
+const inventoryLogSchema = new mongoose.Schema({
+  inventoryLog_inventory_id: {
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Product',
+    ref: 'Inventory',
   },
-  inventory_product_availability: {
+  inventoryLog_transaction_type: {
+    type: String, // in/out
+  },
+  inventoryLog_quantity: {
     type: Number,
-    required: true,
   },
   
   // necessary fields
@@ -30,5 +32,5 @@ const inventorySchema = new mongoose.Schema({
   }
 });
 
-const Inventory = mongoose.model('Inventory', inventorySchema);
-export default Inventory;
+const InventoryLog = mongoose.model('InventoryLogs', inventoryLogSchema);
+export default InventoryLog;

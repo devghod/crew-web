@@ -28,6 +28,12 @@ app.use('/api/user', userRoute);
 const debtRoute = require("./src/routes/debt.route");
 app.use('/api/debt', debtRoute);
 
+const productRoute = require("./src/routes/product.route");
+app.use('/api/product', productRoute);
+
+const inventoryRoute = require("./src/routes/inventory.route");
+app.use('/api/inventory', inventoryRoute);
+
 if (nodeEnv != 'test') {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import AccountTable from '../../components/Account/AccountTable';
 import { useAccountStore } from '../../stores/accountStore';
 import AccountStats from '../../components/Account/AccountStats';
@@ -7,14 +7,14 @@ import { isWhiteSpace } from '../../utils/generalHelper';
 
 const AccountPage = () => {
   const { getUsers, statistics, users, isLoading } = useAccountStore();
-  const [search, setSearch] = useState('');
-  const [modalCreateAccount, setModalCreateAccount] = useState(false);
+  const [ search, setSearch ] = useState('');
+  const [ modalCreateAccount, setModalCreateAccount ] = useState(false);
 
   function onModalCreateAccount() {
     setModalCreateAccount(!modalCreateAccount);
-  }
+  };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fnGetUsers = () => getUsers();
     fnGetUsers();
   }, [getUsers]);
@@ -39,7 +39,7 @@ const AccountPage = () => {
 
   function handleSearch(data: string) {
     setSearch(data);
-  }
+  };
 
   return (
     <>

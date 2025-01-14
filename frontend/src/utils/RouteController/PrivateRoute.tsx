@@ -6,8 +6,6 @@ import { useAuthStore } from '../../stores/authStore';
 const PrivateRoute = () => {
   const { isAuthentic, isLoading } = useAuthStore();
 
-console.log('Private', isAuthentic, isLoading)
-
   if (isLoading) {
     return <SuspenseLoader />;
   }

@@ -3,10 +3,8 @@ import { useAuthStore } from '../../stores/authStore';
 import { useEffect } from 'react';
 
 const PublicRoute = () => {
-  const { isAuthentic, isLoading } = useAuthStore();
+  const { isAuthentic } = useAuthStore();
   const navigate = useNavigate();
-
-  console.log('Public', isAuthentic, isLoading)
 
   useEffect(() => {
     if (isAuthentic) navigate('/dashboard');
