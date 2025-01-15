@@ -3,19 +3,21 @@ import mongoose from 'mongoose';
 const logSchema = new mongoose.Schema({
   model: {
     type: String,
+    required: true,
   },
   id_in_table: {
     type: String,
+    required: true,
   },
   action: {
     type: String, // CRUD
+    required: true,
   },
   description: {
     type: String,
   },
   user_id_execute: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User',
+    type: String
   },
   new_data: {
     type: Object,
@@ -30,19 +32,7 @@ const logSchema = new mongoose.Schema({
     required: true,
     default: Date.now
   },
-  date_updated: {
-    type: Date,
-    required: true,
-    default: Date.now
-  },
-  created_by: {
-    type: String,
-  },
-  deleted: {
-    type: Boolean,
-    default: false
-  }
 });
 
 const Log = mongoose.model('Log', logSchema);
-module.exports = Log;
+export default Log;

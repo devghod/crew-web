@@ -1,9 +1,6 @@
 import { Router } from 'express';
-
-const router = Router();
-const { authenticate } = require('../middlewares/auth.middlewares');
-
-const { 
+import { authenticate } from '../middlewares/auth.middlewares';
+import { 
   getUser,
   getUsers, 
   getUsersStatistics,
@@ -13,7 +10,9 @@ const {
   updateUser,
   deleteUser,
   softDelete,
-} = require('../controllers/user.controller');
+} from '../controllers/user.controller';
+
+const router = Router();
 
 router.get('/get-user/:id', authenticate, getUser);
 router.get('/get-users', authenticate, getUsers);

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import InventoryModel from '../models/inventory.model';
-import InventoryLogModel from '../models/inventory-log.model';
+import LogModel from '../models/log.model';
 
 const controller = 'Inventory';
 
@@ -112,31 +112,40 @@ const updateInventory = async (req: Request, res: Response): Promise<void> => {
 const updateInventoryQuantity = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = req.params.id;
+    const user_id = req.body.user_id;
     const quantityChange = req.body.quantity; // postive number for add and negtive number for minus
+
+    if (!user_id || !quantityChange) {
+      throw new Error('Missing required fields');
+    };
 
     const updatedInventory = await InventoryModel.findOneAndUpdate(
       { inventory_product_id: id }, 
-      { $inc: { inventory_product_availability: quantityChange } },
+      {
+        $inc: { inventory_product_availability: quantityChange },
+        $set: { date_updated: new Date() },
+      },    
       { new: true, useFindAndModify: false }
     );
 
     if (!updatedInventory) {
-      throw new Error(`Not found`);
+      throw new Error('Inventory not found');
     };
 
     if (updatedInventory.inventory_product_availability < 0) {
       throw new Error('Insufficient');
     };
 
-    await InventoryLogModel.create(
-      [
-        {
-          inventoryLog_inventory_id: updatedInventory._id,
-          inventoryLog_transaction_type: quantityChange > 0 ? 'in' : 'out',
-          inventoryLog_quantity: Math.abs(quantityChange),
-        },
-      ],
-    );
+    const desc = `${quantityChange > 0 ? 'in' : 'out'}-${Math.abs(quantityChange)}`;
+
+    await LogModel.create([{
+      model: 'inventory',
+      id_in_table: updatedInventory._id,
+      action: 'update',
+      description: desc,
+      user_id_execute: user_id,
+      new_data: updatedInventory
+    }]);
 
     res.status(200).json({ 
       data: updatedInventory, 
@@ -151,7 +160,7 @@ const updateInventoryQuantity = async (req: Request, res: Response): Promise<voi
   };
 };
 
-module.exports = { 
+export { 
   getInventories, 
   createInventory,
   deleteInventory,

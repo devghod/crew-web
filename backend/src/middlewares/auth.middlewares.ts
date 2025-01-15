@@ -14,10 +14,10 @@ const authenticate = async (req: Request, res: Response, next: any) => {
     const user = await UserModel.findById(decodedToken.userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      throw new Error('User not found');
     }
 
-//     req.user = user;
+    // req.user = decodedToken;
     next();
   } catch (error) {
     res
@@ -28,6 +28,6 @@ const authenticate = async (req: Request, res: Response, next: any) => {
   }
 };
 
-module.exports = { 
-  authenticate, 
+export {
+  authenticate
 };
