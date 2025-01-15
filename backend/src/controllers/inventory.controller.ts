@@ -1,13 +1,17 @@
 import { Request, Response } from 'express';
 import InventoryModel from '../models/inventory.model';
 import LogModel from '../models/log.model';
+import UserModel from '../models/user.model';
+import ProductModel from '../models/product.model';
+import { firstLastName } from '../utils/userUtils';
+import { productName } from '../utils/productUtils';
 
 const controller = 'Inventory';
 
 const getInventories = async (req: Request, res: Response): Promise<void> => {
   try {
     const inventories = await InventoryModel
-      .find({ deleted: false })
+      .find({ deleted_at: null })
       .populate(
         'inventory_product_id', 
         'product_name product_brand product_description product_price'
@@ -111,7 +115,7 @@ const updateInventory = async (req: Request, res: Response): Promise<void> => {
 
 const updateInventoryQuantity = async (req: Request, res: Response): Promise<void> => {
   try {
-    const id = req.params.id;
+    const product_id = req.params.productId;
     const user_id = req.body.user_id;
     const quantityChange = req.body.quantity; // postive number for add and negtive number for minus
 
@@ -119,8 +123,8 @@ const updateInventoryQuantity = async (req: Request, res: Response): Promise<voi
       throw new Error('Missing required fields');
     };
 
-    const updatedInventory = await InventoryModel.findOneAndUpdate(
-      { inventory_product_id: id }, 
+    const updatedInventory: any = await InventoryModel.findOneAndUpdate(
+      { inventory_product_id: product_id }, 
       {
         $inc: { inventory_product_availability: quantityChange },
         $set: { date_updated: new Date() },
@@ -136,15 +140,21 @@ const updateInventoryQuantity = async (req: Request, res: Response): Promise<voi
       throw new Error('Insufficient');
     };
 
-    const desc = `${quantityChange > 0 ? 'in' : 'out'}-${Math.abs(quantityChange)}`;
+    const product_name = await productName(product_id);
+    const user_name = await firstLastName(user_id);
 
-    await LogModel.create([{
+    if (!productName || !user_name) {
+      throw new Error('Product or User not found');
+    };
+
+    const description = `${quantityChange > 0 ? 'Restocking' : 'Decrement'} product ${product_name} quantity: ${Math.abs(quantityChange)} by ${user_name}`;
+
+    LogModel.create([{
       model: 'inventory',
       id_in_table: updatedInventory._id,
       action: 'update',
-      description: desc,
+      detail: description,
       user_id_execute: user_id,
-      new_data: updatedInventory
     }]);
 
     res.status(200).json({ 

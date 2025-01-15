@@ -12,8 +12,8 @@ const router = Router();
 
 router.get('/get-inventories', getInventories);
 router.post('/create-inventory', createInventory);
-router.delete('/delete-inventory/:id', deleteInventory);
-router.put('/update-inventory/:id', updateInventory);
-router.put('/update-inventory-quantity/:id', authenticate, updateInventoryQuantity);
+router.delete('/delete-inventory/:inventoryId', deleteInventory);
+router.put('/update-inventory/:inventoryId', updateInventory);
+router.put('/update-inventory-stock/:productId', updateInventoryQuantity);
 
 module.exports = router;

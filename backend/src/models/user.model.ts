@@ -1,8 +1,31 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
+type TUser = Document & {
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  mobile: string;
+  gender: string;
+  address: string;
+  birth_date: string;
+  status: string;
+  role: string;
+  password: string;
+  profile: string;
+  tokens: [],
+  unique_token: string,
+  date_created: any,
+  date_updated: any,
+  created_by: string,
+  deleted_at: any,
+  comparePassword(password: string): Promise<boolean>;
+}
+
+const userSchema = new mongoose.Schema<TUser>({
   first_name: {
     type: String
   },
@@ -89,9 +112,9 @@ userSchema.pre('save', async function (next) {
 });
 
 // Compare the given password with the hashed password in the database
-userSchema.methods.comparePassword = async function (password: String) {
+userSchema.methods.comparePassword = async function (password: String): Promise<boolean>  {
   return bcrypt.compare(password.toString(), this.password);
 };
 
 const User = mongoose.model('User', userSchema);
-module.exports = User;
+export default User;

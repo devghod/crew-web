@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-const UserModel = require('../models/user.model');
+import UserModel from '../models/user.model';
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 

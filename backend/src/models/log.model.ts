@@ -13,12 +13,14 @@ const logSchema = new mongoose.Schema({
     type: String, // CRUD
     required: true,
   },
-  description: {
+  detail: {
     type: String,
   },
   user_id_execute: {
     type: String
   },
+
+  // optional
   new_data: {
     type: Object,
   },
