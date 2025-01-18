@@ -22,7 +22,7 @@ export type TAuthStore = TAuthState & TAuthActions;
 type TTokens = {
   token?: string | null;
   refreshToken?: string | null;
-}
+};
 
 export const createAuthActions: StateCreator<
   TAuthStore,
@@ -30,7 +30,6 @@ export const createAuthActions: StateCreator<
   [],
   TAuthActions
 > = (set, get, store) => ({
-
   login: async () => {
     try {
       set({ isLoading: true });
@@ -44,13 +43,8 @@ export const createAuthActions: StateCreator<
         body: JSON.stringify(credentials),
       });
 
-      const { 
-        success, 
-        message, 
-        token, 
-        refreshToken, 
-        profile 
-      } = await result.json();
+      const { success, message, token, refreshToken, profile } =
+        await result.json();
 
       // custom delay
       const myDelay = new Promise((resolve, reject) => {
@@ -70,28 +64,27 @@ export const createAuthActions: StateCreator<
         setCookie('token', token, 30);
         setCookie('refreshToken', refreshToken, 30);
         get().resetFormData();
-        set({ 
+        set({
           profile: profile,
           token: token,
           refreshToken: refreshToken,
           message: message,
           isError: false,
-          isAuthentic: true 
+          isAuthentic: true,
         });
       } else {
         deleteCookie('token');
         deleteCookie('refreshToken');
-        set({ 
+        set({
           token: '',
           refreshToken: '',
           message: message,
           isError: true,
-          isAuthentic: false 
+          isAuthentic: false,
         });
       }
 
       set({ isLoading: false });
-
     } catch (error) {
       set({ isLoading: false, isAuthentic: false });
       console.log('>', error);
@@ -120,20 +113,19 @@ export const createAuthActions: StateCreator<
       }
 
       set({ isLoading: false });
-    
     } catch (error) {
       set({ isLoading: false });
       console.log('>', error);
     }
   },
-  
+
   verify: async (tokens: TTokens) => {
     try {
       set({ isLoading: true });
 
       if (!tokens.token || !tokens.refreshToken) {
         set({ isLoading: false, isAuthentic: false });
-        throw new Error('Empty Tokens!'); 
+        throw new Error('Empty Tokens!');
       }
 
       const result = await fetch('http://localhost:4001/api/auth/verify', {
@@ -144,36 +136,31 @@ export const createAuthActions: StateCreator<
         body: JSON.stringify(tokens),
       });
 
-      const { 
-        success, 
-        message, 
-        accessToken, 
-        refreshToken, 
-        profile 
-      } = await result.json();
+      const { success, message, accessToken, refreshToken, profile } =
+        await result.json();
 
       if (success) {
-        set({ 
+        set({
           profile: profile,
           isAuthentic: true,
           message: message,
           isError: false,
           token: accessToken,
           refreshToken: refreshToken,
-          isLoading: false
+          isLoading: false,
         });
         setCookie('token', accessToken, 30);
         setCookie('refreshToken', refreshToken, 30);
       } else {
         deleteCookie('token');
         deleteCookie('refreshToken');
-        set({ 
+        set({
           isAuthentic: false,
           message: message,
           isError: true,
           token: '',
           refreshToken: '',
-          isLoading: false
+          isLoading: false,
         });
       }
     } catch (error) {
@@ -182,10 +169,10 @@ export const createAuthActions: StateCreator<
   },
 
   logout: () => {
-    set({ 
+    set({
       token: '',
       refreshToken: '',
-      isLoading: false
+      isLoading: false,
     });
   },
 
@@ -206,5 +193,4 @@ export const createAuthActions: StateCreator<
 
   setFormDataRegistration: (data: TRegistrationForm) =>
     set({ registration: data }),
-  
 });

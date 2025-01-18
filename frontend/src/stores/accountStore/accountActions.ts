@@ -17,7 +17,6 @@ export const createAccountActions: StateCreator<
   [],
   TAccountActions
 > = (set, get) => ({
-
   createUser: async (body: object) => {
     try {
       set({ isLoading: true });
@@ -72,7 +71,7 @@ export const createAccountActions: StateCreator<
       });
 
       const { success, data, message } = await result.json();
-      
+
       await debounce(() => console.log('3s delay'), 3000);
 
       if (result.ok && success) {
@@ -113,5 +112,4 @@ export const createAccountActions: StateCreator<
       set({ isLoading: false });
     }
   },
-  
 });

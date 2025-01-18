@@ -16,7 +16,7 @@ const Table = (props: TTable) => {
 
   return (
     <>
-      {isLoading && (<TableLoader />)}
+      {isLoading && <TableLoader />}
       {!isLoading && (
         <table className='w-full table-auto rounded'>
           <thead className=''>
@@ -26,8 +26,7 @@ const Table = (props: TTable) => {
                   <th className='p-2 w-1/5 text-left' key={index}>
                     {header.name}
                   </th>
-                ))
-              }
+                ))}
             </tr>
           </thead>
           <tbody className=''>
@@ -39,8 +38,7 @@ const Table = (props: TTable) => {
             {filterDatas.length > 0 &&
               filterDatas.map((data, index) => (
                 <TableRow key={index} data={data} />
-              ))
-            }
+              ))}
           </tbody>
         </table>
       )}

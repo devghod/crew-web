@@ -21,9 +21,7 @@ const AccountTableRow = memo((props: TAccountTableRow) => {
       <td className='p-2 w-1/12 text-right capitalize'>
         <StatusPill data={user?.status} />
       </td>
-      <td className='p-2 w-1/12 text-right capitalize'>
-        action
-      </td>
+      <td className='p-2 w-1/12 text-right capitalize'>action</td>
     </tr>
   );
 });

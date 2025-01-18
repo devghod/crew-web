@@ -7,12 +7,12 @@ import { isWhiteSpace } from '../../utils/generalHelper';
 
 const AccountPage = () => {
   const { getUsers, statistics, users, isLoading } = useAccountStore();
-  const [ search, setSearch ] = useState('');
-  const [ modalCreateAccount, setModalCreateAccount ] = useState(false);
+  const [search, setSearch] = useState('');
+  const [modalCreateAccount, setModalCreateAccount] = useState(false);
 
   function onModalCreateAccount() {
     setModalCreateAccount(!modalCreateAccount);
-  };
+  }
 
   useEffect(() => {
     const fnGetUsers = () => getUsers();
@@ -39,7 +39,7 @@ const AccountPage = () => {
 
   function handleSearch(data: string) {
     setSearch(data);
-  };
+  }
 
   return (
     <>

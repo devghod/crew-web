@@ -14,7 +14,6 @@ export const createInventoryActions: StateCreator<
   [],
   TInventoryActions
 > = (set, get) => ({
-
   getInventories: async () => {
     try {
       set({ isLoading: true });
@@ -25,19 +24,17 @@ export const createInventoryActions: StateCreator<
       });
 
       const { success, data, message } = await result.json();
-      
-      await debounce(() => console.log('3s delay'), 3000);
+
+      // await debounce(() => console.log('3s delay'), 3000);
 
       if (!result.ok || !success) {
         set({ message: message });
       }
 
       set({ inventories: data, isLoading: false });
-
     } catch (err) {
       console.error('Error', err);
       set({ isLoading: false });
     }
   },
-  
 });

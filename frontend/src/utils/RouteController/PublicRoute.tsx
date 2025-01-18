@@ -10,7 +10,7 @@ const PublicRoute = () => {
     if (isAuthentic) navigate('/dashboard');
   }, [isAuthentic, navigate]);
 
-  return !isAuthentic ? <Outlet /> : null; 
+  return !isAuthentic ? <Outlet /> : null;
 };
 
 export default PublicRoute;

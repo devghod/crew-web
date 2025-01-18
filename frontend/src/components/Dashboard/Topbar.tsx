@@ -8,8 +8,8 @@ import { TCompany } from '../../types/CompanyType';
 import LightSwitch from './LightSwitch';
 
 const Topbar = () => {
-  const [ showOptions, setShowOptions ] = useState(false);
-  const [ company, setCompany ] = useState<TCompany>();
+  const [showOptions, setShowOptions] = useState(false);
+  const [company, setCompany] = useState<TCompany>();
   const { logout: signout }: TAuthContext = useAuth();
   const { token, refreshToken } = useAuthStore();
   const navigate = useNavigate();

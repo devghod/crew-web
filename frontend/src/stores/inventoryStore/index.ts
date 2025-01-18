@@ -4,7 +4,9 @@ import { TInventoryActions, createInventoryActions } from './inventoryActions';
 
 export type TInventoryStore = TInventoryState & TInventoryActions;
 
-export const useInventoryStore = create<TInventoryStore>()((set, get, store) => ({
-  ...initialInventoryState,
-  ...createInventoryActions(set, get, store),
-}));
+export const useInventoryStore = create<TInventoryStore>()(
+  (set, get, store) => ({
+    ...initialInventoryState,
+    ...createInventoryActions(set, get, store),
+  }),
+);

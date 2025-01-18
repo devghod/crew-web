@@ -1,4 +1,4 @@
-import InventoryTable from "../../components/Inventory/InventoryTable";
+import InventoryTable from '../../components/Inventory/InventoryTable';
 
 const InventoryPage = () => (
   <div className='grid gap-y-4 grid-cols-1'>

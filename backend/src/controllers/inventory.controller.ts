@@ -14,7 +14,7 @@ const getInventories = async (req: Request, res: Response): Promise<void> => {
       .find({ deleted_at: null })
       .populate(
         'inventory_product_id', 
-        'product_name product_brand product_description product_price'
+        'product_name product_brand product_price'
       )
       .exec();
 
@@ -22,7 +22,6 @@ const getInventories = async (req: Request, res: Response): Promise<void> => {
       "inventory_product_id": inventory.inventory_product_id?._id || null,
       "product_name": inventory.inventory_product_id?.product_name || null,
       "product_brand": inventory.inventory_product_id?.product_brand || null,
-      "product_description": inventory.inventory_product_id?.product_description || null,
       "inventory_product_availability": inventory.inventory_product_availability,
       "product_price": inventory.inventory_product_id?.product_price || null,
     }));

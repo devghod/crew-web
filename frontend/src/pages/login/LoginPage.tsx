@@ -7,7 +7,7 @@ import SuspenseLoader from '../../components/SuspenseLoader';
 
 const LoginPage = () => {
   const { isLoading, isAuthentic } = useAuthStore();
-  const [ formType, setFormType ] = useState('login'); // login or register
+  const [formType, setFormType] = useState('login'); // login or register
 
   const handleFormType = () => {
     if (formType === 'login') {

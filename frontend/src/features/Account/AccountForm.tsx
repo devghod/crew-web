@@ -10,7 +10,6 @@ type TAccountForm = {
 };
 
 const AccountForm = (props: TAccountForm) => {
-
   const { type, data, handleModal } = props;
   const { createUser, isLoading, message } = useAccountStore();
   const [account, setAccount] = useState<TCreateUser>({
@@ -45,7 +44,7 @@ const AccountForm = (props: TAccountForm) => {
   }
 
   async function submit() {
-    const result = await createUser(account)
+    const result = await createUser(account);
     if (result) handleModal();
   }
 
