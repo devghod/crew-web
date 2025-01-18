@@ -32,7 +32,7 @@ const InventoryTable = () => {
       
       if (typeof valueA === "number" && typeof valueB === "number") {
         return order == 'asc' ? valueA - valueB : valueB - valueA;
-      }
+      };
 
       return order == 'asc' ? 
         valueA.toLocaleLowerCase().localeCompare(valueB.toLocaleLowerCase()) : 
@@ -49,23 +49,25 @@ const InventoryTable = () => {
     <>
       {isLoading && <TableLoader />}
       {!isLoading && (
-        <table className='w-full table-auto rounded'>
-          <InventoryTableHeader 
-            filterData={setFilter}
-          />
-          <tbody className='rounded'>
-            {computedInventories.length === 0 && (
-              <tr className='border border-gray-200 text-slate-700 text-sm leading-6'>
-                <td className='p-2 w-full text-center'>No data</td>
-              </tr>
-            )}
-            {computedInventories.length > 0 &&
-              computedInventories.map((data, index) => (
-                <InventoryTableRow key={index} data={data} />
-              ))
-            }
-          </tbody>
-        </table>
+        <div className='overflow-hidden rounded-lg shadow'>
+          <table className='w-full table-fixed rounded-t-lg'>
+            <InventoryTableHeader 
+              filterData={setFilter}
+            />
+            <tbody className='rounded'>
+              {computedInventories.length === 0 && (
+                <tr className='border border-gray-200 text-slate-700 text-sm leading-6'>
+                  <td className='p-2 w-full text-center'>No data</td>
+                </tr>
+              )}
+              {computedInventories.length > 0 &&
+                computedInventories.map((data, index) => (
+                  <InventoryTableRow key={index} data={data} />
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
       )}
     </>
   );

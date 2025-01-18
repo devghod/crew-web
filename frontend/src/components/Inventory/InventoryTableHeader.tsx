@@ -13,8 +13,8 @@ const InventoryTableHeader = memo((
   };
 
   return (
-    <thead className='rounded'>
-      <tr className='leading-6 rounded text-slate-900 dark:text-slate-700 text-xs border border-x-gray-200 border-b-gray-300 dark:border-b-gray-500 dark:border-gray-400 border-b-2 bg-gray-50 dark:bg-gray-400'>
+    <thead className='rounded-t-lg'>
+      <tr className='leading-6 text-slate-900 dark:text-slate-700 text-xs border border-x-gray-200 border-b-gray-300 dark:border-b-gray-500 dark:border-gray-400 border-b-2 bg-gray-50 dark:bg-gray-400'>
         <th className='p-2 text-left'>
           <div className='flex space-x-1'>
             <div className="">Product Name</div>
@@ -67,7 +67,7 @@ const InventoryTableHeader = memo((
             </div>
           </div>
         </th>
-        <th className='p-2 text-left'></th>
+        <th className=''></th>
       </tr>
     </thead>
   );

@@ -50,7 +50,7 @@ const Pathname = (data: TData) => {
               {item}
             </span>
             {lengthIndex > 0 && lengthIndex != index && (
-              <span className='text-gray-400'>
+              <span className='text-gray-400 mx-1'>
                 <svg
                   className='h-3 w-3 inline'
                   width='24'
