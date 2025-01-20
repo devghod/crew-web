@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authenticate } from '../middlewares/auth.middlewares';
 import { 
+  getInventory,
   getInventories, 
   createInventory,
   deleteInventory,
@@ -10,6 +11,7 @@ import {
 
 const router = Router();
 
+router.get('/get-inventory/:inventoryId', getInventory);
 router.get('/get-inventories', getInventories);
 router.post('/create-inventory', createInventory);
 router.delete('/delete-inventory/:inventoryId', deleteInventory);

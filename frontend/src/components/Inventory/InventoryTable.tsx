@@ -4,9 +4,11 @@ import InventoryTableRow from './InventoryTableRow';
 import InventoryTableHeader from './InventoryTableHeader';
 
 const InventoryTable = () => {
-  const { inventories, getInventories, isLoading } = useInventoryStore();
+  const { inventory, inventories, getInventories, getInventory, isLoading } = useInventoryStore();
   const [ filterBy, setFilterBy ] = useState<string | null>(null);
   const [ order, setOrder ] = useState('asc'); // asc or desc
+  const [ isOpenUpdateQuantity, setIsOpenUpdateQuantity ] = useState<boolean>(false);
+  const [ inventoryId, setInventoryId ] = useState<string | undefined>();
 
   useEffect(() => {
     function init() {
@@ -15,6 +17,12 @@ const InventoryTable = () => {
 
     init();
   }, []);
+
+  useEffect(() => {
+    if (!inventoryId) return;
+
+    getInventory(inventoryId);
+  }, [inventoryId, getInventory]);
 
   const computedInventories = useMemo(() => {
     if (!filterBy) { 
@@ -45,6 +53,11 @@ const InventoryTable = () => {
     setFilterBy(filter);
   };
 
+  function setUpdateQuantityFormId(inventoryId: string) {
+    setIsOpenUpdateQuantity(true);
+    setInventoryId(inventoryId);
+  };
+
   return (
     <>
       {isLoading && <TableLoader />}
@@ -62,18 +75,44 @@ const InventoryTable = () => {
               )}
               {computedInventories.length > 0 &&
                 computedInventories.map((data, index) => (
-                  <InventoryTableRow key={index} data={data} />
+                  <InventoryTableRow 
+                    key={index} 
+                    data={data} 
+                    handleOpenUpdateQuantity={setUpdateQuantityFormId}
+                  />
                 ))
               }
             </tbody>
           </table>
         </div>
       )}
+      {isOpenUpdateQuantity && (
+        <UpdateQuantityForm inventory={inventory} />
+      )}
     </>
   );
 };
 
 export default InventoryTable;
+
+const UpdateQuantityForm = ({
+  inventory
+} : {
+  inventory: any
+}) => {
+  return (
+    <div className='relative z-20 transition ease-in-out duration-700'>
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center h-screen">
+        <div className="">
+          <div className="bg-white">
+            Form
+            {inventory?.inventory_product_availability}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+};
 
 const TableLoader = memo(() => (
   <table className='w-full table-auto rounded border dark:border-gray-600 animate-pulse bg-white'>

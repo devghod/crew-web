@@ -8,6 +8,26 @@ import { productName } from '../utils/productUtils';
 
 const controller = 'Inventory';
 
+const getInventory = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const inventoryId = req.params.inventoryId;
+    const inventory = await InventoryModel.findById(inventoryId);
+
+    if (!inventory) throw new Error(`${controller} not found`);
+
+    res.status(200).json({ 
+      data: inventory, 
+      success: true, 
+      message: `${controller} retrieve successfully`
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false, 
+      message: `Error retrieve ${controller} ${error}` 
+    });
+  };
+};
+
 const getInventories = async (req: Request, res: Response): Promise<void> => {
   try {
     const inventories = await InventoryModel
@@ -19,6 +39,7 @@ const getInventories = async (req: Request, res: Response): Promise<void> => {
       .exec();
 
     const reconstructInventories = inventories.map((inventory: any) => ({
+      "_id": inventory._id,
       "inventory_product_id": inventory.inventory_product_id?._id || null,
       "product_name": inventory.inventory_product_id?.product_name || null,
       "product_brand": inventory.inventory_product_id?.product_brand || null,
@@ -34,9 +55,9 @@ const getInventories = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error) {
     res.status(500).json({
-        success: false, 
-        message: `Error retrieve ${controller} ${error}` 
-      });
+      success: false, 
+      message: `Error retrieve ${controller} ${error}` 
+    });
   };
 };
 
@@ -170,6 +191,7 @@ const updateInventoryQuantity = async (req: Request, res: Response): Promise<voi
 };
 
 export { 
+  getInventory,
   getInventories, 
   createInventory,
   deleteInventory,
