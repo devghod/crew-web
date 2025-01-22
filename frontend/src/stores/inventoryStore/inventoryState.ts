@@ -5,6 +5,7 @@ export type TInventoryState = {
   inventories: TInventory[];
   message: string;
   isLoading: boolean;
+  isLoadingInventory: boolean; 
 };
 
 export const initialInventoryState: TInventoryState = {
@@ -12,4 +13,5 @@ export const initialInventoryState: TInventoryState = {
   inventories: [],
   message: '',
   isLoading: false,
+  isLoadingInventory: false,
 };

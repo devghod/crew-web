@@ -16,6 +16,6 @@ router.get('/get-inventories', getInventories);
 router.post('/create-inventory', createInventory);
 router.delete('/delete-inventory/:inventoryId', deleteInventory);
 router.put('/update-inventory/:inventoryId', updateInventory);
-router.put('/update-inventory-stock/:productId', updateInventoryQuantity);
+router.put('/update-inventory-stock/:inventoryId', updateInventoryQuantity);
 
 module.exports = router;

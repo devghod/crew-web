@@ -11,7 +11,13 @@ const controller = 'Inventory';
 const getInventory = async (req: Request, res: Response): Promise<void> => {
   try {
     const inventoryId = req.params.inventoryId;
-    const inventory = await InventoryModel.findById(inventoryId);
+    const inventory = await InventoryModel
+      .findById(inventoryId)
+      .populate(
+        'inventory_product_id',
+        'product_name'
+      )
+      .exec();
 
     if (!inventory) throw new Error(`${controller} not found`);
 
@@ -135,7 +141,7 @@ const updateInventory = async (req: Request, res: Response): Promise<void> => {
 
 const updateInventoryQuantity = async (req: Request, res: Response): Promise<void> => {
   try {
-    const product_id = req.params.productId;
+    const inventory_id = req.params.inventoryId;
     const user_id = req.body.user_id;
     const quantityChange = req.body.quantity; // postive number for add and negtive number for minus
 
@@ -144,7 +150,7 @@ const updateInventoryQuantity = async (req: Request, res: Response): Promise<voi
     };
 
     const updatedInventory: any = await InventoryModel.findOneAndUpdate(
-      { inventory_product_id: product_id }, 
+      { _id: inventory_id }, 
       {
         $inc: { inventory_product_availability: quantityChange },
         $set: { date_updated: new Date() },
@@ -160,7 +166,7 @@ const updateInventoryQuantity = async (req: Request, res: Response): Promise<voi
       throw new Error('Insufficient');
     };
 
-    const product_name = await productName(product_id);
+    const product_name = await productName(updatedInventory.inventory_product_id);
     const user_name = await firstLastName(user_id);
 
     if (!productName || !user_name) {

@@ -2,27 +2,40 @@ import { useEffect, useMemo, memo, useState } from 'react';
 import { useInventoryStore } from '../../stores/inventoryStore';
 import InventoryTableRow from './InventoryTableRow';
 import InventoryTableHeader from './InventoryTableHeader';
+import { useAuthStore } from '../../stores/authStore';
 
 const InventoryTable = () => {
-  const { inventory, inventories, getInventories, getInventory, isLoading } = useInventoryStore();
+  const { 
+    inventory, 
+    inventories, 
+    getInventories, 
+    getInventory, 
+    setInventoryClear,
+    isLoading,
+    isLoadingInventory
+  } = useInventoryStore();
   const [ filterBy, setFilterBy ] = useState<string | null>(null);
   const [ order, setOrder ] = useState('asc'); // asc or desc
   const [ isOpenUpdateQuantity, setIsOpenUpdateQuantity ] = useState<boolean>(false);
   const [ inventoryId, setInventoryId ] = useState<string | undefined>();
 
+  useEffect(() => { getInventories() }, []);
+
   useEffect(() => {
-    function init() {
-      getInventories();
+    if (!inventoryId) {
+      setInventoryClear();
+      return;
     };
-
-    init();
-  }, []);
-
-  useEffect(() => {
-    if (!inventoryId) return;
 
     getInventory(inventoryId);
   }, [inventoryId, getInventory]);
+
+  useEffect(() => {
+    if (Object.keys(inventory).length === 0) return;
+    if (Object.keys(inventory).length > 0) {
+      setIsOpenUpdateQuantity(true);
+    };
+  }, [inventory]);
 
   const computedInventories = useMemo(() => {
     if (!filterBy) { 
@@ -54,7 +67,6 @@ const InventoryTable = () => {
   };
 
   function setUpdateQuantityFormId(inventoryId: string) {
-    setIsOpenUpdateQuantity(true);
     setInventoryId(inventoryId);
   };
 
@@ -86,8 +98,11 @@ const InventoryTable = () => {
           </table>
         </div>
       )}
-      {isOpenUpdateQuantity && (
-        <UpdateQuantityForm inventory={inventory} />
+      {(isOpenUpdateQuantity && !isLoadingInventory) && (
+        <UpdateQuantityForm 
+          inventory={inventory} 
+          quantityFormClose={() => setIsOpenUpdateQuantity(false)}
+        />
       )}
     </>
   );
@@ -96,17 +111,92 @@ const InventoryTable = () => {
 export default InventoryTable;
 
 const UpdateQuantityForm = ({
-  inventory
+  inventory,
+  quantityFormClose
 } : {
-  inventory: any
+  inventory: any,
+  quantityFormClose: () => void 
 }) => {
+  const loginUser: any = useAuthStore((state) => state.profile);
+  const updateQuantity = useInventoryStore((state) => state.putInventoryQuantity);
+  const isLoadingInventory = useInventoryStore((state) => state.isLoadingInventory);
+  const [ formData, setFormData ] = useState({ 
+    user_id: loginUser._id, 
+    quantity: inventory.inventory_product_availability | 0
+  });
+
+  useEffect(() => {
+    setFormData({
+      user_id: loginUser._id,
+      quantity: inventory.inventory_product_availability 
+    });
+  }, [loginUser, inventory]);
+
+  function handleChange(event: any) {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  async function handleUpdateQuantity() {
+    const form = {
+      inventoryId: inventory._id,
+      form: formData
+    };
+
+    await updateQuantity(form)
+      .then(() => {
+        quantityFormClose();
+      });
+  };
+
   return (
-    <div className='relative z-20 transition ease-in-out duration-700'>
+    <div className='relative z-20 transition ease-in-out duration-500'>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center h-screen">
-        <div className="">
-          <div className="bg-white">
-            Form
-            {inventory?.inventory_product_availability}
+        <div className="bg-white w-5/12 rounded-lg divide-y">
+          <div className="py-2 px-3 font-semibold">
+            Update Product Quantity
+          </div>
+          <div className="p-5 space-y-3">
+            <div className="text-xs text-slate-500 cap">
+              Positive number for increment and negative for decrement.
+            </div>
+            <div className="flex space-x-2">
+              <div className="text-slate-500 text-sm font-medium">Product:</div>
+              <div className="text-slate-800 text-sm font-medium">
+                {inventory?.inventory_product_id?.product_name}
+              </div>
+            </div>
+            <div className="flex space-x-2">
+              <div className="text-slate-500 text-sm font-medium">Quantity:</div>
+              <div className="text-slate-800 text-sm font-medium">
+                <input 
+                  id='quantity'
+                  name='quantity'
+                  className='border rounded py-1 px-2'
+                  type='number' 
+                  value={formData.quantity}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="py-2 px-3 text-right space-x-1">
+            <button
+              className='border border-gray-300 p-2 rounded-lg hover:bg-gray-300'
+              onClick={quantityFormClose}
+            >
+              Cancel
+            </button>
+            <button
+              className='border border-lime-300 p-2 rounded-lg bg-lime-500 hover:bg-lime-500/50'
+              onClick={handleUpdateQuantity}
+              disabled={isLoadingInventory}
+            >
+              {isLoadingInventory ? '...' : 'Update'}
+            </button>
           </div>
         </div>
       </div>

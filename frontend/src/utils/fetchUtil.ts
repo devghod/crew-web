@@ -18,6 +18,6 @@ export async function fetchAuth(params: TFetchAuth) {
       Authorization: authToken,
       'Content-Type': 'application/json',
     },
-    ...(['UPDATE', 'POST'].includes(method) && { body: JSON.stringify(body) }),
+    ...(['UPDATE', 'PUT', 'POST'].includes(method) && { body: JSON.stringify(body) }),
   });
 }
