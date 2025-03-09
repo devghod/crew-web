@@ -4,7 +4,10 @@ import { getCookie, fetchAuth, debounce } from '../../utils';
 
 export type TAccountActions = {
   createUser: (body: object) => Promise<boolean | undefined>;
-  getUser: (id: number) => Promise<void>;
+  getUser: (id: string) => Promise<{
+    success: boolean, 
+    message?: string, 
+    data: string | undefined}>;
   getUsers: () => Promise<void>;
   getUsersStatistics: () => Promise<void>;
 };
@@ -17,6 +20,7 @@ export const createAccountActions: StateCreator<
   [],
   TAccountActions
 > = (set, get) => ({
+
   createUser: async (body: object) => {
     try {
       set({ isLoading: true });
@@ -42,19 +46,19 @@ export const createAccountActions: StateCreator<
     }
   },
 
-  getUser: async (id: number) => {
+  getUser: async (id: string) => {
     try {
       set({ isLoading: true });
-      const result = await fetch(
-        `http://localhost:4001/api/user/get-user/${id}`,
-      );
 
-      if (result.ok) {
-        const data = await result.json();
-        set({ user: data, isLoading: false });
-      } else {
-        set({ isLoading: false });
-      }
+      const result = await fetchAuth({
+        api: `user/get-user/${id}`,
+        method: 'GET',
+      });
+      const data = await result.json();
+
+      set({ isLoading: false });
+
+      return data;
     } catch (err) {
       console.error('Error', err);
       set({ isLoading: false });
@@ -112,4 +116,5 @@ export const createAccountActions: StateCreator<
       set({ isLoading: false });
     }
   },
+
 });

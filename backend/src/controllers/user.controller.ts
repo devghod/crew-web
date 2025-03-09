@@ -7,11 +7,22 @@ export const getUser = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    const user = await UserModel.find({ 
-      _id: id,
-      // status: "active" ,
-      deleted_at: { $eq: null },
-    });
+    // const user = await UserModel.findById({ 
+    //   _id: id,
+    //   // status: "active" ,
+    //   deleted_at: { $eq: null },
+    // });
+
+    const user = await UserModel.findById(id);
+
+    if (!user) {
+      res
+        .status(404)
+        .json({ 
+          message: "User not found",
+          success: false
+        });
+    }
 
     res
       .status(200)
@@ -26,7 +37,7 @@ export const getUser = async (req: Request, res: Response) => {
       .status(500)
       .json({
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   }
 };
@@ -51,7 +62,7 @@ export const getUsers = async (req: Request, res: Response) => {
       .status(500)
       .json({
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   }
 };
@@ -85,7 +96,7 @@ export const getUsersStatistics = async (req: Request, res: Response) => {
       .status(500)
       .json({
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   }
 
@@ -116,7 +127,7 @@ export const postUsersList = async (req: Request, res: Response) => {
       .status(500)
       .json({
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   }
 };
@@ -145,7 +156,7 @@ export const getUsersSelections = async (req: Request, res: Response) => {
       .status(500)
       .json({
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   }
 };
@@ -199,7 +210,7 @@ export const createUser = async (req: Request, res: Response) => {
       .status(500)
       .json({ 
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   };
 };
@@ -237,7 +248,7 @@ export const updateUser = async (req: Request, res: Response) => {
       .status(500)
       .json({ 
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   };
 };
@@ -270,7 +281,7 @@ export const deleteUser = async (req: Request, res: Response) => {
       .status(500)
       .json({ 
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   }
 }; 
@@ -308,7 +319,7 @@ export const softDelete = async (req: Request, res: Response) => {
       .status(500)
       .json({ 
         success: false, 
-        message: `Error ${error}` 
+        message: `Error: ${error}` 
       });
   }
 }; 

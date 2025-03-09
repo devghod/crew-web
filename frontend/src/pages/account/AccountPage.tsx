@@ -1,9 +1,9 @@
 import { useMemo, useState, useEffect } from 'react';
-import AccountTable from '../../components/Account/AccountTable';
 import { useAccountStore } from '../../stores/accountStore';
+import { isWhiteSpace } from '../../utils/generalHelper';
+import AccountTable from '../../components/Account/AccountTable';
 import AccountStats from '../../components/Account/AccountStats';
 import AccountController from '../../components/Account/AccountController';
-import { isWhiteSpace } from '../../utils/generalHelper';
 
 const AccountPage = () => {
   const { getUsers, statistics, users, isLoading } = useAccountStore();
@@ -47,7 +47,7 @@ const AccountPage = () => {
         <div className=''>
           <AccountStats statistics={statistics} />
         </div>
-        <div className='border border-0 bg-white p-4 rounded-lg dark:bg-gray-800'>
+        <div className='bg-white p-4 rounded-lg dark:bg-gray-800'>
           <AccountController
             handleSearch={handleSearch}
             modalCreateAccount={modalCreateAccount}

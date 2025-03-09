@@ -11,6 +11,7 @@ const RootPage = lazy(() => import('../pages/root'));
 const LoginPage = lazy(() => import('../pages/login'));
 const StatisticsPage = lazy(() => import('../pages/main'));
 const AccountPage = lazy(() => import('../pages/account'));
+const AccountDetails = lazy(() => import('../pages/account/AccountDetails'));
 const InventoryPage = lazy(() => import('../pages/inventory'));
 
 const Routers = () => {
@@ -27,6 +28,7 @@ const Routers = () => {
               <Route path='/dashboard' element={<Dashboard />}>
                 <Route path='' element={<StatisticsPage />} />
                 <Route path='account' element={<AccountPage />} />
+                <Route path='account/:id' element={<AccountDetails />} />
                 <Route path='inventory' element={<InventoryPage />} />
               </Route>
             </Route>

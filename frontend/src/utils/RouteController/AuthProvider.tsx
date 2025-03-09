@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: TAuthProvider) => {
 };
 
 export type TAuthContext = {
-  isAuthenticated: boolean;
+  isAuthenticated?: boolean;
   loginAuth?: () => void;
   logout?: () => void;
   isLoading?: boolean;

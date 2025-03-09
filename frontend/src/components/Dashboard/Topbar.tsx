@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../assets/logos/crew-sm.png';
 import { useAuth } from '../../utils/RouteController/Auth';
 import { useAuthStore } from '../../stores/authStore';
 import { TAuthContext } from '../../utils/RouteController/AuthProvider';
 import { TCompany } from '../../types/CompanyType';
 import LightSwitch from './LightSwitch';
+import Logo from '../../assets/logos/crew-sm.png';
 
 const Topbar = () => {
   const [showOptions, setShowOptions] = useState(false);
