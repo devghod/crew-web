@@ -81,7 +81,7 @@ const login = async (req: Request, res: Response) => {
         .status(400)
         .json({ 
           success: false, 
-          message: 'Incorrect password' 
+          message: 'Invalid login credentials.' 
         });
     }
 
