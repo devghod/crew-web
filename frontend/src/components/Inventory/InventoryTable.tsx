@@ -4,6 +4,14 @@ import InventoryTableRow from './InventoryTableRow';
 import InventoryTableHeader from './InventoryTableHeader';
 import { useAuthStore } from '../../stores/authStore';
 
+type TNotification = {
+  type?: 'success' | 'error' | 'warning' | 'fail';
+  duration?: number;
+  message: string;
+  isVisible: boolean;
+  onClose: () => void;
+};
+
 const InventoryTable = () => {
   const { 
     inventory, 
@@ -12,23 +20,17 @@ const InventoryTable = () => {
     getInventory, 
     setInventoryClear,
     isLoading,
-    isLoadingInventory
+    putInventoryQuantity
   } = useInventoryStore();
   const [ filterBy, setFilterBy ] = useState<string | null>(null);
   const [ order, setOrder ] = useState('asc'); // asc or desc
   const [ isOpenUpdateQuantity, setIsOpenUpdateQuantity ] = useState<boolean>(false);
-  const [ inventoryId, setInventoryId ] = useState<string | undefined>();
+  const [ isNotificationVisible, setIsNotificationVisible ] = useState(false);
+  const [ notificationResult, setNotificationResult ] = useState<TNotification>({ isVisible: false, message: '', type: 'success', onClose: () => {}});
+  const [ notificationType, setNotificationType ] = useState<'success' | 'error' | 'warning' | 'fail'>();
+  const [ notificationMessage, setNotificationMessage ] = useState('');
 
   useEffect(() => { getInventories() }, []);
-
-  useEffect(() => {
-    if (!inventoryId) {
-      setInventoryClear();
-      return;
-    };
-
-    getInventory(inventoryId);
-  }, [inventoryId, getInventory]);
 
   useEffect(() => {
     if (Object.keys(inventory).length === 0) return;
@@ -67,7 +69,34 @@ const InventoryTable = () => {
   };
 
   function setUpdateQuantityFormId(inventoryId: string) {
-    setInventoryId(inventoryId);
+    if (!inventoryId) {
+      setInventoryClear();
+      return;
+    };
+
+    getInventory(inventoryId);
+  };
+
+  function clearForm() {
+    setIsOpenUpdateQuantity(false);
+    setInventoryClear();
+  };
+
+  async function handleUpdateQuantity(form: { inventoryId: string, form: any }) {
+    await putInventoryQuantity(form)
+      .then((result: any) => {
+        console.log(result)
+        if (result.success) {
+          setNotificationType('success');
+          setNotificationMessage(result.message);
+          setIsNotificationVisible(true);
+          clearForm();
+        } else {
+          setNotificationType('error');
+          setNotificationMessage(result.message);
+          setIsNotificationVisible(true);
+        }
+      });
   };
 
   return (
@@ -98,10 +127,20 @@ const InventoryTable = () => {
           </table>
         </div>
       )}
-      {(isOpenUpdateQuantity && !isLoadingInventory) && (
+      {(isOpenUpdateQuantity) && (
         <UpdateQuantityForm 
           inventory={inventory} 
-          quantityFormClose={() => setIsOpenUpdateQuantity(false)}
+          quantityFormClose={clearForm}
+          handleUpdateQuantity={handleUpdateQuantity}
+        />
+      )}
+      {(isNotificationVisible) && (
+        <NotificationSlideTopRight 
+          message={notificationResult.message}
+          type={notificationResult.type}
+          duration={3000}
+          isVisible={isNotificationVisible}
+          onClose={() => setIsNotificationVisible(false)}
         />
       )}
     </>
@@ -110,25 +149,72 @@ const InventoryTable = () => {
 
 export default InventoryTable;
 
+const NotificationSlideTopRight = ({
+  type = "success",
+  duration = 3000,
+  message,
+  isVisible,
+  onClose,
+} : TNotification) => {
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, duration);
+      return () => clearTimeout(timer); 
+    }
+  }, [isVisible, duration, onClose]);
+console.log(type, message, isVisible)
+  const typeColors: any = {
+    success: 'green',
+    error: 'red',
+    info: 'blue',
+    warning: 'yellow'
+  };
+
+  return (
+    <div
+      className={`fixed top-4 right-4 transform transition-all duration-500 ${
+        isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+      } px-6 py-3 rounded-lg shadow-lg bg-${typeColors[type]}-500`}
+      style={{ zIndex: 9999 }}
+    >
+      <p>{message}</p>
+    </div>
+
+    // <div className="relative">
+    //   <div
+    //     className={`fixed top-4 right-4 transform transition-all duration-500 ${
+    //       show ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+    //     } bg-${typeColors[type]}-500 text-white px-6 py-3 rounded-lg shadow-lg`}
+    //     style={{ zIndex: 9999 }}
+    //   >
+    //     <p>{message}</p>
+    //   </div>
+    // </div>
+  );
+};
+
 const UpdateQuantityForm = ({
   inventory,
-  quantityFormClose
+  quantityFormClose,
+  handleUpdateQuantity,
 } : {
-  inventory: any,
-  quantityFormClose: () => void 
+  inventory: any;
+  quantityFormClose: () => void;
+  handleUpdateQuantity: (form: { inventoryId: string, form: any }) => void;
 }) => {
   const loginUser: any = useAuthStore((state) => state.profile);
-  const updateQuantity = useInventoryStore((state) => state.putInventoryQuantity);
   const isLoadingInventory = useInventoryStore((state) => state.isLoadingInventory);
   const [ formData, setFormData ] = useState({ 
     user_id: loginUser._id, 
-    quantity: inventory.inventory_product_availability | 0
+    quantity: 0
   });
 
   useEffect(() => {
     setFormData({
       user_id: loginUser._id,
-      quantity: inventory.inventory_product_availability 
+      quantity: 0 
     });
   }, [loginUser, inventory]);
 
@@ -140,67 +226,71 @@ const UpdateQuantityForm = ({
     }));
   };
 
-  async function handleUpdateQuantity() {
-    const form = {
+  async function onUpdateQuantity() {
+    handleUpdateQuantity({
       inventoryId: inventory._id,
       form: formData
-    };
-
-    await updateQuantity(form)
-      .then(() => {
-        quantityFormClose();
-      });
+    });
   };
 
   return (
-    <div className='relative z-20 transition ease-in-out duration-500'>
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center h-screen">
-        <div className="bg-white w-5/12 rounded-lg divide-y">
-          <div className="py-2 px-3 font-semibold">
-            Update Product Quantity
-          </div>
-          <div className="p-5 space-y-3">
-            <div className="text-xs text-slate-500 cap">
-              Positive number for increment and negative for decrement.
+    <>
+      <div className='relative z-20 transition ease-in-out duration-500'>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center h-screen">
+          <div className="bg-white w-5/12 rounded-lg divide-y">
+            <div className="py-2 px-3 font-semibold">
+              Update Product Quantity
             </div>
-            <div className="flex space-x-2">
-              <div className="text-slate-500 text-sm font-medium">Product:</div>
-              <div className="text-slate-800 text-sm font-medium">
-                {inventory?.inventory_product_id?.product_name}
+            <div className="p-5 space-y-3">
+              <div className="text-xs text-slate-500 cap">
+                Positive number for increment and negative for decrement.
+              </div>
+              <div className="flex space-x-2">
+                <div className="text-slate-500 text-sm font-medium">Product:</div>
+                <div className="text-slate-800 text-sm font-medium">
+                  {inventory?.inventory_product_id?.product_name}
+                </div>
+              </div>
+              <div className="flex space-x-2">
+                <div className="text-slate-500 text-sm font-medium">Available:</div>
+                <div className="text-slate-800 text-sm font-medium">
+                  {inventory?.inventory_product_availability}
+                </div>
+              </div>
+              <div className="flex space-x-2">
+                <div className="text-slate-500 text-sm font-medium">Quantity:</div>
+                <div className="text-slate-800 text-sm font-medium">
+                  <input 
+                    id='quantity'
+                    name='quantity'
+                    className='border rounded py-1 px-2'
+                    type='number' 
+                    value={formData.quantity}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
-            <div className="flex space-x-2">
-              <div className="text-slate-500 text-sm font-medium">Quantity:</div>
-              <div className="text-slate-800 text-sm font-medium">
-                <input 
-                  id='quantity'
-                  name='quantity'
-                  className='border rounded py-1 px-2'
-                  type='number' 
-                  value={formData.quantity}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="py-2 px-3 text-right space-x-1">
+              <button
+                className='border border-gray-300 p-2 rounded-lg hover:bg-gray-300'
+                onClick={quantityFormClose}
+                disabled={isLoadingInventory}
+              >
+                Cancel
+              </button>
+              <button
+                className='border border-lime-300 p-2 rounded-lg bg-lime-500 hover:bg-lime-500/50'
+                onClick={onUpdateQuantity}
+                disabled={isLoadingInventory}
+              >
+                {isLoadingInventory ? 'Updating...' : 'Update'}
+              </button>
             </div>
-          </div>
-          <div className="py-2 px-3 text-right space-x-1">
-            <button
-              className='border border-gray-300 p-2 rounded-lg hover:bg-gray-300'
-              onClick={quantityFormClose}
-            >
-              Cancel
-            </button>
-            <button
-              className='border border-lime-300 p-2 rounded-lg bg-lime-500 hover:bg-lime-500/50'
-              onClick={handleUpdateQuantity}
-              disabled={isLoadingInventory}
-            >
-              {isLoadingInventory ? '...' : 'Update'}
-            </button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 };
 

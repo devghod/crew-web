@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand';
 import { TInventoryState } from './inventoryState';
-import { fetchAuth } from '../../utils';
+import { debounce, fetchAuth } from '../../utils';
 
 export type TInventoryActions = {
   getInventories: () => Promise<void>;
@@ -15,7 +15,7 @@ export type TInventoryActions = {
       quantity: number;
     },
     inventoryId: string;
-  }) => Promise<boolean>;
+  }) => Promise<{}>;
 };
 
 export type TInventoryStore = TInventoryState & TInventoryActions;
@@ -94,6 +94,8 @@ export const createInventoryActions: StateCreator<
         throw new Error('Check field requirements.');
       };
 
+      set({ isLoadingInventory: true });
+
       const result = await fetchAuth({
         api: `inventory/update-inventory-stock/${inventoryId}`,
         method: 'PUT',
@@ -102,19 +104,25 @@ export const createInventoryActions: StateCreator<
 
       const { success, message } = await result.json();
 
+      await debounce(() => console.log('3s delay'), 3000);
+
       if (!result.ok || !success) {
         set({ message: message });
+        throw new Error(message);
       };
 
       get().getInventories();
       get().setInventoryClear();
       set({ isLoadingInventory: false });
 
-      return true;
+      return { success: true, message: 'Successfully Updated.'};
     } catch (error) {
       console.error('Error', error);
       set({ isLoadingInventory: false });
-      return false;
+      return {
+        success: false,
+        message: error,
+      };
     }
   },
 
