@@ -193,7 +193,6 @@ export const createUser = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    // const user = new UserModel({ username, email, password: hashedPassword });
     const user = new UserModel(body);
     user.password = hashedPassword;
     const result = await user.save();
