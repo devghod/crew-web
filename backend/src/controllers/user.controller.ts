@@ -105,13 +105,29 @@ export const getUsersStatistics = async (req: Request, res: Response) => {
 export const postUsersList = async (req: Request, res: Response) => {
   try {
     const { size, page, filters } = req.body;
+    const { fields, search: searchWord } = filters;
+    const match: any = {};
 
-    const users = await UserModel.find({ 
-        deleted_at: { $eq: null },
-      })
-      .skip((page - 1) * size)
+    let setPage = page ?? 1;
+
+    const filtersFields = fields.map((filter: any) => { 
+      return { 
+        [filter]: { $regex: searchWord, $options: 'i' }
+      }
+    });
+
+    match.$and = [{ deleted_at: null }];
+
+    // Return to first page if search exist
+    if (searchWord) setPage = 1;
+    if (searchWord) match.$and.push({ $or: filtersFields });
+
+    const users = await UserModel.aggregate([
+        { $match: match },
+      ])
+      .skip((setPage - 1) * size)
       .limit(size)
-      .lean();
+      .exec();
 
     const total_users = await UserModel.countDocuments({ 
         deleted_at: { $eq: null },
@@ -124,7 +140,7 @@ export const postUsersList = async (req: Request, res: Response) => {
         message: "Users List Paginated",
         data: users,
         size: size,
-        page: page,
+        page: setPage,
         total: total_users,
       });
   
