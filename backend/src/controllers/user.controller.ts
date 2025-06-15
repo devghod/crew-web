@@ -104,13 +104,18 @@ export const getUsersStatistics = async (req: Request, res: Response) => {
 
 export const postUsersList = async (req: Request, res: Response) => {
   try {
-    const { size, page } = req.body;
+    const { size, page, filters } = req.body;
 
     const users = await UserModel.find({ 
         deleted_at: { $eq: null },
       })
       .skip((page - 1) * size)
-      .limit(size);
+      .limit(size)
+      .lean();
+
+    const total_users = await UserModel.countDocuments({ 
+        deleted_at: { $eq: null },
+      });
 
     res
       .status(200)
@@ -120,6 +125,7 @@ export const postUsersList = async (req: Request, res: Response) => {
         data: users,
         size: size,
         page: page,
+        total: total_users,
       });
   
   } catch (error) {
