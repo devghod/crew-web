@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import UserModel from '../models/user.model'
+import UserModel from '../models/user.model';
+import { Logging } from '../helpers/Log.helper';
 const bcrypt = require('bcrypt');
 
 export const getUser = async (req: Request, res: Response) => {
@@ -110,11 +111,11 @@ export const postUsersList = async (req: Request, res: Response) => {
 
     let setPage = page ?? 1;
 
-    const filtersFields = fields.map((filter: any) => { 
+    const filtersFields = fields ? fields.map((filter: any) => { 
       return { 
         [filter]: { $regex: searchWord, $options: 'i' }
       }
-    });
+    }) : {};
 
     match.$and = [{ deleted_at: null }];
 
@@ -124,6 +125,7 @@ export const postUsersList = async (req: Request, res: Response) => {
 
     const users = await UserModel.aggregate([
         { $match: match },
+        { $sort: { date_created: -1 } }
       ])
       .skip((setPage - 1) * size)
       .limit(size)
@@ -218,6 +220,8 @@ export const createUser = async (req: Request, res: Response) => {
     const user = new UserModel(body);
     user.password = hashedPassword;
     const result = await user.save();
+
+    if (result) Logging(result, req, 'create');
     
     res
       .status(201)
@@ -256,6 +260,51 @@ export const updateUser = async (req: Request, res: Response) => {
           message: 'No data' 
         });
     };
+
+    if (updated) Logging(updated, req, 'update');
+    
+    res
+      .status(200)
+      .json({ 
+        data: updated, 
+        success: true, 
+        message: 'UPDATED' 
+      });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ 
+        success: false, 
+        message: `Error: ${error}` 
+      });
+  };
+};
+
+export const updateUserPassword = async (req: Request, res: Response) => {
+  try {
+    const { body } = req;
+    const { id } = req.params;
+    const { password } = body;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const updated = await UserModel
+      .findOneAndUpdate(
+        { _id: id }, 
+        { password: hashedPassword }, 
+        { new: true, useFindAndModify: false }
+      );
+    
+    if (!updated) {
+      res
+        .status(404)
+        .json({ 
+          success: false, 
+          message: 'No data' 
+        });
+    };
+
+    if (updated) Logging(updated, req, 'update');
     
     res
       .status(200)
@@ -289,6 +338,8 @@ export const deleteUser = async (req: Request, res: Response) => {
           message: 'No data' 
         });
     };
+
+    if (deleted) Logging(deleted, req, 'delete');
     
     res
       .status(200)

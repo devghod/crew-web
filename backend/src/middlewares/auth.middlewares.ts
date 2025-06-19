@@ -1,9 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import UserModel from '../models/user.model';
 const jwt = require('jsonwebtoken');
 
-
-const authenticate = async (req: Request, res: Response, next: any) => {
+const authenticate = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
@@ -18,7 +17,6 @@ const authenticate = async (req: Request, res: Response, next: any) => {
       throw new Error('User not found');
     };
 
-    // req.user = decodedToken;
     next();
   } catch (error) {
     res
