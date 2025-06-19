@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const logSchema = new mongoose.Schema({
-  model: {
-    type: String,
-    required: true,
-  },
   id_in_table: {
     type: String,
     required: true,
@@ -13,7 +9,7 @@ const logSchema = new mongoose.Schema({
     type: String, // CRUD
     required: true,
   },
-  detail: {
+  details: {
     type: String,
   },
   user_id_execute: {
