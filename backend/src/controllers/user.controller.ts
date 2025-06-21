@@ -3,7 +3,7 @@ import UserModel from '../models/user.model';
 import { Logging } from '../helpers/Log.helper';
 const bcrypt = require('bcrypt');
 
-export const getUser = async (req: Request, res: Response) => {
+const getUser = async (req: Request, res: Response) => {
   try {
 
     const { id } = req.params;
@@ -43,7 +43,7 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
-export const getUsers = async (req: Request, res: Response) => {
+const getUsers = async (req: Request, res: Response) => {
   try {
 
     const users = await UserModel.find({ 
@@ -68,7 +68,7 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-export const getUsersStatistics = async (req: Request, res: Response) => {
+const getUsersStatistics = async (req: Request, res: Response) => {
   
   try {
     const users = await UserModel.aggregate([
@@ -78,7 +78,7 @@ export const getUsersStatistics = async (req: Request, res: Response) => {
           totalCount: { $sum: { $cond: [ {}, 1, 0] } },
           activeCount: { $sum: { $cond: [{ $eq: ['$status', 'active'] }, 1, 0] } },
           inactiveCount: { $sum: { $cond: [{ $eq: ['$status', 'inactive'] }, 1, 0] } },
-          holdCount: { $sum: { $cond: [{ $eq: ['$status', 'onhold'] }, 1, 0] } },
+          holdCount: { $sum: { $cond: [{ $eq: ['$status', 'hold'] }, 1, 0] } },
           softDeleteCount: { $sum: { $cond: [{ $ne: ['$deleted_at', null ] }, 1, 0] } },
         }
       }
@@ -103,7 +103,7 @@ export const getUsersStatistics = async (req: Request, res: Response) => {
 
 };
 
-export const postUsersList = async (req: Request, res: Response) => {
+const postUsersPaginate= async (req: Request, res: Response) => {
   try {
     const { size, page, filters } = req.body;
     const { fields, search: searchWord } = filters;
@@ -156,7 +156,7 @@ export const postUsersList = async (req: Request, res: Response) => {
   }
 };
 
-export const getUsersSelections = async (req: Request, res: Response) => {
+const getUsersSelections = async (req: Request, res: Response) => {
   try {
 
     const { selections } = req.body;
@@ -185,7 +185,7 @@ export const getUsersSelections = async (req: Request, res: Response) => {
   }
 };
 
-export const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response) => {
   try {
     const { body } = req;
     const { 
@@ -221,7 +221,7 @@ export const createUser = async (req: Request, res: Response) => {
     user.password = hashedPassword;
     const result = await user.save();
 
-    if (result) Logging(result, req, 'create');
+    if (result) Logging(result, req, 'create', 'user');
     
     res
       .status(201)
@@ -240,7 +240,7 @@ export const createUser = async (req: Request, res: Response) => {
   };
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+const updateUser = async (req: Request, res: Response) => {
   try {
     const { body } = req;
     const { id } = req.params;
@@ -261,7 +261,7 @@ export const updateUser = async (req: Request, res: Response) => {
         });
     };
 
-    if (updated) Logging(updated, req, 'update');
+    if (updated) Logging(updated, req, 'update', 'user');
     
     res
       .status(200)
@@ -280,7 +280,7 @@ export const updateUser = async (req: Request, res: Response) => {
   };
 };
 
-export const updateUserPassword = async (req: Request, res: Response) => {
+const updateUserPassword = async (req: Request, res: Response) => {
   try {
     const { body } = req;
     const { id } = req.params;
@@ -304,7 +304,7 @@ export const updateUserPassword = async (req: Request, res: Response) => {
         });
     };
 
-    if (updated) Logging(updated, req, 'update');
+    if (updated) Logging(updated, req, 'update', 'user');
     
     res
       .status(200)
@@ -323,7 +323,7 @@ export const updateUserPassword = async (req: Request, res: Response) => {
   };
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+const deleteUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
@@ -339,7 +339,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         });
     };
 
-    if (deleted) Logging(deleted, req, 'delete');
+    if (deleted) Logging(deleted, req, 'delete', 'user');
     
     res
       .status(200)
@@ -358,7 +358,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 }; 
 
-export const softDelete = async (req: Request, res: Response) => {
+const softDelete = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const currentDate = new Date().toISOString();
@@ -395,3 +395,16 @@ export const softDelete = async (req: Request, res: Response) => {
       });
   }
 }; 
+
+export {
+  softDelete,
+  getUser,
+  getUsers,
+  getUsersStatistics,
+  getUsersSelections,
+  postUsersPaginate,
+  createUser,
+  updateUser,
+  updateUserPassword,
+  deleteUser
+};

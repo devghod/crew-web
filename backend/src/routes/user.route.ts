@@ -5,7 +5,7 @@ import {
   getUsers, 
   getUsersStatistics,
   getUsersSelections,
-  postUsersList,
+  postUsersPaginate,
   createUser,
   updateUser,
   updateUserPassword,
@@ -19,7 +19,7 @@ router.get('/get-user/:id', authenticate, getUser);
 router.get('/get-users', authenticate, getUsers);
 router.get('/get-users-statistics', authenticate, getUsersStatistics);
 router.get('/get-users-selections', authenticate, getUsersSelections);
-router.post('/post-users-list', authenticate, postUsersList);
+router.post('/post-users-paginate', authenticate, postUsersPaginate);
 router.post('/create-user', authenticate, createUser);
 router.put('/update-user/:id', authenticate, updateUser);
 router.put('/update-user-password/:id', authenticate, updateUserPassword);

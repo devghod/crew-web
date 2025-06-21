@@ -4,7 +4,8 @@ import { getUserInfoFromToken } from '../utils/userUtils';
 export const Logging = async(
   result: any,
   request: any,
-  action: string
+  action: string,
+  model: string,
 ) => {
   const userInfo = await getUserInfoFromToken(request);
 
@@ -14,6 +15,7 @@ export const Logging = async(
     details: `${userInfo.id} ${action.toLocaleLowerCase()} ${result._id.toString()}`,
     user_id_execute: userInfo.id,
     new_data: result,
+    model: model,
     old_data: {},
   }).save();
 }

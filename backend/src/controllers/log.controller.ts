@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-const LogModel = require('../models/log.model');
+import LogModel from '../models/log.model';
 
 const getLogs = async (req: Request, res: Response) => {
   try {
@@ -8,7 +8,7 @@ const getLogs = async (req: Request, res: Response) => {
     res
       .status(200)
       .json({ 
-        logs: logs, 
+        data: logs, 
         total: logs.length,
         success: true, 
         message: 'LOGS' 
@@ -24,24 +24,30 @@ const getLogs = async (req: Request, res: Response) => {
   };
 };
 
-const getLogsPaginate = async (req: Request, res: Response) => {
+const postLogsPaginate = async (req: Request, res: Response) => {
   try {
     const body = req.body;
-    const skip = body.skip;
-    const limit = body.limit;
+    const page = body.page;
+    const size = body.size;
+
+    let setPage = page ?? 1;
 
     const total = (await LogModel.find()).length;
     const logs = await LogModel
       .find()
       .sort({ date_created: -1 })
-      .limit(limit)
-      .skip(skip)
-      .populate(['created_by', 'created_for']);
+      // .limit(size)
+      // .skip((setPage - 1) * size)
+      // .populate(['created_by', 'created_for']);
+      .skip((setPage - 1) * size)
+      .limit(size)
+      .populate(['user_id_execute'])
+      .exec();
       
     res
       .status(200)
       .json({ 
-        logs: logs, 
+        data: logs, 
         total: total,
         success: true, 
         message: 'LOGS' 
@@ -57,7 +63,7 @@ const getLogsPaginate = async (req: Request, res: Response) => {
   };
 }
 
-module.exports = { 
+export { 
   getLogs, 
-  getLogsPaginate
+  postLogsPaginate
 };

@@ -34,6 +34,9 @@ app.use('/api/product', productRoute);
 const inventoryRoute = require("./src/routes/inventory.route");
 app.use('/api/inventory', inventoryRoute);
 
+const logRoute = require("./src/routes/log.route");
+app.use('/api/log', logRoute);
+
 if (nodeEnv != 'test') {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);

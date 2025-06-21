@@ -13,6 +13,10 @@ const logSchema = new mongoose.Schema({
     type: String,
   },
   user_id_execute: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User',
+  },
+  model: {
     type: String
   },
 
