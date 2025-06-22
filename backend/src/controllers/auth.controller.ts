@@ -115,7 +115,9 @@ const login = async (req: Request, res: Response) => {
       .json({ 
         success: true,
         token: token,
+        tokenExpIn: new Date(Date.now() + 60 * 60 * 1000), // 1hr
         refreshToken: refreshToken,
+        refreshTokenExpIn: new Date(Date.now() + 10 * 60 * 60 * 1000), // 10hrs
         profile: profile,
       });
   

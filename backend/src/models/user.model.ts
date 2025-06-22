@@ -1,5 +1,4 @@
-import { Request, Response } from 'express';
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 type TUser = Document & {
