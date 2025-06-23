@@ -95,21 +95,6 @@ const login = async (req: Request, res: Response) => {
       process.env.REFRESH_SECRET_KEY, 
       { expiresIn: '10h'});
 
-    const profile = await UserModel.findOne({ 
-        $or: [
-          { username: username },
-          { email: username },
-          { mobile: username },
-        ],
-        status: "active" 
-      }, {
-        _id: 1,
-        first_name: 1,
-        last_name: 1,
-        email: 1,
-        image: 1,
-      });
-
     res
       .status(200)
       .json({ 
@@ -118,7 +103,6 @@ const login = async (req: Request, res: Response) => {
         tokenExpIn: new Date(Date.now() + 60 * 60 * 1000), // 1hr
         refreshToken: refreshToken,
         refreshTokenExpIn: new Date(Date.now() + 10 * 60 * 60 * 1000), // 10hrs
-        profile: profile,
       });
   
   } catch (error) {
@@ -171,7 +155,8 @@ const verify = async (req: Request, res: Response) => {
                       status: 1,
                       username: 1,
                       date_created: 1,
-                      image: 1
+                      image: 1,
+                      gender: 1,
                     });
 
                   const newToken = jwt.sign(
@@ -211,7 +196,8 @@ const verify = async (req: Request, res: Response) => {
               status: 1,
               username: 1,
               date_created: 1,
-              image: 1
+              image: 1,
+              gender: 1,
             });
 
           res
