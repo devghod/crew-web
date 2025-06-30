@@ -36,9 +36,6 @@ const postLogsPaginate = async (req: Request, res: Response) => {
     const logs = await LogModel
       .find()
       .sort({ date_created: -1 })
-      // .limit(size)
-      // .skip((setPage - 1) * size)
-      // .populate(['created_by', 'created_for']);
       .skip((setPage - 1) * size)
       .limit(size)
       .populate(['user_id_execute'])
@@ -49,6 +46,8 @@ const postLogsPaginate = async (req: Request, res: Response) => {
       .json({ 
         data: logs, 
         total: total,
+        page: setPage,
+        size: size,
         success: true, 
         message: 'LOGS' 
       });
